@@ -21,9 +21,28 @@ class ChainTest(unittest.TestCase):
     def test_bakeca(self):
         self.__run_chain(dataset_name="bakeca")
 
-    def __run_chain(self, dataset_name):
-        logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+    def test_college_recruiter(self):
+        self.__run_chain(dataset_name="college_recruiter")
 
+    def test_finanzacom(self):
+        self.__run_chain(dataset_name="finanzacom")
+
+    def test_glassdoor(self):
+        self.__run_chain(dataset_name="glassdoor")
+
+    def test_indeed(self):
+        self.__run_chain(dataset_name="indeed")
+
+    def test_monster(self):
+        self.__run_chain(dataset_name="monster")
+
+    def test_wsi(self):
+        self.__run_chain(dataset_name="wsi")
+
+    def test_yahoo_finance(self):
+        self.__run_chain(dataset_name="yahoo_finance")
+
+    def __run_chain(self, dataset_name):
         dc = DefaultChain()
         df = pd.read_csv('datasets/full/' + dataset_name + '.csv', header=None, na_values='')
 

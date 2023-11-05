@@ -7,18 +7,18 @@ class Sampler:
         self.token_limit = 3500
 
     def sample(self, df):
-        df_clone = df.applymap(lambda x: None if x == '' else x) # fai attenzione
+        df_clone = df.map(lambda x: None if x == '' else x) # fai attenzione
         row_counts = df_clone.count(axis=1)
-        df['non_empty_count'] = row_counts
+        df_clone['non_empty_count'] = row_counts
 
-        df['total_token_count'] = 0
-        for column in df.columns:
-            for index, row in df.iterrows():
+        df_clone['total_token_count'] = 0
+        for column in df_clone.columns:
+            for index, row in df_clone.iterrows():
                 text = row[column]
                 token_count = self.__num_tokens_from_string(text)
-                df.at[index, 'total_token_count'] += token_count
+                df_clone.at[index, 'total_token_count'] += token_count
 
-        filtered_df = df[df['non_empty_count'] > 0].sort_values(by='non_empty_count', ascending=False)
+        filtered_df = df_clone[df_clone['non_empty_count'] > 0].sort_values(by='non_empty_count', ascending=False)
 
         sampled_rows = pd.DataFrame()
         total_tokens = 0

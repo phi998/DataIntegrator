@@ -1,15 +1,23 @@
 import json
-import logging
 
+from enums.chatgpt.Model import Model
 from llm.chatgpt.chatgpt import ChatGPT
 from sampler.Sampler import Sampler
 
 
 class UsefulDataFilter:
 
+    def __init__(self, data_context=None):
+        self.data_context = data_context
+
     def clean(self, df):
         sampler = Sampler()
         sampled_rows = sampler.sample(df)
+
+        sampled_rows = sampled_rows.dropna(axis=1, how='all')
+        empty_columns = [col for col in sampled_rows.columns if
+                         sampled_rows[col].apply(lambda x: x.strip() == '').all()]
+        sampled_rows = sampled_rows.drop(empty_columns, axis=1)
 
         columns_to_drop = self.__get_useless_columns_indexes(sampled_rows)
         df = df.drop(df.columns[columns_to_drop], axis=1)
@@ -17,23 +25,26 @@ class UsefulDataFilter:
         return df
 
     def __get_useless_columns_indexes(self, df):
-        csv_data = df.to_csv(index=False, header=False)
+        column_dict = {}
+        for col_index, col_name in enumerate(df.columns):
+            column_dict[col_index] = df[col_name].tolist()
+
+        json_string = json.dumps(column_dict)
 
         chatgpt = ChatGPT()
-        prompt = f"I give some rows of a table in csv format." \
-                 f"Return me the indexes of columns containing useful data in json list format, key name must be indexes?" \
-                 f"Choose data that may make sense to you to be included in a database." \
-                 f"I want only the json code of one list, no prose!  {csv_data}"
-        solution = chatgpt.get_solution(task='', prompt=prompt)
+        task = f"You are an expert about {self.data_context}" if self.data_context is not None else ""
+        prompt = f"I'm going to give you a json dictionary, return in a json integer list the keys you would classify as 'useful'. " \
+                 f"No prose." \
+                 f"{json_string}"
 
-        response = solution.choices[0].message.content
+        solution = chatgpt.get_simple_solution(model=Model.GPT_3_5, task=task, prompt=prompt)
 
-        logging.debug(f"UsefulDataFilter: response={response}")
-
-        indexes = json.loads(response)
+        indexes = json.loads(solution)
+        first_key = next(iter(indexes))
+        indexes = [int(x) for x in indexes[first_key]]
 
         num_columns = len(df.columns)
         columns_indexes = list(range(num_columns))
-        result = [x for x in columns_indexes if x not in indexes["indexes"]]
+        result = [x for x in columns_indexes if x not in indexes]
 
         return result
