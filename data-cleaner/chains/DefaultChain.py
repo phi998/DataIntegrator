@@ -8,7 +8,7 @@ from filters.UsefulDataFilter import UsefulDataFilter
 
 class DefaultChain:
 
-    def __init__(self, context=None):
+    def __init__(self, context):
         self.context = context
 
     def apply(self, df):

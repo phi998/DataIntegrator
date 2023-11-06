@@ -47,7 +47,7 @@ class FiltersTest(unittest.TestCase):
     def test_labeler(self):
         df = pd.read_csv('datasets/labeler/input.csv', header=None)
 
-        labeler = Labeler()
+        labeler = Labeler("job advertisement")
         df = labeler.label_columns(df)
 
         df.to_csv("datasets/labeler/output.csv")

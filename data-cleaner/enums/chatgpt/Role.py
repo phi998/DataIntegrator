@@ -3,5 +3,5 @@ from enum import Enum
 
 class Role(Enum):
     SYSTEM = "system"
-    AGENT = "agent"
+    ASSISTANT = "assistant"
     USER = "user"
