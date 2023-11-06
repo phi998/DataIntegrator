@@ -12,7 +12,7 @@ class ChatGPT:
     def __init__(self):
         self.key = self.__get_key()
 
-    def get_simple_solution(self, model=Model.GPT_3_5, task="", prompt=""):
+    def get_simple_solution(self, model=Model.DEFAULT, task="", prompt=""):
         openai.api_key = self.key
 
         response = openai.ChatCompletion.create(
@@ -27,6 +27,8 @@ class ChatGPT:
         return response.choices[0].message.content
 
     def get_one_shot_solution(self, model, input_example='', output_example='', task='', prompt='', prompt_input=''):
+
+
 
         pass
 

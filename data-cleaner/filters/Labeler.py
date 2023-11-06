@@ -4,6 +4,11 @@ from enums.chatgpt.Model import Model
 from llm.chatgpt.chatgpt import ChatGPT
 from sampler.Sampler import Sampler
 
+'''
+
+https://arxiv.org/pdf/2306.00745.pdf
+'''
+
 
 class Labeler:
 
@@ -34,7 +39,8 @@ class Labeler:
                  f"If the list has only blank elements answer with none. Names in the list can be repeated." \
                  f"No prose, output format: json list. {json_data}"
 
-        # TODO with 1-shot
+
+
         column_names = chatgpt.get_simple_solution(task=task, prompt=prompt, model=Model.GPT_3_5)
 
         return json.loads(column_names)
