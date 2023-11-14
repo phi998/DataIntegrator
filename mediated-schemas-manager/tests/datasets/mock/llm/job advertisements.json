@@ -1,0 +1,15 @@
+{
+  "Company Information": ["Company Names", "Employer Name", "Company"],
+  "Reference": ["Ref Number", "Payment coordinator"],
+  "Roles and Positions": ["Roles", "Job position"],
+  "Dates": ["Dates"],
+  "Sectors": ["Sectors"],
+  "Locations": ["Locations", "Location", "Location and Employer Victim"],
+  "Descriptions": ["Descriptions", "Advertisement description", "Job Details"],
+  "Departments": ["Departments"],
+  "Location and Job Title": ["Location and Job Title"],
+  "Job Title": ["Job title", "Job title and location", "Jobs"],
+  "Personal Invitation Targets": ["Location and Personal Invitation Reply Targets"],
+  "Number of Employees": ["Number of employees"],
+  "Website Link": ["Website link"]
+}
