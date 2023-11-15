@@ -9,22 +9,13 @@ class SchemaAligner:
         mscols_2_sscols = self.__get_mediated_schema_structure(dfs, context)
         alignment_definition = self.__invert_key_vals_dict(mscols_2_sscols)
 
-        mediated_schema_column_names = list(mscols_2_sscols.keys())
-        mediated_schema_column_names.append("table_id")
+        renamed_dfs = []
 
-        mediated_schema = pd.DataFrame(columns=mediated_schema_column_names)
-
-        i = 1
         for df in dfs:
             df = self.__rename_schema_columns(df, alignment_definition)
-            df["table_id"] = i
-            df = df.loc[:, ~df.columns.duplicated()]
-            df.reset_index(drop=True, inplace=True)
-            mediated_schema = pd.concat([mediated_schema, df], join='outer', ignore_index=True)
-            mediated_schema.reset_index(inplace=True, drop=True)
-            i += 1
+            renamed_dfs.append(df)
 
-        return mediated_schema
+        return renamed_dfs
 
     def __get_mediated_schema_structure(self, dfs, context):
         llm_input = {}
