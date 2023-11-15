@@ -10,15 +10,19 @@ class SchemaAligner:
         alignment_definition = self.__invert_key_vals_dict(mscols_2_sscols)
 
         mediated_schema_column_names = list(mscols_2_sscols.keys())
+        mediated_schema_column_names.append("table_id")
 
         mediated_schema = pd.DataFrame(columns=mediated_schema_column_names)
 
+        i = 1
         for df in dfs:
             df = self.__rename_schema_columns(df, alignment_definition)
+            df["table_id"] = i
             df = df.loc[:, ~df.columns.duplicated()]
             df.reset_index(drop=True, inplace=True)
             mediated_schema = pd.concat([mediated_schema, df], join='outer', ignore_index=True)
             mediated_schema.reset_index(inplace=True, drop=True)
+            i += 1
 
         return mediated_schema
 
