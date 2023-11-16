@@ -34,7 +34,7 @@ class FiltersTest(unittest.TestCase):
             df = pd.read_csv(file_path, encoding="ISO-8859-1")
             dataframes.append(df)
 
-        couples_sample = CouplesSampler()
+        couples_sample = CouplesSampler(1000)
         sampled_couples_df = couples_sample.sample_couples(dataframes, important_attributes)
 
         # Save to output

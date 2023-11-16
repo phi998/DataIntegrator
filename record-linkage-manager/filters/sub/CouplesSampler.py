@@ -6,46 +6,68 @@ from nltk import ngrams
 
 class CouplesSampler:
 
-    def __init__(self):
-        self.max_samples = 1000
-        self.top_rows = int(0.5 * self.max_samples)
-        self.bottom_rows = int(0.3 * self.max_samples)
+    def __init__(self, max_samples):
+        self.max_samples = max_samples
+        self.top_rows = int(0.2 * self.max_samples)
+        self.bottom_rows = int(0.2 * self.max_samples)
         self.middle_rows = int((1 - self.top_rows - self.bottom_rows) * self.max_samples)
 
     def sample_couples(self, dfs, important_attributes):
-        big_schema = self.__compute_big_schema(dfs)
-        terms_weights = self.__compute_terms_weights(big_schema, important_attributes)
 
-        merged_df = pd.merge(big_schema, big_schema, how='cross', suffixes=('_l', '_r'))
-        merged_df = merged_df[(merged_df['table_id_l'] != merged_df['table_id_r'])]
+        num_of_dfs = len(dfs)
+        combs = list(combinations(range(0, num_of_dfs), 2))
 
-        important_attributes_dupl = self.__transform_list(important_attributes)
-        merged_df = merged_df.dropna(subset=important_attributes_dupl)
+        final_df = pd.DataFrame()
 
-        merged_df['distance'] = merged_df.apply(self.__compute_jaccard_distance,
-                                                args=(important_attributes, terms_weights), axis=1)
-        merged_df = merged_df.sort_values(by='distance')
+        # TODO Introduce concurrency
+        # TODO optimize only sampling a subset of dfs in input, i need only a sampling!
 
-        top_df = merged_df.head(self.top_rows)
-        middle_df = merged_df.iloc[int((len(merged_df)/2 - self.middle_rows / 2)):int((len(merged_df)/2 + self.middle_rows / 2))]
-        bottom_df = merged_df.iloc[int(len(merged_df)/2):].sample(n=self.bottom_rows)
+        for combination in combs:
+            left_table_index = combination[0]
+            right_table_index = combination[1]
 
-        result_df = pd.concat([top_df, middle_df, bottom_df])
-        result_df = result_df.reset_index(drop=True)
+            df1 = dfs[left_table_index]
+            df2 = dfs[right_table_index]
+            partial_df = self.__sample_couple_sub(df1, df2, important_attributes)
+            partial_df["table_id_l"] = left_table_index
+            partial_df["table_id_r"] = right_table_index
+            final_df = pd.concat([final_df, partial_df], ignore_index=True)
+            final_df.reset_index(drop=True, inplace=True)
 
-        result_df = result_df.drop(columns=['distance'])  # do i really need to drop it?
+        return final_df
+
+    def __sample_couple_sub(self, df1, df2, important_attributes):
+        big_schema = self.__compute_big_schema_couple(df1, df2)
+        result_df = pd.DataFrame()
+
+        missing_columns = [col for col in important_attributes if col not in big_schema.columns]
+
+        if not missing_columns:
+            terms_weights = self.__compute_terms_weights(big_schema, important_attributes)
+
+            merged_df = pd.merge(big_schema, big_schema, how='cross', suffixes=('_l', '_r'))
+
+            important_attributes_dupl = self.__transform_list(important_attributes)
+            merged_df = merged_df.dropna(subset=important_attributes_dupl)
+
+            if len(merged_df) > 0:
+                merged_df['distance'] = merged_df.apply(self.__compute_jaccard_distance,
+                                                        args=(important_attributes, terms_weights), axis=1)
+                merged_df = merged_df.sort_values(by='distance')
+                result_df = merged_df
 
         return result_df
 
+    def __compute_big_schema_couple(self, df1, df2):
+        return self.__compute_big_schema([df1, df2])
+
     def __compute_big_schema(self, dfs):
         mediated_schema_column_names = dfs[0].columns.tolist()
-        mediated_schema_column_names.append("table_id")
 
         big_schema = pd.DataFrame(columns=mediated_schema_column_names)
 
         i = 0
         for df in dfs:
-            df["table_id"] = i
             df = df.loc[:, ~df.columns.duplicated()]
             df.reset_index(drop=True, inplace=True)
             big_schema = pd.concat([big_schema, df], join='outer', ignore_index=True)
