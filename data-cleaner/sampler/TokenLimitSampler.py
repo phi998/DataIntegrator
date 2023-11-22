@@ -5,9 +5,9 @@ from sampler.Sampler import Sampler
 
 class TokenLimitSampler(Sampler):
 
-    def __init__(self):
+    def __init__(self, token_limit):
         super().__init__()
-        self.token_limit = 3000
+        self.token_limit = token_limit
 
     def sample(self, df):
         df_clone = super()._count_non_empty_columns_in_new_column(df)

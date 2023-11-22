@@ -53,3 +53,8 @@ class EmptyColumnsCleaner:
         empty_string_ratio = empty_string_count / total_count
 
         return empty_string_ratio
+
+    # TODO
+    def __remove_low_entropy_columns(self, df, min_entropy):
+
+        pass

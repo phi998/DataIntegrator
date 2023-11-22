@@ -34,8 +34,14 @@ class FiltersTest(unittest.TestCase):
             df = pd.read_csv(file_path, encoding="ISO-8859-1")
             dataframes.append(df)
 
-        couples_sample = CouplesSampler(1000)
+        couples_sample = CouplesSampler(500)
         sampled_couples_df = couples_sample.sample_couples(dataframes, important_attributes)
+
+
+        # stabilire criterio per scelta campioni (per esempio sulla base della distanza)
+
+        # sottoponi coppie a chatgpt
+
 
         # Save to output
         sampled_couples_df.to_csv(folder_path_out + ".csv", index=False)

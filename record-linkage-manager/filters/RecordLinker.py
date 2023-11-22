@@ -2,6 +2,6 @@
 
 class RecordLinker:
 
-    def apply(self, df):
+    def apply(self, dfs):
 
         pass

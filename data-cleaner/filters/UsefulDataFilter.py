@@ -1,9 +1,7 @@
 import json
-import guidance
 
 from enums.chatgpt.Model import Model
 from llm.chatgpt.chatgpt import ChatGPT
-from sampler.Sampler import Sampler
 from sampler.TokenLimitSampler import TokenLimitSampler
 
 
@@ -13,7 +11,7 @@ class UsefulDataFilter:
         self.data_context = data_context
 
     def clean(self, df):
-        sampler = TokenLimitSampler()
+        sampler = TokenLimitSampler(3000)
         sampled_rows = sampler.sample(df)
 
         sampled_rows = sampled_rows.dropna(axis=1, how='all')
@@ -50,3 +48,5 @@ class UsefulDataFilter:
         result = [x for x in columns_indexes if x not in indexes]
 
         return result
+
+

@@ -14,6 +14,7 @@ class ChatGPT(GenericLLMApi):
 
     def __init__(self):
         self.key = self.__get_key()
+        self.DEFAULT_TEMPERATURE = 1
 
     def get_simple_solution(self, model=Model.DEFAULT, task="", prompt=""):
         return json.loads(self.__get_simple_solution_text(model, task, prompt))
@@ -25,13 +26,14 @@ class ChatGPT(GenericLLMApi):
                 {"role": Role.SYSTEM.value, "content": task},
                 {"role": Role.USER.value, "content": prompt}
             ],
-            temperature=1.6
+            temperature=self.DEFAULT_TEMPERATURE
         )
 
         return response.choices[0].message.content
 
     def get_one_shot_solution(self, input_example, output_example, task, prompt, prompt_input, instructions, model=Model.DEFAULT):
-        return json.loads(self.__get_one_shot_solution_text(input_example, output_example, task, prompt, prompt_input, instructions, model))
+        solution_text = self.__get_one_shot_solution_text(input_example, output_example, task, prompt, prompt_input, instructions, model)
+        return json.loads(solution_text)
 
     def __get_one_shot_solution_text(self, input_example, output_example, task, prompt, prompt_input, instructions,
                               model=Model.DEFAULT):
@@ -51,7 +53,7 @@ class ChatGPT(GenericLLMApi):
                 {"role": Role.ASSISTANT.value, "content": DefaultAgentAnswers.EXAMPLE_PROVIDED.value},
                 {"role": Role.USER.value, "content": prompt_input}
             ],
-            temperature=1.6
+            temperature=self.DEFAULT_TEMPERATURE
         )
         response_content = response.choices[0].message.content
 

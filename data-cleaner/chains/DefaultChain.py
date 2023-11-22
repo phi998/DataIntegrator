@@ -3,6 +3,7 @@ import numpy as np
 from filters.EmptyColumnsCleaner import EmptyColumnsCleaner
 from filters.HtmlCleaner import HtmlCleaner
 from filters.Labeler import Labeler
+from filters.OldLabeler import OldLabeler
 from filters.UsefulDataFilter import UsefulDataFilter
 
 
@@ -12,7 +13,7 @@ class DefaultChain:
         self.context = context
 
     def apply(self, df):
-        df = df.iloc[:, 3:] # delete some columns of naruto output
+        df = df.iloc[:, 3:]  # delete some columns of naruto output
 
         html_cleaner = HtmlCleaner()
         df = html_cleaner.clean(df)

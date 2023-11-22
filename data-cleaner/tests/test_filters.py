@@ -5,6 +5,7 @@ from io import StringIO
 from filters.EmptyColumnsCleaner import EmptyColumnsCleaner
 from filters.HtmlCleaner import HtmlCleaner
 from filters.Labeler import Labeler
+from filters.OldLabeler import OldLabeler
 from filters.UsefulDataFilter import UsefulDataFilter
 
 
@@ -48,7 +49,7 @@ class FiltersTest(unittest.TestCase):
         df = pd.read_csv('datasets/labeler/input.csv', header=None)
 
         labeler = Labeler("job advertisement")
-        df = labeler.label_columns(df)
+        df = labeler.label_columns(df, ["Company name", "Role", "Location", "Description"])
 
         df.to_csv("datasets/labeler/output.csv")
 

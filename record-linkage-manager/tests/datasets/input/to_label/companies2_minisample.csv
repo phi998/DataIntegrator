@@ -1,0 +1,56 @@
+Name_l,Name_r,distance,table_id_l,table_id_r
+Aon plc,Aon Plc,0.0,0,1
+Aon Plc,Aon plc,0.0,0,1
+Johnson Controls International Plc,Johnson Controls International plc,1.1102230246251565e-16,0,1
+Johnson Controls International plc,Johnson Controls International Plc,1.1102230246251565e-16,0,1
+Bank of China Ltd,Agricultural Bank of China Ltd,0.20331313131313122,0,1
+Agricultural Bank of China Ltd,Bank of China Ltd,0.20331313131313122,0,1
+Crown Castle International Corp.,Crown Castle International Corp. (REIT),0.20377725541055358,0,1
+Crown Castle International Corp. (REIT),Crown Castle International Corp.,0.20377725541055358,0,1
+The Bank of New York Mellon Corp.,The Bank of New York Mellon Corporation,0.23787517139810055,0,1
+The Bank of New York Mellon Corporation,The Bank of New York Mellon Corp.,0.23787517139810055,0,1
+Cognizant Technology Solutions Corporation,Cognizant Technology Solutions,0.23826421981141632,0,1
+Cognizant Technology Solutions,Cognizant Technology Solutions Corporation,0.23826421981141632,0,1
+Capital One Financial,Capital One Financial Corporation,0.2391614085080399,0,1
+Capital One Financial Corporation,Capital One Financial,0.2391614085080399,0,1
+The Boeing Company,Boeing Company,0.33310801676355284,0,1
+Microchip Technology,Microchip Technology Incorporated,0.33315572132676163,0,1
+Microchip Technology Incorporated,Microchip Technology,0.33315572132676163,0,1
+Biogen Inc.,BIOGEN IDEC Inc.,0.33315663927908823,0,1
+BIOGEN IDEC Inc.,Biogen Inc.,0.33315663927908823,0,1
+Wal-Mart de Mexico SAB de CV,Grupo Mexico SAB de CV,0.3334880944484978,0,1
+Grupo Mexico SAB de CV,Wal-Mart de Mexico SAB de CV,0.3334880944484978,0,1
+Electronic Arts Inc.,Electronic Arts,0.33359851498276316,0,1
+Berkshire Hathaway Inc.,Berkshire Hathaway,0.33359851498276316,0,1
+Electronic Arts,Electronic Arts Inc.,0.33359851498276316,0,1
+Berkshire Hathaway,Berkshire Hathaway Inc.,0.33359851498276316,0,1
+Seagate Technology plc,Seagate Technology,0.33386560212907523,0,1
+Seagate Technology,Seagate Technology plc,0.33386560212907523,0,1
+Kroger Co.,The Kroger Co.,0.3341016949152543,0,1
+Longfor Group Holdings Ltd,Asahi Group Holdings Ltd,0.41000570357695754,0,1
+Asahi Group Holdings Ltd,DBS Group Holdings Ltd,0.41000570357695754,0,1
+DBS Group Holdings Ltd,Longfor Group Holdings Ltd,0.41000570357695754,0,1
+Mitsui & Co. Ltd,Shionogi & Co. Ltd,0.41188994431706527,0,1
+Shionogi & Co. Ltd,Mitsui & Co. Ltd,0.41188994431706527,0,1
+PT Bank Rakyat Indonesia (Persero) Tbk,PT Bank Mandiri (Persero) Tbk,0.42878245554229866,0,1
+PT Bank Mandiri (Persero) Tbk,PT Bank Rakyat Indonesia (Persero) Tbk,0.42878245554229866,0,1
+Grupo Financiero Banorte SAB de CV,Grupo Mexico SAB de CV,0.4289042964310069,0,1
+Grupo Mexico SAB de CV,Grupo Financiero Banorte SAB de CV,0.4289042964310069,0,1
+Industrial & Commercial Bank of China Ltd,Bank of China Ltd,0.43008266373778836,0,1
+Bank of China Ltd,Industrial & Commercial Bank of China Ltd,0.43008266373778836,0,1
+China Yangtze Power Co. Ltd,China National Nuclear Power Co. Ltd,0.435612634501909,0,1
+China National Nuclear Power Co. Ltd,China Yangtze Power Co. Ltd,0.435612634501909,0,1
+Textron Inc.,Biogen Inc.,0.6665783196395441,0,1
+"Hologic, Inc.",Anthem Inc.,0.6665783196395441,0,1
+Textron Inc.,"ONEOK, Inc.",0.6665783196395441,0,1
+"Hologic, Inc.","CA, Inc.",0.6665783196395441,0,1
+"Hologic, Inc.",Coach Inc.,0.6665783196395441,0,1
+"Hologic, Inc.",Comerica Inc.,0.6665783196395441,0,1
+"Hologic, Inc.",CSRA Inc.,0.6665783196395441,0,1
+"Hologic, Inc.",DaVita Inc.,0.6665783196395441,0,1
+Hasbro Inc.,MSCI Inc.,0.6665783196395441,0,1
+Paychex Inc.,"Okta, Inc.",0.6665783196395441,0,1
+Paychex Inc.,"Ventas, Inc.",0.6665783196395441,0,1
+Paychex Inc.,"Paychex, Inc.",0.6665783196395441,0,1
+Paychex Inc.,"MercadoLibre, Inc.",0.6665783196395441,0,1
+Paychex Inc.,"Illumina, Inc.",0.6665783196395441,0,1

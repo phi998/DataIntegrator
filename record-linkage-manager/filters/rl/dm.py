@@ -1,7 +1,3 @@
 
 
-# DeepMatcher submodule
-
-
-
-
+# DeepMatcher

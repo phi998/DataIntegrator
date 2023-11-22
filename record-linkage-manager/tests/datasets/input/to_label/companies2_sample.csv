@@ -1,0 +1,321 @@
+Name_l,Name_r,distance,table_id_l,table_id_r
+Aon plc,Aon Plc,0.0,0,1
+Aon Plc,Aon plc,0.0,0,1
+Johnson Controls International Plc,Johnson Controls International plc,1.1102230246251565e-16,0,1
+Johnson Controls International plc,Johnson Controls International Plc,1.1102230246251565e-16,0,1
+Bank of China Ltd,Agricultural Bank of China Ltd,0.20331313131313122,0,1
+Agricultural Bank of China Ltd,Bank of China Ltd,0.20331313131313122,0,1
+Crown Castle International Corp.,Crown Castle International Corp. (REIT),0.20377725541055358,0,1
+Crown Castle International Corp. (REIT),Crown Castle International Corp.,0.20377725541055358,0,1
+The Bank of New York Mellon Corp.,The Bank of New York Mellon Corporation,0.23787517139810055,0,1
+The Bank of New York Mellon Corporation,The Bank of New York Mellon Corp.,0.23787517139810055,0,1
+Cognizant Technology Solutions Corporation,Cognizant Technology Solutions,0.23826421981141632,0,1
+Cognizant Technology Solutions,Cognizant Technology Solutions Corporation,0.23826421981141632,0,1
+Capital One Financial,Capital One Financial Corporation,0.2391614085080399,0,1
+Capital One Financial Corporation,Capital One Financial,0.2391614085080399,0,1
+Hewlett Packard Enterprise,Hewlett Packard Enterprise Company,0.24314277102381188,0,1
+Hewlett Packard Enterprise Company,Hewlett Packard Enterprise,0.24314277102381188,0,1
+Pioneer Natural Resources Company,Pioneer Natural Resources,0.24348526008652782,0,1
+Pioneer Natural Resources,Pioneer Natural Resources Company,0.24348526008652782,0,1
+Willis Towers Watson plc,Willis Towers Watson,0.249701433121019,0,1
+Willis Towers Watson,Willis Towers Watson plc,0.249701433121019,0,1
+Extra Space Storage Inc.,Extra Space Storage,0.2503233509103572,0,1
+Illinois Tool Works,Illinois Tool Works Inc.,0.2503233509103572,0,1
+Extra Space Storage,Extra Space Storage Inc.,0.2503233509103572,0,1
+Illinois Tool Works Inc.,Illinois Tool Works,0.2503233509103572,0,1
+Thermo Fisher Scientific,Thermo Fisher Scientific Inc.,0.2503482587064677,0,1
+Thermo Fisher Scientific Inc.,Thermo Fisher Scientific,0.2503482587064677,0,1
+Charles Schwab Corporation,The Charles Schwab Corporation,0.2504065040650406,0,1
+The Charles Schwab Corporation,Charles Schwab Corporation,0.2504065040650406,0,1
+Philip Morris International Inc.,Philip Morris International,0.25147426286856567,0,1
+Philip Morris International,Philip Morris International Inc.,0.25147426286856567,0,1
+"The Hartford Financial Services Group, Inc.","The PNC Financial Services Group, Inc.",0.2880064179703169,0,1
+"The PNC Financial Services Group, Inc.","The Hartford Financial Services Group, Inc.",0.2880064179703169,0,1
+Edwards Lifesciences Corporation,Edwards Lifesciences,0.3186008676789588,0,1
+Edwards Lifesciences,Edwards Lifesciences Corporation,0.3186008676789588,0,1
+Monster Beverage Corporation,Monster Beverage,0.31864406779661003,0,1
+Lam Research Corporation,Lam Research,0.31864406779661003,0,1
+Monster Beverage,Monster Beverage Corporation,0.31864406779661003,0,1
+Lam Research,Lam Research Corporation,0.31864406779661003,0,1
+Union Pacific,Union Pacific Corporation,0.3188169854836521,0,1
+Union Pacific Corporation,Union Pacific,0.3188169854836521,0,1
+Boston Scientific,Boston Scientific Corporation,0.31899009094611097,0,1
+Boston Scientific Corporation,Boston Scientific,0.31899009094611097,0,1
+CVS Health,CVS Health Corporation,0.319033396687483,0,1
+CVS Health Corporation,CVS Health,0.319033396687483,0,1
+Occidental Petroleum Corporation,Occidental Petroleum,0.3191200434546442,0,1
+Occidental Petroleum,Occidental Petroleum Corporation,0.3191200434546442,0,1
+Marathon Petroleum Corporation,Marathon Petroleum,0.3192934782608696,0,1
+Marathon Petroleum,Marathon Petroleum Corporation,0.3192934782608696,0,1
+General Dynamics,General Dynamics Corporation,0.3195105370496262,0,1
+General Dynamics Corporation,General Dynamics,0.3195105370496262,0,1
+Dollar General Corporation,Dollar General,0.3196843966807237,0,1
+Dollar General,Dollar General Corporation,0.3196843966807237,0,1
+Cincinnati Financial,Cincinnati Financial Corporation,0.3209943996721759,0,1
+Cincinnati Financial Corporation,Cincinnati Financial,0.3209943996721759,0,1
+Valero Energy,Valero Energy Corporation,0.32156540777230436,0,1
+CMS Energy,CMS Energy Corporation,0.32156540777230436,0,1
+CMS Energy Corporation,CMS Energy,0.32156540777230436,0,1
+Valero Energy Corporation,Valero Energy,0.32156540777230436,0,1
+Duke Energy,Duke Energy Corporation,0.32160941562884904,0,1
+Duke Energy Corporation,Duke Energy,0.32160941562884904,0,1
+Southwest Airlines Co.,Southwest Airlines,0.3231370435251314,0,1
+Southwest Airlines,Southwest Airlines Co.,0.3231370435251314,0,1
+Bristol-Myers Squibb,Bristol-Myers Squibb Company,0.32500671501477296,0,1
+Bristol-Myers Squibb Company,Bristol-Myers Squibb,0.32500671501477296,0,1
+Genuine Parts,Genuine Parts Company,0.32513771328765284,0,1
+Genuine Parts Company,Genuine Parts,0.32513771328765284,0,1
+Ford Motor Company,Ford Motor,0.32518140284869657,0,1
+Ford Motor,Ford Motor Company,0.32518140284869657,0,1
+Vulcan Materials Company,Vulcan Materials,0.3253125420083345,0,1
+Vulcan Materials,Vulcan Materials Company,0.3253125420083345,0,1
+General Motors,General Motors Company,0.32596982758620685,0,1
+General Motors Company,General Motors,0.32596982758620685,0,1
+General Electric,General Electric Company,0.32636547538772764,0,1
+General Electric Company,General Electric,0.32636547538772764,0,1
+International Paper,International Paper Company,0.327203893996755,0,1
+International Paper Company,International Paper,0.327203893996755,0,1
+Expedia Inc.,"Expedia Group, Inc.",0.33151668217466435,0,1
+"Expedia Group, Inc.",Expedia Inc.,0.33151668217466435,0,1
+Texas Instruments,Texas Instruments Incorporated,0.3322704928922545,0,1
+Texas Instruments Incorporated,Texas Instruments,0.3322704928922545,0,1
+Huntington Bancshares,Huntington Bancshares Incorporated,0.3323146425724156,0,1
+Huntington Bancshares Incorporated,Huntington Bancshares,0.3323146425724156,0,1
+Twenty-First Century Fox Class A,Twenty-First Century Fox Class B,0.3330895552157437,0,1
+Twenty-First Century Fox Class B,Twenty-First Century Fox Class A,0.3330895552157437,0,1
+Boeing Company,The Boeing Company,0.33310801676355284,0,1
+The Boeing Company,Boeing Company,0.33310801676355284,0,1
+Microchip Technology,Microchip Technology Incorporated,0.33315572132676163,0,1
+Microchip Technology Incorporated,Microchip Technology,0.33315572132676163,0,1
+Biogen Inc.,BIOGEN IDEC Inc.,0.33315663927908823,0,1
+BIOGEN IDEC Inc.,Biogen Inc.,0.33315663927908823,0,1
+Wal-Mart de Mexico SAB de CV,Grupo Mexico SAB de CV,0.3334880944484978,0,1
+Grupo Mexico SAB de CV,Wal-Mart de Mexico SAB de CV,0.3334880944484978,0,1
+Electronic Arts Inc.,Electronic Arts,0.33359851498276316,0,1
+Berkshire Hathaway Inc.,Berkshire Hathaway,0.33359851498276316,0,1
+Electronic Arts,Electronic Arts Inc.,0.33359851498276316,0,1
+Berkshire Hathaway,Berkshire Hathaway Inc.,0.33359851498276316,0,1
+Seagate Technology plc,Seagate Technology,0.33386560212907523,0,1
+Seagate Technology,Seagate Technology plc,0.33386560212907523,0,1
+Kroger Co.,The Kroger Co.,0.3341016949152543,0,1
+The Kroger Co.,Kroger Co.,0.3341016949152543,0,1
+Heineken Holding N.V.,Heineken N.V.,0.3342189160467588,0,1
+Heineken N.V.,Heineken Holding N.V.,0.3342189160467588,0,1
+Verizon Communications Inc.,Verizon Communications,0.33430773319160245,0,1
+Verizon Communications,Verizon Communications Inc.,0.33430773319160245,0,1
+Siemens Healthineers AG,Siemens AG,0.3349307774227902,0,1
+Siemens AG,Siemens Healthineers AG,0.3349307774227902,0,1
+TransDigm Group Incorporated,TransDigm Group,0.3373347720528729,0,1
+TransDigm Group,TransDigm Group Incorporated,0.3373347720528729,0,1
+Omnicom Group Inc.,Omnicom Group,0.33867276887871856,0,1
+Omnicom Group,Omnicom Group Inc.,0.33867276887871856,0,1
+Eaton Corporation,Eaton Corporation plc,0.3403418339663592,0,1
+Eaton Corporation plc,Eaton Corporation,0.3403418339663592,0,1
+CTBC Financial Holding Co. Ltd,Cathay Financial Holding Co. Ltd,0.3405522468868435,0,1
+Fubon Financial Holding Co. Ltd,CTBC Financial Holding Co. Ltd,0.3405522468868435,0,1
+Fubon Financial Holding Co. Ltd,Cathay Financial Holding Co. Ltd,0.3405522468868435,0,1
+Fubon Financial Holding Co. Ltd,Mega Financial Holding Co. Ltd,0.3405522468868435,0,1
+CTBC Financial Holding Co. Ltd,Mega Financial Holding Co. Ltd,0.3405522468868435,0,1
+CTBC Financial Holding Co. Ltd,Fubon Financial Holding Co. Ltd,0.3405522468868435,0,1
+Mega Financial Holding Co. Ltd,CTBC Financial Holding Co. Ltd,0.3405522468868436,0,1
+Mega Financial Holding Co. Ltd,Fubon Financial Holding Co. Ltd,0.3405522468868436,0,1
+Mega Financial Holding Co. Ltd,Cathay Financial Holding Co. Ltd,0.3405522468868436,0,1
+Cathay Financial Holding Co. Ltd,CTBC Financial Holding Co. Ltd,0.3405522468868436,0,1
+Cathay Financial Holding Co. Ltd,Fubon Financial Holding Co. Ltd,0.3405522468868436,0,1
+Cathay Financial Holding Co. Ltd,Mega Financial Holding Co. Ltd,0.3405522468868436,0,1
+Bank of America Corp,Bank of America Corporation,0.38796122831310587,0,1
+Bank of America Corporation,Bank of America Corp,0.38796122831310587,0,1
+Royal Caribbean Cruises Ltd.,Royal Caribbean Cruises Ltd,0.3919987094692693,0,1
+Royal Caribbean Cruises Ltd,Royal Caribbean Cruises Ltd.,0.3919987094692693,0,1
+"Best Buy Co., Inc.",Best Buy Co. Inc.,0.3942168674698795,0,1
+Best Buy Co. Inc.,"Best Buy Co., Inc.",0.3942168674698795,0,1
+Procter & Gamble,The Procter & Gamble Company,0.396364226586593,0,1
+The Procter & Gamble Company,Procter & Gamble,0.3963642265865931,0,1
+National Bank of Canada,Royal Bank of Canada,0.39987229627264753,0,1
+Royal Bank of Canada,National Bank of Canada,0.39987229627264753,0,1
+"The Travelers Companies, Inc.",The Travelers Companies Inc.,0.4008475931552854,0,1
+The Travelers Companies Inc.,"The Travelers Companies, Inc.",0.4008475931552854,0,1
+The Saudi British Bank,The Saudi National Bank,0.4009437734943613,0,1
+The Saudi National Bank,The Saudi British Bank,0.4009437734943613,0,1
+"American Electric Power Company, Inc.",American Electric Power,0.4015647453297142,0,1
+American Electric Power,"American Electric Power Company, Inc.",0.4015647453297142,0,1
+"The TJX Companies, Inc.","The Travelers Companies, Inc.",0.401565995525727,0,1
+"The TJX Companies, Inc.","The Williams Companies, Inc.",0.401565995525727,0,1
+"The Cooper Companies, Inc.","The Williams Companies, Inc.",0.401565995525727,0,1
+"The Cooper Companies, Inc.","The Travelers Companies, Inc.",0.401565995525727,0,1
+"The Travelers Companies, Inc.","The Williams Companies, Inc.",0.401565995525727,0,1
+"The Travelers Companies, Inc.","The TJX Companies, Inc.",0.401565995525727,0,1
+"The Williams Companies, Inc.","The TJX Companies, Inc.",0.401565995525727,0,1
+"The Williams Companies, Inc.","The Cooper Companies, Inc.",0.401565995525727,0,1
+"The Williams Companies, Inc.","The Travelers Companies, Inc.",0.401565995525727,0,1
+"The Cooper Companies, Inc.","The TJX Companies, Inc.",0.401565995525727,0,1
+"The Travelers Companies, Inc.","The Cooper Companies, Inc.",0.401565995525727,0,1
+"The TJX Companies, Inc.","The Cooper Companies, Inc.",0.401565995525727,0,1
+"Citizens Financial Group, Inc.","Principal Financial Group, Inc.",0.4022730910837202,0,1
+"Principal Financial Group, Inc.","Citizens Financial Group, Inc.",0.4022730910837202,0,1
+"Mizuho Financial Group, Inc.","Principal Financial Group, Inc.",0.402416579979195,0,1
+"Principal Financial Group, Inc.","Mizuho Financial Group, Inc.",0.402416579979195,0,1
+"Mizuho Financial Group, Inc.","Citizens Financial Group, Inc.",0.402416579979195,0,1
+"Citizens Financial Group, Inc.","Mizuho Financial Group, Inc.",0.402416579979195,0,1
+Saudi Arabian Mining Company,Saudi Arabian Oil Company,0.4024879614767255,0,1
+Saudi Arabian Oil Company,Saudi Arabian Mining Company,0.4024879614767255,0,1
+Marsh & McLennan,"Marsh & McLennan Companies, Inc.",0.4032413350449293,0,1
+"Marsh & McLennan Companies, Inc.",Marsh & McLennan,0.4032413350449294,0,1
+Church & Dwight,"Church & Dwight Co., Inc.",0.4032413350449294,0,1
+"Church & Dwight Co., Inc.",Church & Dwight,0.4032413350449294,0,1
+Mitsui Fudosan Co. Ltd,Mitsui & Co. Ltd,0.40353750409433353,0,1
+Mitsui & Co. Ltd,Mitsui Fudosan Co. Ltd,0.40353750409433353,0,1
+The People's Insurance Company (Group) of China Ltd,Ping An Insurance (Group) Company of China Ltd,0.4036212597790143,0,1
+Ping An Insurance (Group) Company of China Ltd,The People's Insurance Company (Group) of China Ltd,0.4036212597790143,0,1
+Alphabet Inc Class A,Alphabet Inc Class C,0.4043720254900379,0,1
+Alphabet Inc Class C,Alphabet Inc Class A,0.4043720254900379,0,1
+News Corp. Class B,News Corp. Class A,0.40553666828557555,0,1
+News Corp. Class A,News Corp. Class B,0.40553666828557555,0,1
+GF Securities Co. Ltd,Haitong Securities Co. Ltd,0.40867375944124096,0,1
+Haitong Securities Co. Ltd,GF Securities Co. Ltd,0.40867375944124096,0,1
+China Telecom Corp Ltd,China Tower Corp Ltd,0.4088505653624013,0,1
+China Tower Corp Ltd,China Telecom Corp Ltd,0.4088505653624013,0,1
+Asahi Group Holdings Ltd,Longfor Group Holdings Ltd,0.41000570357695754,0,1
+Longfor Group Holdings Ltd,DBS Group Holdings Ltd,0.41000570357695754,0,1
+DBS Group Holdings Ltd,Asahi Group Holdings Ltd,0.41000570357695754,0,1
+Longfor Group Holdings Ltd,Asahi Group Holdings Ltd,0.41000570357695754,0,1
+Asahi Group Holdings Ltd,DBS Group Holdings Ltd,0.41000570357695754,0,1
+DBS Group Holdings Ltd,Longfor Group Holdings Ltd,0.41000570357695754,0,1
+Mitsui & Co. Ltd,Shionogi & Co. Ltd,0.41188994431706527,0,1
+Shionogi & Co. Ltd,Mitsui & Co. Ltd,0.41188994431706527,0,1
+PT Bank Rakyat Indonesia (Persero) Tbk,PT Bank Mandiri (Persero) Tbk,0.42878245554229866,0,1
+PT Bank Mandiri (Persero) Tbk,PT Bank Rakyat Indonesia (Persero) Tbk,0.42878245554229866,0,1
+Grupo Financiero Banorte SAB de CV,Grupo Mexico SAB de CV,0.4289042964310069,0,1
+Grupo Mexico SAB de CV,Grupo Financiero Banorte SAB de CV,0.4289042964310069,0,1
+Industrial & Commercial Bank of China Ltd,Bank of China Ltd,0.43008266373778836,0,1
+Bank of China Ltd,Industrial & Commercial Bank of China Ltd,0.43008266373778836,0,1
+China Yangtze Power Co. Ltd,China National Nuclear Power Co. Ltd,0.435612634501909,0,1
+China National Nuclear Power Co. Ltd,China Yangtze Power Co. Ltd,0.435612634501909,0,1
+M&T Bank Corp.,M&T Bank Corporation,0.48224029650983224,0,1
+M&T Bank Corporation,M&T Bank Corp.,0.48224029650983224,0,1
+State Street Corp.,State Street Corporation,0.482389289392379,0,1
+Exxon Mobil Corp.,Exxon Mobil Corporation,0.482389289392379,0,1
+Exxon Mobil Corporation,Exxon Mobil Corp.,0.482389289392379,0,1
+Northrop Grumman Corporation,Northrop Grumman Corp.,0.482389289392379,0,1
+State Street Corporation,State Street Corp.,0.482389289392379,0,1
+Northrop Grumman Corp.,Northrop Grumman Corporation,0.482389289392379,0,1
+Lockheed Martin Corporation,Lockheed Martin Corp.,0.4825880898413353,0,1
+Lockheed Martin Corp.,Lockheed Martin Corporation,0.4825880898413353,0,1
+Norfolk Southern Corporation,Norfolk Southern Corp.,0.4828368209462942,0,1
+Norfolk Southern Corp.,Norfolk Southern Corporation,0.4828368209462942,0,1
+Hormel Foods Corp.,Hormel Foods Corporation,0.4828368209462942,0,1
+Hormel Foods Corporation,Hormel Foods Corp.,0.4828368209462942,0,1
+Marathon Oil Corp.,Marathon Oil Corporation,0.48303599051252966,0,1
+Marathon Oil Corporation,Marathon Oil Corp.,0.48303599051252966,0,1
+Northern Trust Corp.,Northern Trust Corporation,0.4831356369262506,0,1
+Northern Trust Corporation,Northern Trust Corp.,0.4831356369262506,0,1
+Parker-Hannifin Corporation,Parker-Hannifin,0.4832407978614024,0,1
+Parker-Hannifin,Parker-Hannifin Corporation,0.4832407978614024,0,1
+Kimberly-Clark,Kimberly-Clark Corporation,0.4832407978614024,0,1
+Cerner,Cerner Corporation,0.4832407978614024,0,1
+Netflix Inc.,Verisign Inc.,0.6664899257688228,0,1
+Netflix Inc.,Viacom Inc.,0.6664899257688228,0,1
+Mattel Inc.,NiSource Inc.,0.6664899257688228,0,1
+Netflix Inc.,Xylem Inc.,0.6664899257688228,0,1
+Mattel Inc.,Netflix Inc.,0.6664899257688228,0,1
+Mattel Inc.,Macy's Inc.,0.6664899257688228,0,1
+MetLife Inc.,HCP Inc.,0.6664899257688228,0,1
+MetLife Inc.,Hasbro Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Netflix Inc.,0.6664899257688228,0,1
+NiSource Inc.,Textron Inc.,0.6664899257688228,0,1
+Yahoo Inc.,NiSource Inc.,0.6664899257688228,0,1
+Yahoo Inc.,DaVita Inc.,0.6664899257688228,0,1
+NiSource Inc.,Staples Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Hasbro Inc.,0.6664899257688228,0,1
+Yahoo Inc.,CSRA Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Comerica Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Coach Inc.,0.6664899257688228,0,1
+NiSource Inc.,Snap-On Inc.,0.6664899257688228,0,1
+Yahoo Inc.,"CA, Inc.",0.6664899257688228,0,1
+Yahoo Inc.,HCP Inc.,0.6664899257688228,0,1
+Yahoo Inc.,MetLife Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Viacom Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Verisign Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Textron Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Staples Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Snap-On Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Praxair Inc.,0.6664899257688228,0,1
+Yahoo Inc.,PepsiCo Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Paychex Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Mattel Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Macy's Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Anthem Inc.,0.6664899257688228,0,1
+MetLife Inc.,Netflix Inc.,0.6664899257688228,0,1
+NiSource Inc.,HCP Inc.,0.6664899257688228,0,1
+NiSource Inc.,Hasbro Inc.,0.6664899257688228,0,1
+NiSource Inc.,Praxair Inc.,0.6664899257688228,0,1
+NiSource Inc.,PepsiCo Inc.,0.6664899257688228,0,1
+NiSource Inc.,Paychex Inc.,0.6664899257688228,0,1
+NiSource Inc.,Netflix Inc.,0.6664899257688228,0,1
+NiSource Inc.,MetLife Inc.,0.6664899257688228,0,1
+NiSource Inc.,Mattel Inc.,0.6664899257688228,0,1
+NiSource Inc.,Macy's Inc.,0.6664899257688228,0,1
+NiSource Inc.,DaVita Inc.,0.6664899257688228,0,1
+Yahoo Inc.,Xylem Inc.,0.6664899257688228,0,1
+NiSource Inc.,Verisign Inc.,0.6664899257688228,0,1
+MetLife Inc.,Mattel Inc.,0.6664899257688228,0,1
+NiSource Inc.,CSRA Inc.,0.6664899257688228,0,1
+Xylem Inc.,Macy's Inc.,0.6664899257688228,0,1
+Xylem Inc.,HCP Inc.,0.6664899257688228,0,1
+Xylem Inc.,Hasbro Inc.,0.6664899257688228,0,1
+Xylem Inc.,Mattel Inc.,0.6664899257688228,0,1
+Xylem Inc.,MetLife Inc.,0.6664899257688228,0,1
+NiSource Inc.,Xylem Inc.,0.6664899257688228,0,1
+NiSource Inc.,Viacom Inc.,0.6664899257688228,0,1
+Xylem Inc.,Paychex Inc.,0.6664899257688228,0,1
+Xylem Inc.,NiSource Inc.,0.6664899257688228,0,1
+Xylem Inc.,Netflix Inc.,0.6664899257688228,0,1
+Xylem Inc.,PepsiCo Inc.,0.6664899257688228,0,1
+NiSource Inc.,Anthem Inc.,0.6664899257688228,0,1
+Xylem Inc.,Viacom Inc.,0.6664899257688228,0,1
+Xylem Inc.,Verisign Inc.,0.6664899257688228,0,1
+Xylem Inc.,Textron Inc.,0.6664899257688228,0,1
+Xylem Inc.,Staples Inc.,0.6664899257688228,0,1
+NiSource Inc.,"CA, Inc.",0.6664899257688228,0,1
+NiSource Inc.,Yahoo Inc.,0.6664899257688228,0,1
+Xylem Inc.,Snap-On Inc.,0.6664899257688228,0,1
+Xylem Inc.,Praxair Inc.,0.6664899257688228,0,1
+Xylem Inc.,Yahoo Inc.,0.6664899257688228,0,1
+Xylem Inc.,Anthem Inc.,0.6664899257688228,0,1
+Xylem Inc.,DaVita Inc.,0.6664899257688228,0,1
+Xylem Inc.,CSRA Inc.,0.6664899257688228,0,1
+Xylem Inc.,Comerica Inc.,0.6664899257688228,0,1
+NiSource Inc.,Comerica Inc.,0.6664899257688228,0,1
+Xylem Inc.,Coach Inc.,0.6664899257688228,0,1
+NiSource Inc.,Coach Inc.,0.6664899257688228,0,1
+Xylem Inc.,"CA, Inc.",0.6664899257688228,0,1
+MetLife Inc.,Yahoo Inc.,0.6664899257688228,0,1
+"Hologic, Inc.",Yahoo Inc.,0.6665783196395441,0,1
+Paychex Inc.,"Hologic, Inc.",0.6665783196395441,0,1
+Paychex Inc.,"Teradyne, Inc.",0.6665783196395441,0,1
+Textron Inc.,MSCI Inc.,0.6665783196395441,0,1
+Paychex Inc.,"PerkinElmer, Inc.",0.6665783196395441,0,1
+Paychex Inc.,"HubSpot, Inc.",0.6665783196395441,0,1
+Paychex Inc.,ViacomCBS Inc.,0.6665783196395441,0,1
+Textron Inc.,"Corteva, Inc.",0.6665783196395441,0,1
+Paychex Inc.,"Shimano, Inc.",0.6665783196395441,0,1
+"Hologic, Inc.",Verisign Inc.,0.6665783196395441,0,1
+Paychex Inc.,XP Inc.,0.6665783196395441,0,1
+Textron Inc.,ResMed Inc.,0.6665783196395441,0,1
+"Hologic, Inc.",Hasbro Inc.,0.6665783196395441,0,1
+"Hologic, Inc.",HCP Inc.,0.6665783196395441,0,1
+Textron Inc.,"Nasdaq, Inc.",0.6665783196395441,0,1
+Textron Inc.,Biogen Inc.,0.6665783196395441,0,1
+"Hologic, Inc.",Anthem Inc.,0.6665783196395441,0,1
+Textron Inc.,"ONEOK, Inc.",0.6665783196395441,0,1
+"Hologic, Inc.","CA, Inc.",0.6665783196395441,0,1
+"Hologic, Inc.",Coach Inc.,0.6665783196395441,0,1
+"Hologic, Inc.",Comerica Inc.,0.6665783196395441,0,1
+"Hologic, Inc.",CSRA Inc.,0.6665783196395441,0,1
+"Hologic, Inc.",DaVita Inc.,0.6665783196395441,0,1
+Hasbro Inc.,MSCI Inc.,0.6665783196395441,0,1
+Paychex Inc.,"Okta, Inc.",0.6665783196395441,0,1
+Paychex Inc.,"Ventas, Inc.",0.6665783196395441,0,1
+Paychex Inc.,"Paychex, Inc.",0.6665783196395441,0,1
+Paychex Inc.,"MercadoLibre, Inc.",0.6665783196395441,0,1
+Paychex Inc.,"Illumina, Inc.",0.6665783196395441,0,1

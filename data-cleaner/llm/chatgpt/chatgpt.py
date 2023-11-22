@@ -6,27 +6,35 @@ from os.path import dirname, join
 from enums.chatgpt.Model import Model
 from enums.chatgpt.Role import Role
 from enums.llm.DefaultAgentAnswers import DefaultAgentAnswers
-from llm.chatgpt.PromptBuilder import PromptBuilder
+from llm.GenericLLMApi import GenericLLMApi
+from llm.PromptBuilder import PromptBuilder
 
 
-class ChatGPT:
+class ChatGPT(GenericLLMApi):
 
     def __init__(self):
         self.key = self.__get_key()
 
     def get_simple_solution(self, model=Model.DEFAULT, task="", prompt=""):
+        return json.loads(self.__get_simple_solution_text(model, task, prompt))
+
+    def __get_simple_solution_text(self, model=Model.DEFAULT, task="", prompt=""):
         response = openai.ChatCompletion.create(
             model=model.value,
             messages=[
                 {"role": Role.SYSTEM.value, "content": task},
                 {"role": Role.USER.value, "content": prompt}
             ],
-            temperature=1.6
+            temperature=1
         )
 
         return response.choices[0].message.content
 
     def get_one_shot_solution(self, input_example, output_example, task, prompt, prompt_input, instructions, model=Model.DEFAULT):
+        return json.loads(self.__get_one_shot_solution_text(input_example, output_example, task, prompt, prompt_input, instructions, model))
+
+    def __get_one_shot_solution_text(self, input_example, output_example, task, prompt, prompt_input, instructions,
+                              model=Model.DEFAULT):
         prompt_builder = PromptBuilder()
 
         prompt = prompt_builder.build_prompt_with_instructions(prompt, instructions)
@@ -43,10 +51,11 @@ class ChatGPT:
                 {"role": Role.ASSISTANT.value, "content": DefaultAgentAnswers.EXAMPLE_PROVIDED.value},
                 {"role": Role.USER.value, "content": prompt_input}
             ],
-            temperature=1.6
+            temperature=1
         )
+        response_content = response.choices[0].message.content
 
-        return response.choices[0].message.content
+        return response_content
 
     def __get_key(self):
         project_root = dirname(dirname(__file__))

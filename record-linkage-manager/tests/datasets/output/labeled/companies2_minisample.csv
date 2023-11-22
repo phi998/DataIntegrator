@@ -1,0 +1,56 @@
+Name_l,Name_r,distance,table_id_l,table_id_r,matching_prob
+Aon plc,Aon Plc,0.0,0,1,0.9
+Aon Plc,Aon plc,0.0,0,1,0.9
+Johnson Controls International Plc,Johnson Controls International plc,1.1102230246251563e-16,0,1,0.9
+Johnson Controls International plc,Johnson Controls International Plc,1.1102230246251563e-16,0,1,0.9
+Bank of China Ltd,Agricultural Bank of China Ltd,0.2033131313131312,0,1,0.1
+Agricultural Bank of China Ltd,Bank of China Ltd,0.2033131313131312,0,1,0.1
+Crown Castle International Corp.,Crown Castle International Corp. (REIT),0.2037772554105535,0,1,0.9
+Crown Castle International Corp. (REIT),Crown Castle International Corp.,0.2037772554105535,0,1,0.9
+The Bank of New York Mellon Corp.,The Bank of New York Mellon Corporation,0.2378751713981005,0,1,0.9
+The Bank of New York Mellon Corporation,The Bank of New York Mellon Corp.,0.2378751713981005,0,1,0.9
+Cognizant Technology Solutions Corporation,Cognizant Technology Solutions,0.2382642198114163,0,1,0.9
+Cognizant Technology Solutions,Cognizant Technology Solutions Corporation,0.2382642198114163,0,1,0.9
+Capital One Financial,Capital One Financial Corporation,0.2391614085080399,0,1,0.9
+Capital One Financial Corporation,Capital One Financial,0.2391614085080399,0,1,0.9
+The Boeing Company,Boeing Company,0.3331080167635528,0,1,0.1
+Microchip Technology,Microchip Technology Incorporated,0.3331557213267616,0,1,0.1
+Microchip Technology Incorporated,Microchip Technology,0.3331557213267616,0,1,0.1
+Biogen Inc.,BIOGEN IDEC Inc.,0.3331566392790882,0,1,0.1
+BIOGEN IDEC Inc.,Biogen Inc.,0.3331566392790882,0,1,0.1
+Wal-Mart de Mexico SAB de CV,Grupo Mexico SAB de CV,0.3334880944484978,0,1,0.1
+Grupo Mexico SAB de CV,Wal-Mart de Mexico SAB de CV,0.3334880944484978,0,1,0.1
+Electronic Arts Inc.,Electronic Arts,0.3335985149827631,0,1,0.9
+Berkshire Hathaway Inc.,Berkshire Hathaway,0.3335985149827631,0,1,0.9
+Electronic Arts,Electronic Arts Inc.,0.3335985149827631,0,1,0.9
+Berkshire Hathaway,Berkshire Hathaway Inc.,0.3335985149827631,0,1,0.9
+Seagate Technology plc,Seagate Technology,0.3338656021290752,0,1,0.9
+Seagate Technology,Seagate Technology plc,0.3338656021290752,0,1,0.9
+Kroger Co.,The Kroger Co.,0.3341016949152543,0,1,0.9
+Longfor Group Holdings Ltd,Asahi Group Holdings Ltd,0.4100057035769575,0,1,0.1
+Asahi Group Holdings Ltd,DBS Group Holdings Ltd,0.4100057035769575,0,1,0.1
+DBS Group Holdings Ltd,Longfor Group Holdings Ltd,0.4100057035769575,0,1,0.1
+Mitsui & Co. Ltd,Shionogi & Co. Ltd,0.4118899443170652,0,1,0.1
+Shionogi & Co. Ltd,Mitsui & Co. Ltd,0.4118899443170652,0,1,0.1
+PT Bank Rakyat Indonesia (Persero) Tbk,PT Bank Mandiri (Persero) Tbk,0.4287824555422986,0,1,0.1
+PT Bank Mandiri (Persero) Tbk,PT Bank Rakyat Indonesia (Persero) Tbk,0.4287824555422986,0,1,0.1
+Grupo Financiero Banorte SAB de CV,Grupo Mexico SAB de CV,0.4289042964310069,0,1,0.1
+Grupo Mexico SAB de CV,Grupo Financiero Banorte SAB de CV,0.4289042964310069,0,1,0.1
+Industrial & Commercial Bank of China Ltd,Bank of China Ltd,0.4300826637377883,0,1,0.1
+Bank of China Ltd,Industrial & Commercial Bank of China Ltd,0.4300826637377883,0,1,0.1
+China Yangtze Power Co. Ltd,China National Nuclear Power Co. Ltd,0.435612634501909,0,1,0.1
+China National Nuclear Power Co. Ltd,China Yangtze Power Co. Ltd,0.435612634501909,0,1,0.1
+Textron Inc.,Biogen Inc.,0.6665783196395441,0,1,0.1
+"Hologic, Inc.",Anthem Inc.,0.6665783196395441,0,1,0.1
+Textron Inc.,"ONEOK, Inc.",0.6665783196395441,0,1,0.1
+"Hologic, Inc.","CA, Inc.",0.6665783196395441,0,1,0.1
+"Hologic, Inc.",Coach Inc.,0.6665783196395441,0,1,0.1
+"Hologic, Inc.",Comerica Inc.,0.6665783196395441,0,1,0.1
+"Hologic, Inc.",CSRA Inc.,0.6665783196395441,0,1,0.1
+"Hologic, Inc.",DaVita Inc.,0.6665783196395441,0,1,0.1
+Hasbro Inc.,MSCI Inc.,0.6665783196395441,0,1,0.1
+Paychex Inc.,"Okta, Inc.",0.6665783196395441,0,1,0.1
+Paychex Inc.,"Ventas, Inc.",0.6665783196395441,0,1,0.1
+Paychex Inc.,"Paychex, Inc.",0.6665783196395441,0,1,0.9
+Paychex Inc.,"MercadoLibre, Inc.",0.6665783196395441,0,1,0.1
+Paychex Inc.,"Illumina, Inc.",0.6665783196395441,0,1,0.1

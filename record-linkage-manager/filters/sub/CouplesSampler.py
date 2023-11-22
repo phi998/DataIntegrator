@@ -1,18 +1,18 @@
+import random
 from itertools import combinations
 
 import pandas as pd
-from nltk import ngrams
 
 
 class CouplesSampler:
 
-    def __init__(self, max_samples):
-        self.max_samples = max_samples
-        self.top_rows = int(0.2 * self.max_samples)
-        self.bottom_rows = int(0.2 * self.max_samples)
-        self.middle_rows = int((1 - self.top_rows - self.bottom_rows) * self.max_samples)
+    def __init__(self, n_samples):
+        self.n_samples = n_samples
 
-    def sample_couples(self, dfs, important_attributes):
+    def sample_couples(self, dfs, important_attributes, dfs_to_sample=0):
+
+        if dfs_to_sample > 0:
+            dfs = random.sample(dfs, dfs_to_sample)
 
         num_of_dfs = len(dfs)
         combs = list(combinations(range(0, num_of_dfs), 2))
@@ -34,6 +34,11 @@ class CouplesSampler:
             final_df = pd.concat([final_df, partial_df], ignore_index=True)
             final_df.reset_index(drop=True, inplace=True)
 
+        final_df = self.__delete_duplicates(df=final_df, important_attributes=important_attributes)
+
+        # sample better
+        # final_df = final_df.sample(n=self.n_samples)
+
         return final_df
 
     def __sample_couple_sub(self, df1, df2, important_attributes):
@@ -46,6 +51,13 @@ class CouplesSampler:
             terms_weights = self.__compute_terms_weights(big_schema, important_attributes)
 
             merged_df = pd.merge(big_schema, big_schema, how='cross', suffixes=('_l', '_r'))
+
+            # TODO delete couple where right=left, exact matches are useless
+            for important_attribute in important_attributes:
+                important_attribute_l = important_attribute + "_l"
+                important_attribute_r = important_attribute + "_r"
+
+                merged_df = merged_df[merged_df[important_attribute_l] != merged_df[important_attribute_r]]
 
             important_attributes_dupl = self.__transform_list(important_attributes)
             merged_df = merged_df.dropna(subset=important_attributes_dupl)
@@ -138,3 +150,9 @@ class CouplesSampler:
                 term_weights[attribute][term.lower()] = 1 - (df / num_of_documents)
 
         return term_weights
+
+    def __delete_duplicates(self, df, important_attributes):
+        attrs_to_check = self.__transform_list(important_attributes)
+        df = df.drop_duplicates(subset=attrs_to_check, keep='first')
+
+        return df
