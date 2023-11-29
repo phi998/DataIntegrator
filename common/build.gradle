@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group = 'it.uniroma3.di'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = '17'
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}

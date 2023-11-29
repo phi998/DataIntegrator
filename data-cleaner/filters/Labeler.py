@@ -1,4 +1,3 @@
-
 '''
 The class has the purpose to return
 '''
@@ -26,16 +25,23 @@ class Labeler:
 
         sampled_rows = sampled_rows.drop(empty_columns, axis=1)
 
-        return self.__label_columns(sampled_rows, ontology)
+        columns_labels_dict = self.__get_label_columns(sampled_rows, ontology)
+        columns_to_keep = list(columns_labels_dict.keys())
+        columns_names = list(columns_labels_dict.values())
 
+        df = df[[int(x) for x in columns_to_keep]]
+        df.columns = columns_names
 
-    def __label_columns(self, df, ontology):
+        return df
+
+    def __get_label_columns(self, df, ontology):
         chatgpt = ChatGPT()
 
         input_json = self.__transform_df_to_input_string(df)
 
         ontology_string = ', '.join(ontology)
 
+        # TODO Conseder the case where there is no ontology!
         response = chatgpt.get_one_shot_solution(
             input_example="{'0':['apple','banana','apple','pear'],'1':['AAA','hi','flo','car'],'2':['dog','cat','bird','mouse']}",
             output_example="{0:'fruit',2:'animals'}",
@@ -53,20 +59,14 @@ class Labeler:
             prompt_input=f"{input_json}"
         )
 
-        columns_to_keep = list(response.keys())
-        columns_names = list(response.values())
+        response = {key: value for key, value in response.items() if value != 'other'}
 
-        df = df[[int(x) for x in columns_to_keep]]
-        df.columns = columns_names
-
-        return df
+        return response
 
     def __transform_df_to_input_string(self, df):
         df_dict = {}
 
-        i = 0
         for column_name in df.columns:
-            df_dict[i] = df[column_name].tolist()
-            i += 1
+            df_dict[column_name] = df[column_name].tolist()
 
         return json.dumps(df_dict)

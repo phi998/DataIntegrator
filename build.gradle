@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group 'it.uniroma3.di'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = '17'
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    group 'it.uniroma3.di'
+
+    dependencies {
+        implementation 'org.projectlombok:lombok:1.18.30'
+        annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    }
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = '17'
+        targetCompatibility = '17'
+    }
+}

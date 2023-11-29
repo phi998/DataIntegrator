@@ -9,8 +9,9 @@ from filters.UsefulDataFilter import UsefulDataFilter
 
 class DefaultChain:
 
-    def __init__(self, context):
+    def __init__(self, context, ontology):
         self.context = context
+        self.ontology = ontology
 
     def apply(self, df):
         df = df.iloc[:, 3:]  # delete some columns of naruto output
@@ -24,7 +25,8 @@ class DefaultChain:
         useful_data_filter = UsefulDataFilter(data_context=self.context)
         df = useful_data_filter.clean(df)
 
+        # TODO manage failures
         labeler = Labeler(data_context=self.context)
-        df = labeler.label_columns(df)
+        df = labeler.label_columns(df, self.ontology)
 
         return df

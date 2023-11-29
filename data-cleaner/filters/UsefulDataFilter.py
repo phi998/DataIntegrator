@@ -40,8 +40,7 @@ class UsefulDataFilter:
 
         solution = chatgpt.get_simple_solution(model=Model.GPT_3_5, task=task, prompt=prompt)
 
-        indexes = json.loads(solution)
-        indexes = [int(x) for x in indexes]
+        indexes = [int(x) for x in solution]
 
         num_columns = len(df.columns)
         columns_indexes = list(range(num_columns))

@@ -1,0 +1,44 @@
+# application.yml
+---
+spring:
+  config:
+    activate:
+      on-profile: default
+  application:
+    name: dim
+  datasource:
+    username: postgres
+    url: jdbc:postgresql://dimdb:5432/dimdb
+    password: postgres
+    driverClassName: org.postgresql.Driver
+  sql:
+    init:
+      mode: always
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: create-drop
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        instanceId: ${spring.application.name}-${spring.cloud.client.hostname}-${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 10s
+        healthCheckCriticalTimeout: 45s
+        queryPassing: true
+    loadbalancer:
+      ribbon.enabled: false
+  kafka:
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    bootstrap-servers: kafka:9092
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
