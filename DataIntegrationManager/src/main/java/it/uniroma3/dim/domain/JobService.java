@@ -1,10 +1,13 @@
 package it.uniroma3.dim.domain;
 
 import it.uniroma3.di.common.api.dto.FileUploadedResponse;
+import it.uniroma3.di.common.api.dto.RetrieveFileResponse;
 import it.uniroma3.dim.domain.entity.Job;
+import it.uniroma3.dim.domain.entity.JobResult;
 import it.uniroma3.dim.domain.entity.JobTable;
 import it.uniroma3.dim.domain.entity.OntologyItem;
 import it.uniroma3.dim.domain.enums.JobStatus;
+import it.uniroma3.dim.domain.enums.JobType;
 import it.uniroma3.dim.event.JobStartedEvent;
 import it.uniroma3.dim.eventpublisher.impl.JobCreatedEventPublisher;
 import it.uniroma3.dim.proxy.FileStorageClient;
@@ -15,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -29,12 +34,13 @@ public class JobService {
     @Autowired
     private JobCreatedEventPublisher publisher;
 
-    public CreateNewJobResponse createNewJob(String jobName, Collection<String> ontologyItems) {
+    public CreateNewJobResponse createNewJob(String jobName, Collection<String> ontologyItems, String jobType) {
         log.info("createNewJob(): jobName={}", jobName);
 
         Job job = new Job();
         job.setName(jobName);
         job.setStatus(JobStatus.CREATED);
+        job.setJobType(JobType.valueOf(jobType));
         job.addOntologyItems(ontologyItems);
 
         job = jobRepository.save(job);
@@ -87,6 +93,23 @@ public class JobService {
         return Converter.toJobStartedResponse(job);
     }
 
+    public void setJobEnded(Long jobId, String jobResultUrl) {
+        Job job = jobRepository.findById(jobId).get();
+        String resourceAssignedName = this.getLastPartOfUrl(jobResultUrl);
+
+        RetrieveFileResponse retrieveFileResponse = new FileStorageClient(new RestTemplate()).retrieveFile(resourceAssignedName);
+
+        job.setStatus(JobStatus.COMPLETED);
+
+
+        JobResult jobResult = new JobResult();
+
+
+        job = jobRepository.save(job);
+
+
+    }
+
     /**
      * @return table content url on dis service
      * */
@@ -95,6 +118,22 @@ public class JobService {
         FileUploadedResponse fileUploadedResponse = fileStorageClient.uploadFile(tableName, tableData, true);
 
         return fileUploadedResponse.getResourceUrl();
+    }
+
+    private String getLastPartOfUrl(String urlString) {
+        String lastSegment = "";
+
+        try {
+            URL url = new URL(urlString);
+            String path = url.getPath();
+
+            String[] pathSegments = path.split("/");
+            lastSegment = pathSegments[pathSegments.length - 1];
+        } catch (MalformedURLException e) {
+            log.error("getLastPartOfUrl(): Error={}", e.getMessage());
+        }
+
+        return lastSegment;
     }
 
 

@@ -16,6 +16,10 @@ public class OntologyItem {
 
     private String item;
 
+    public OntologyItem() {
+
+    }
+
     public OntologyItem(String item) {
         this.item = item;
     }

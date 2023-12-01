@@ -1,4 +1,6 @@
 import json
+import time
+
 import openai
 
 from os.path import dirname, join
@@ -30,8 +32,23 @@ class ChatGPT(GenericLLMApi):
 
         return response.choices[0].message.content
 
-    def get_one_shot_solution(self, input_example, output_example, task, prompt, prompt_input, instructions, model=Model.DEFAULT):
-        return json.loads(self.__get_one_shot_solution_text(input_example, output_example, task, prompt, prompt_input, instructions, model))
+    def get_one_shot_solution(self, input_example, output_example, task, prompt, prompt_input, instructions,
+                              model=Model.DEFAULT):
+        solution_found = False
+        solution = ""
+
+        while not solution_found:
+            try:
+                solution = json.loads(
+                    self.__get_one_shot_solution_text(input_example, output_example, task, prompt, prompt_input,
+                                                      instructions, model))
+                solution_found = True
+            except json.decoder.JSONDecodeError as e:
+                print("JSON decoding error:", e)
+                print("Retrying call to chatgpt api...")
+                time.sleep(5)
+
+        return solution
 
     def __get_one_shot_solution_text(self, input_example, output_example, task, prompt, prompt_input, instructions,
                               model=Model.DEFAULT):

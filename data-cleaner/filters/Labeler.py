@@ -25,7 +25,12 @@ class Labeler:
 
         sampled_rows = sampled_rows.drop(empty_columns, axis=1)
 
+        print("Labelling columns...")
+
         columns_labels_dict = self.__get_label_columns(sampled_rows, ontology)
+
+        print(f"Got columns_labels_dict={columns_labels_dict}")
+
         columns_to_keep = list(columns_labels_dict.keys())
         columns_names = list(columns_labels_dict.values())
 

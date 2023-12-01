@@ -11,4 +11,6 @@ public class CreateNewJobRequest {
 
     private Collection<String> ontology;
 
+    private String jobType;
+
 }

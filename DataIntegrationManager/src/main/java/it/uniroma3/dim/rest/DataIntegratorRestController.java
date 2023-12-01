@@ -23,7 +23,7 @@ public class DataIntegratorRestController {
     ) {
         log.info("createNewJob(): newJobRequest={}", newJobRequest);
 
-        return jobService.createNewJob(newJobRequest.getJobName(), newJobRequest.getOntology());
+        return jobService.createNewJob(newJobRequest.getJobName(), newJobRequest.getOntology(), newJobRequest.getJobType());
     }
 
     @GetMapping("/jobs/{jobId}")
@@ -54,5 +54,7 @@ public class DataIntegratorRestController {
         log.info("startJob(): jobId={}",jobId);
         return jobService.startJob(jobId);
     }
+
+
 
 }

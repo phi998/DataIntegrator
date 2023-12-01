@@ -1,6 +1,7 @@
 package it.uniroma3.dim.domain.entity;
 
 import it.uniroma3.dim.domain.enums.JobStatus;
+import it.uniroma3.dim.domain.enums.JobType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,8 +22,14 @@ public class Job {
     @Enumerated(EnumType.STRING)
     private JobStatus status;
 
+    @Enumerated(EnumType.STRING)
+    private JobType jobType;
+
     @OneToOne(cascade = CascadeType.ALL)
     private JobData jobData;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private JobResult jobResult;
 
     public Job() {
         jobData = new JobData();

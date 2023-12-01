@@ -25,12 +25,19 @@ services:
       KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
-      KAFKA_CREATE_TOPICS: "job-service-event-channel:1:1,cleaned-data-event-channel:1:1,manager-informer-event-channel:1:1"
+      KAFKA_CREATE_TOPICS: "
+        job-service-event-channel:1:1,
+        cleaned-data-event-channel:1:1,
+        aligned-data-event-channel:1:1,
+        manager-informer-event-channel:1:1
+        "
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
+  # Applications
+
   dim:
-    build: ./app
+    build: ./DataIntegrationManager
     ports:
       - "8080:8080"
     environment:
@@ -38,7 +45,29 @@ services:
     depends_on:
       - "consul"
       - "dimdb"
-  
+
+  dis:
+    build: ./DataIntegrationStorage
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_PROFILE=default
+    depends_on:
+      - "consul"
+      - "disdb"
+
+  dc:
+    build: ./data-cleaner
+    depends_on:
+      - "kafka"
+
+  msm:
+    build: ./mediated-schemas-manager
+    depends_on:
+      - "kafka"
+
+  # Databases
+
   dimdb:
     image: postgres
     volumes:
@@ -52,7 +81,15 @@ services:
     depends_on:
       - "consul"
 
-  dc:
-    build: ./data-cleaner
+  disdb:
+    image: postgres
+    volumes:
+      - "$PWD/postgres:/docker-entrypoint-initdb.d"
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: disdb
     depends_on:
-      - "kafka"
+      - "consul"

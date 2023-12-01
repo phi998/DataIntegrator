@@ -5,17 +5,25 @@ from llm.chatgpt.chatgpt import ChatGPT
 
 class SchemaAligner:
 
-    def align_schemas(self, dfs, context):
-        mscols_2_sscols = self.__get_mediated_schema_structure(dfs, context)
-        alignment_definition = self.__invert_key_vals_dict(mscols_2_sscols)
+    def align_schemas(self, dfs, context, ontology_present):
+        alignment_definition = {}
+
+        if not ontology_present:
+            mscols_2_sscols = self.__get_mediated_schema_structure(dfs, context)
+            alignment_definition = self.__invert_key_vals_dict(mscols_2_sscols)
+
+            print(f"mscols_2_sscols = {mscols_2_sscols}")
 
         renamed_dfs = []
+        result_df = pd.DataFrame()
 
         for df in dfs:
-            df = self.__rename_schema_columns(df, alignment_definition)
+            result_df = pd.concat([result_df, df], ignore_index=True)
+            if not ontology_present:
+                df = self.__rename_schema_columns(df, alignment_definition)
             renamed_dfs.append(df)
 
-        return renamed_dfs
+        return result_df
 
     def __get_mediated_schema_structure(self, dfs, context):
         llm_input = {}
@@ -54,7 +62,6 @@ class SchemaAligner:
             for column_name in column_names_list:
                 if single_schema_column_name == column_name:
                     return mediated_schema_column_name
-
 
         raise Exception(f"No name found for column {single_schema_column_name}")
 

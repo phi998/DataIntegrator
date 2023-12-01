@@ -13,6 +13,7 @@ public class JobStartedEventData {
     private Collection<TableData> tables;
 
     public JobStartedEventData() {
+        ontology = new ArrayList<>();
         tables = new ArrayList<>();
     }
 

@@ -3,6 +3,7 @@ import unittest
 
 import pandas as pd
 
+from chain.DefaultChain import DefaultChain
 from filters.SchemaAligner import SchemaAligner
 
 
@@ -10,6 +11,9 @@ class FiltersTest(unittest.TestCase):
 
     def test_jobs(self):
         self.run_job(group_name="jobs", context="job advertisements")
+
+    def test_jobs_a(self):
+        self.run_job(group_name="jobs_a", context="job advertisements")
 
     def test_finance(self):
         self.run_job(group_name="finance", context="finance")
@@ -27,10 +31,12 @@ class FiltersTest(unittest.TestCase):
             df = pd.read_csv(file_path)
             dataframes.append(df)
 
-        schema_aligner = SchemaAligner()
-        renamed_dfs = schema_aligner.align_schemas(dataframes, context)
+        chain = DefaultChain(context=context)
+        result_df = chain.apply(dataframes, True)
 
-        i = 0
+        result_df.to_csv(f'datasets/output/{group_name}_.csv', index=False)
+
+        '''i = 0
         for renamed_df in renamed_dfs:
             renamed_df.to_csv(f'datasets/output/{group_name}_{str(i)}.csv', index=False)
-            i += 1
+            i += 1'''

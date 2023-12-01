@@ -8,7 +8,7 @@ spring:
     name: dis
   datasource:
     username: postgres
-    url: jdbc:postgresql://disdb:5432/dimdb
+    url: jdbc:postgresql://disdb:5432/disdb
     password: postgres
     driverClassName: org.postgresql.Driver
   sql:
