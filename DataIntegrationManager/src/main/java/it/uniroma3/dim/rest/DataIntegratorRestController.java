@@ -27,10 +27,10 @@ public class DataIntegratorRestController {
     }
 
     @GetMapping("/jobs/{jobId}")
-    public GetJobInfoResponse getJobInfo(@PathVariable Long jobId) {
+    public GetJobInfoResponse getJobInfo(@PathVariable Long jobId, @RequestParam(name = "showTables", defaultValue = "false") boolean showTables) {
         log.info("getJobInfo(): jobId={}", jobId);
 
-        GetJobInfoResponse jobInfoResponse = jobService.getJobInfo(jobId);
+        GetJobInfoResponse jobInfoResponse = jobService.getJobInfo(jobId, showTables);
         log.info("getJobInfo(): jobInfoResponse={}", jobInfoResponse);
 
         return jobInfoResponse;

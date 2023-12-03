@@ -3,6 +3,7 @@ from filters.HtmlCleaner import HtmlCleaner
 from filters.Labeler import Labeler
 from filters.UsefulDataFilter import UsefulDataFilter
 
+
 class DefaultChain:
 
     def __init__(self, context, ontology):

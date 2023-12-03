@@ -14,7 +14,7 @@ public class JobResult {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<JobTable> resultTables;
 
     public JobResult() {

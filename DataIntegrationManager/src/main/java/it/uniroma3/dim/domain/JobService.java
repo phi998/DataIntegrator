@@ -22,6 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,10 +49,10 @@ public class JobService {
         return Converter.toCreateNewJobResponse(job);
     }
 
-    public GetJobInfoResponse getJobInfo(Long jobId) {
+    public GetJobInfoResponse getJobInfo(Long jobId, boolean showTables) {
         Job job = jobRepository.findById(jobId).get();
 
-        return Converter.toGetJobInfoResponse(job);
+        return Converter.toGetJobInfoResponse(job, showTables);
     }
 
     public TableAddedToJobResponse addNewTableToJob(Long jobId, String tableName, String tableContent) {
@@ -93,21 +94,29 @@ public class JobService {
         return Converter.toJobStartedResponse(job);
     }
 
-    public void setJobEnded(Long jobId, String jobResultUrl) {
+    public void setJobEnded(Long jobId, Map<String,String> tableName2Url) {
+        log.info("addNewTableToJob(): jobId={}, tableName2Url={}", jobId, tableName2Url);
+
         Job job = jobRepository.findById(jobId).get();
-        String resourceAssignedName = this.getLastPartOfUrl(jobResultUrl);
-
-        RetrieveFileResponse retrieveFileResponse = new FileStorageClient(new RestTemplate()).retrieveFile(resourceAssignedName);
-
-        job.setStatus(JobStatus.COMPLETED);
-
 
         JobResult jobResult = new JobResult();
 
+        for(Map.Entry<String,String> tn2u: tableName2Url.entrySet()) {
+            String tableName = tn2u.getKey();
+            String tableUrl = tn2u.getValue();
 
-        job = jobRepository.save(job);
+            RetrieveFileResponse retrieveFileResponse = new FileStorageClient(new RestTemplate()).retrieveFile(tableUrl);
+            JobTable jobTable = new JobTable();
+            jobTable.setName(tableName);
+            jobTable.setTableData(retrieveFileResponse.getFileContent());
 
+            jobResult.addJobTable(jobTable);
+        }
 
+        job.setStatus(JobStatus.COMPLETED);
+        job.setJobResult(jobResult);
+
+        jobRepository.save(job);
     }
 
     /**
@@ -119,23 +128,6 @@ public class JobService {
 
         return fileUploadedResponse.getResourceUrl();
     }
-
-    private String getLastPartOfUrl(String urlString) {
-        String lastSegment = "";
-
-        try {
-            URL url = new URL(urlString);
-            String path = url.getPath();
-
-            String[] pathSegments = path.split("/");
-            lastSegment = pathSegments[pathSegments.length - 1];
-        } catch (MalformedURLException e) {
-            log.error("getLastPartOfUrl(): Error={}", e.getMessage());
-        }
-
-        return lastSegment;
-    }
-
 
     static class Converter {
 
@@ -165,11 +157,20 @@ public class JobService {
             return createNewJobResponse;
         }
 
-        public static GetJobInfoResponse toGetJobInfoResponse(Job job) {
+        public static GetJobInfoResponse toGetJobInfoResponse(Job job, boolean showTables) {
             GetJobInfoResponse jobInfoResponse = new GetJobInfoResponse();
             jobInfoResponse.setId(job.getId());
             jobInfoResponse.setName(job.getName());
             jobInfoResponse.setJobStatus(job.getStatus().name());
+
+            if(showTables) {
+                for(JobTable jt: job.getJobData().getTables()) {
+                    EndedJobTable endedJobTable = new EndedJobTable();
+                    endedJobTable.setTableName(jt.getName());
+                    endedJobTable.setTableContent(jt.getTableData());
+                    jobInfoResponse.getEndedJobTables().add(endedJobTable);
+                }
+            }
 
             return jobInfoResponse;
         }

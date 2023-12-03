@@ -61,10 +61,10 @@ services:
     depends_on:
       - "kafka"
 
-  msm:
-    build: ./mediated-schemas-manager
-    depends_on:
-      - "kafka"
+  #msm:
+  #  build: ./mediated-schemas-manager
+  #  depends_on:
+  #    - "kafka"
 
   # Databases
 

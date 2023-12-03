@@ -9,4 +9,6 @@ public interface FileStorager {
 
     RetrieveFileResponse retrieveFile(String assignedName);
 
+    RetrieveFileResponse retrieveFileFromUrl(String url);
+
 }

@@ -10,3 +10,9 @@ The pipeline is composed of the following filters:
 - **Record Linkage Manager (RLM)**
 - **Data Enrichment Manager (DEM)**
 
+## Installation
+
+### Python
+
+With a terminal, go into _py_common_di_ and enter
+`pip install .`, you are now ready to use it into other python projects.

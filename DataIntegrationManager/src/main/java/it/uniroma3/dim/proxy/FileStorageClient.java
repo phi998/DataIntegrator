@@ -52,4 +52,9 @@ public class FileStorageClient implements FileStorager {
         // TODO manage errors
         return restTemplate.getForObject(apiUrl, RetrieveFileResponse.class);
     }
+
+    @Override
+    public RetrieveFileResponse retrieveFileFromUrl(String url) {
+        return restTemplate.getForObject(url, RetrieveFileResponse.class);
+    }
 }

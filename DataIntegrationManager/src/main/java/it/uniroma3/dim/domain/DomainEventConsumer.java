@@ -2,10 +2,14 @@ package it.uniroma3.dim.domain;
 
 import it.uniroma3.dim.event.DomainEvent;
 import it.uniroma3.dim.event.JobEndedEvent;
+import it.uniroma3.dim.event.JobTableEventData;
 import it.uniroma3.dim.event.ManagerInformEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -37,7 +41,12 @@ public class DomainEventConsumer {
     private void onJobEndedEvent(JobEndedEvent jee) {
         log.info("onJobEndedEvent(): jee={}", jee);
 
-        jobService.setJobEnded(jee.getJobId(), jee.getJobResultResourceUrl());
+        Map<String,String> tableName2tableUrl = new HashMap<>();
+        for(JobTableEventData jted: jee.getJobResultTables()) {
+            tableName2tableUrl.put(jted.getTableName(), jted.getTableUrl());
+        }
+
+        jobService.setJobEnded(jee.getJobId(), tableName2tableUrl);
     }
 
 }

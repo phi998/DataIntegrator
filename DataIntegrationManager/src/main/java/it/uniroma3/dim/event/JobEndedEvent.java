@@ -11,6 +11,6 @@ public class JobEndedEvent implements DomainEvent {
 
     private String jobName;
 
-    private List<JobTableEventData> jobResultResourceUrls;
+    private List<JobTableEventData> jobResultTables;
 
 }
