@@ -2,7 +2,6 @@ import re
 
 import numpy as np
 
-
 class NumericColumnsFilter:
 
     def clean(self, df):

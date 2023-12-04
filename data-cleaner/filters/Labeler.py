@@ -1,6 +1,3 @@
-'''
-The class has the purpose to return
-'''
 import json
 
 from llm.chatgpt.chatgpt import ChatGPT
@@ -46,7 +43,6 @@ class Labeler:
 
         ontology_string = ', '.join(ontology)
 
-        # TODO Conseder the case where there is no ontology!
         response = chatgpt.get_one_shot_solution(
             input_example="{'0':['apple','banana','apple','pear'],'1':['AAA','hi','flo','car'],'2':['dog','cat','bird','mouse']}",
             output_example="{0:'fruit',2:'animals'}",

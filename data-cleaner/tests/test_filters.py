@@ -5,7 +5,6 @@ from io import StringIO
 from filters.EmptyColumnsCleaner import EmptyColumnsCleaner
 from filters.HtmlCleaner import HtmlCleaner
 from filters.Labeler import Labeler
-from filters.OldLabeler import OldLabeler
 from filters.UsefulDataFilter import UsefulDataFilter
 
 

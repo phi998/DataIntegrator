@@ -12,7 +12,12 @@ The pipeline is composed of the following filters:
 
 ## Installation
 
-### Python
+### Java projects
 
-With a terminal, go into _py_common_di_ and enter
-`pip install .`, you are now ready to use it into other python projects.
+Execute the following command in this folder
+
+```gradle build```
+
+
+### Docker execution
+

@@ -61,6 +61,7 @@ class ChatGPT(GenericLLMApi):
 
         return None
 
+    @timeout(300)
     def __get_one_shot_solution_text(self, input_example, output_example, task, prompt, prompt_input, instructions,
                                      model=Model.DEFAULT):
         prompt_builder = PromptBuilder()
