@@ -12,7 +12,7 @@ class ColumnLabeler:
 
     def label_columns(self, df, ontology=None):
         if ontology is None:
-            ontology = []
+            ontology = {}
 
         sampler = ColumnTokenLimitSampler(300)
 
@@ -44,7 +44,7 @@ class ColumnLabeler:
 
         column = [str(col) for col in column if col is not None]
 
-        ontology = ','.join(ontology)
+        ontology_items = ','.join(ontology.values())
 
         response = chatgpt.get_one_shot_solution(
             input_example='apple, banana, pear, pineapple',
@@ -53,12 +53,13 @@ class ColumnLabeler:
             prompt="Answer the question based on the task below, If the question cannot be answered " \
                    "using the information provided answer with 'other'.\n" \
                    "Classify the column given to you into only one of these types that are separated with " \
-                   f"comma: {ontology}",
+                   f"comma: {ontology_items}",
             instructions=["Look at items values in detail",
                           "Select a class that best represents the meaning of all items",
                           "For the selected class write the confidence you would give in the interval [0,1]",
                           "Answer with only a json string like {'column_name':'effective name','confidence':confidence}, no prose"],
-            prompt_input=';'.join(column)
+            prompt_input=';'.join(column),
+            ontology=ontology
         )
 
         return response["column_name"]

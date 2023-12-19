@@ -193,7 +193,7 @@
       "importance": 3
     },
     "Duration": {
-      "type": "NAME",
+      "type": "NUMERIC",
       "importance": 4
     },
     "Director": {
