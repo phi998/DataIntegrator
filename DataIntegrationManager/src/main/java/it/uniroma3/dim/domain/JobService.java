@@ -15,15 +15,11 @@ import it.uniroma3.dim.rest.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -35,16 +31,21 @@ public class JobService {
     @Autowired
     private JobCreatedEventPublisher publisher;
 
-    public CreateNewJobResponse createNewJob(String jobName, Collection<String> ontologyItems, String jobType) {
-        log.info("createNewJob(): jobName={}", jobName);
+    public CreateNewJobResponse createNewJob(String jobName, Collection<OntologyItemInput> ontologyItemInputs, String jobType) {
+        log.info("createNewJob(): jobName={}, ontology={}, jobType={}", jobName, ontologyItemInputs, jobName);
 
         Job job = new Job();
         job.setName(jobName);
         job.setStatus(JobStatus.CREATED);
         job.setJobType(JobType.valueOf(jobType));
-        job.addOntologyItems(ontologyItems);
+
+        for(OntologyItemInput oii: ontologyItemInputs) {
+            job.addOntologyItem(oii.getItem(), oii.getType(), oii.getImportance());
+        }
 
         job = jobRepository.save(job);
+
+        log.info("createNewJob(): persisted job={}", job);
 
         return Converter.toCreateNewJobResponse(job);
     }
@@ -71,7 +72,7 @@ public class JobService {
         return Converter.toTableAddedToJobResponse(job);
     }
 
-    public JobStartedResponse startJob(Long jobId) {
+    public JobStartedResponse startJob(Long jobId, Collection<Integer> columnsToDrop) {
         log.info("addNewTableToJob(): jobId={}", jobId);
 
         Job job = jobRepository.findById(jobId).get();
@@ -80,6 +81,7 @@ public class JobService {
         JobStartedEvent jobStartedEvent = new JobStartedEvent();
         jobStartedEvent.setJobId(job.getId());
         jobStartedEvent.setJobName(job.getName());
+        jobStartedEvent.getData().setColumnsToDrop(columnsToDrop);
         jobStartedEvent.getData().getOntology().addAll(job.getJobData().getOntology().stream().map(OntologyItem::getItem).toList());
 
         for(JobTable jt : job.getJobData().getTables()) {
@@ -167,7 +169,7 @@ public class JobService {
                 for(JobTable jt: job.getJobData().getTables()) {
                     EndedJobTable endedJobTable = new EndedJobTable();
                     endedJobTable.setTableName(jt.getName());
-                    endedJobTable.setTableContent(jt.getTableData());
+                    endedJobTable.setTableContent(new String(jt.getTableData(), StandardCharsets.UTF_8));
                     jobInfoResponse.getEndedJobTables().add(endedJobTable);
                 }
             }

@@ -1,4 +1,5 @@
 import re
+import warnings
 
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -8,6 +9,9 @@ This class represents a filter that is intended to delete all html tags in a str
 '''
 
 class HtmlCleaner:
+
+    def __init__(self):
+        warnings.filterwarnings("ignore", category=UserWarning, module="bs4")
 
     def clean(self, df):
         df = df.map(self.__clean_html_tags_nonull)

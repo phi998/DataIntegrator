@@ -1,16 +1,21 @@
-# This is a sample Python script.
+import json
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from filesystem import DataReader
+from proxy import PipelineClient
 
+dr = DataReader.DataReader("datasets/")
+pc = PipelineClient.PipelineClient(base_url="http://localhost:8080")
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+ontologies_file_path = "ontologies.json"
+with open(ontologies_file_path, 'r') as file:
+    ontologies = json.load(file)
 
+experiment_name = "companies_2"
+df_companies = dr.read_dataset(experiment_name)
+companies_ontology = ontologies["companies"]
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+new_job = pc.create_new_job(job_name=experiment_name, ontology=companies_ontology)
+new_job_id = new_job["jobId"]
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+pc.upload_table(table_name=experiment_name,df=df_companies,job_id=new_job_id,columns_to_ignore=[])
+

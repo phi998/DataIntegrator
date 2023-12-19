@@ -1,7 +1,8 @@
 import json
 
+from enums.chatgpt.Model import Model
 from llm.chatgpt.chatgpt import ChatGPT
-from sampler.TokenLimitSampler import TokenLimitSampler
+from sampler.table.TokenLimitSampler import TokenLimitSampler
 
 
 class Labeler:
@@ -13,14 +14,14 @@ class Labeler:
         if ontology is None:
             ontology = []
 
-        sampler = TokenLimitSampler(3000)
+        sampler = TokenLimitSampler(2600)
         sampled_rows = sampler.sample(df)
 
         sampled_rows = sampled_rows.dropna(axis=1, how='all')
         empty_columns = [col for col in sampled_rows.columns if
                          sampled_rows[col].apply(lambda x: x is None or (isinstance(x, str) and x.strip() == '')).all()]
 
-        sampled_rows = sampled_rows.drop(empty_columns, axis=1)
+        sampled_rows = sampled_rows.drop(empty_columns, axis=1)  # FIXME will it side effect original dataset??
 
         print("Labelling columns...")
 
@@ -37,7 +38,7 @@ class Labeler:
         return df
 
     def __get_label_columns(self, df, ontology):
-        chatgpt = ChatGPT()
+        chatgpt = ChatGPT(model=Model.GPT_3_5_16K)
 
         input_json = self.__transform_df_to_input_string(df)
 

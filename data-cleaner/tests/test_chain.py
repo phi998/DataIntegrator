@@ -1,6 +1,6 @@
+import json
 import unittest
 import pandas as pd
-import logging
 
 from chains.DefaultChain import DefaultChain
 
@@ -40,14 +40,67 @@ class ChainTest(unittest.TestCase):
         self.__run_chain(dataset_name="wsi", context="finance")
 
     def test_yahoo_finance(self):
-        self.__run_chain(dataset_name="yahoo_finance", context="finance")
+        self.__run_chain(dataset_name="yahoo_finance",
+                         context="finance",
+                         ontology=self.__read_ontology_list("finance"),
+                         cols_to_drop=[0, 1, 2, 3])
 
-    def __run_chain(self, dataset_name, context):
-        dc = DefaultChain(context=context)
+    def test_ansa_finance(self):
+        self.__run_chain(dataset_name="ansa_finance",
+                         context="finance",
+                         ontology=self.__read_ontology_list("finance"),
+                         cols_to_drop=[0, 1, 2, 3, 4])
+
+    def test_alibaba(self):
+        self.__run_chain(dataset_name="alibaba",
+                         context="eshopping",
+                         ontology=self.__read_ontology_list("eshopping"),
+                         cols_to_drop=[0, 1, 2])
+
+    def test_booking(self):
+        self.__run_chain(dataset_name="booking",
+                         context="hotels",
+                         ontology=self.__read_ontology_list("hotels"),
+                         cols_to_drop=[0, 1, 2])
+
+    def test_tecnocasa(self):
+        self.__run_chain(dataset_name="tecnocasa",
+                         context="realestate",
+                         ontology=self.__read_ontology_list("realestate"),
+                         cols_to_drop=[0, 1])
+
+    def test_tripadvisor(self):
+        self.__run_chain(dataset_name="tripadvisor",
+                         context="restaurants",
+                         ontology=self.__read_ontology_list("restaurants"),
+                         cols_to_drop=[0, 1, 2])
+
+    def test_yelp(self):
+        self.__run_chain(dataset_name="yelp",
+                         context="restaurants",
+                         ontology=self.__read_ontology_list("restaurants"),
+                         cols_to_drop=[0, 1])
+
+    def test_imdb(self):
+        self.__run_chain(dataset_name="imdb",
+                         context="movies",
+                         ontology=self.__read_ontology_list("movies"),
+                         cols_to_drop=[0, 1, 2, 3, 4])
+
+    def __run_chain(self, dataset_name, context, ontology, cols_to_drop):
+        dc = DefaultChain(context=context, ontology=ontology)
         df = pd.read_csv('datasets/full/' + dataset_name + '.csv', header=None, na_values='')
 
-        df = dc.apply(df)
+        df = dc.apply(df, cols_to_drop)
 
         df.to_csv('datasets/full/output/' + dataset_name + '.csv', index=False)
 
+    def __read_ontology(self, domain):
+        ontologies_file_path = "ontologies.json"
+        with open(ontologies_file_path, 'r') as file:
+            ontologies = json.load(file)
+        return ontologies[domain]
 
+    def __read_ontology_list(self, domain):
+        ontology = self.__read_ontology(domain)
+        return list(ontology.keys())

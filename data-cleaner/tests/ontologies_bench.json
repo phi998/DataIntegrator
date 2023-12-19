@@ -1,0 +1,40 @@
+{
+  "imdb": {
+    "tconts": {
+      "type": "TITLE",
+      "importance": 9
+    },
+    "titleType": {
+      "type": "BOOLEAN",
+      "importance": 3
+    },
+    "primaryTitle": {
+      "type": "TITLE",
+      "importance": 4
+    },
+    "originalTitle": {
+      "type": "TITLE",
+      "importance": 4
+    },
+    "isAdult": {
+      "type": "BOOLEAN",
+      "importance": 4
+    },
+    "startYear": {
+      "type": "DATE",
+      "importance": 5
+    },
+    "endYear": {
+      "type": "DATE",
+      "importance": 2
+    },
+    "runtimeMinutes": {
+      "type": "NUMBER",
+      "importance": 2
+    },
+    "genres": {
+      "type": "ENUM",
+      "importance": 2
+    }
+  }
+}

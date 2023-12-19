@@ -16,6 +16,7 @@ class JobWorker:
         context = job["jobName"]
         ontology = job["data"]["ontology"]
         tables = job["data"]["tables"]
+        columnsToDrop = job["data"]["columnsToDrop"]
 
         chain = DefaultChain(context, ontology)
 
@@ -31,7 +32,7 @@ class JobWorker:
             csv_file = StringIO(table_content)
             df = pd.read_csv(csv_file, encoding="utf-8", header=None)
             print(f"Applying chain to table {table_name}")
-            df_cleaned = chain.apply(df)
+            df_cleaned = chain.apply(df, columnsToDrop)
             print(f"Uploading table {table_name}")
             cleaned_tables.append({
                 "tableName": table_name,

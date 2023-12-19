@@ -1,0 +1,170 @@
+{
+  "companies": {
+    "Company Name": {
+      "type": "TITLE",
+      "importance": 9
+    },
+    "Location": {
+      "type": "TITLE",
+      "importance": 5
+    },
+    "Foundation": {
+      "type": "DATE",
+      "importance": 3
+    },
+    "Industry": {
+      "type": "TITLE",
+      "importance": 6
+    },
+    "Revenue": {
+      "type": "MONEY",
+      "importance": 2
+    },
+    "Company Description": {
+      "type": "PROSE",
+      "importance": 2
+    }
+  },
+
+  "eshopping": {
+    "Product Name": {
+      "type": "TITLE",
+      "importance": 9
+    },
+    "Product Category": {
+      "type": "TITLE",
+      "importance": 6
+    },
+    "Rating": {
+      "type": "RATING",
+      "importance": 3
+    },
+    "Price": {
+      "type": "PRICE",
+      "importance": 2
+    },
+    "Description": {
+      "type": "PROSE",
+      "importance": 1
+    },
+    "Seller": {
+      "type": "NAME",
+      "importance": 2
+    }
+  },
+
+  "finance": {
+    "Title": {
+      "type": "TITLE",
+      "importance": 8
+    },
+    "Publication Date": {
+      "type": "DATE",
+      "importance": 6
+    },
+    "Article Content": {
+      "type": "PROSE",
+      "importance": 2
+    },
+    "Category": {
+      "type": "TITLE",
+      "importance": 4
+    },
+    "Author": {
+      "type": "NAME",
+      "importance": 2
+    }
+  },
+
+  "hotels": {
+    "Name" : {
+      "type": "TITLE",
+      "importance": 8
+    },
+    "Location": {
+      "type": "TITLE",
+      "importance": 6
+    },
+    "Price": {
+      "type": "PRICE",
+      "importance": 2
+    },
+    "Rating": {
+      "type": "RATING",
+      "importance": 3
+    },
+    "Description": {
+      "type": "PROSE",
+      "importance": 2
+    }
+  },
+
+  "jobs": {
+    "Advertisement Title": {
+      "type": "TITLE",
+      "importance": 6
+    },
+    "Location": {
+      "type": "TITLE",
+      "importance": 3
+    },
+    "Company Name": {
+      "type": "TITLE",
+      "importance": 7
+    },
+    "Publication Date": {
+      "type": "DATE",
+      "importance": 3
+    },
+    "Advertisement Content": {
+      "type": "PROSE",
+      "importance": 2
+    },
+    "Role": {
+      "type": "TITLE",
+      "importance": 7
+    },
+    "Industry": {
+      "type": "TITLE",
+      "importance": 4
+    }
+  },
+
+  "realestate": {
+    "Advertisement title": {
+      "type": "TITLE",
+      "importance": 4
+    },
+    "Price": {
+      "type": "NUMERIC",
+      "importance": 2
+    },
+    "Surface": {
+      "type": "NUMERIC",
+      "importance": 3
+    },
+    "Location": {
+      "type": "TITLE",
+      "importance": 4
+    },
+    "Broker": {
+      "type": "NAME",
+      "importance": 2
+    }
+  },
+
+  "restaurants": {
+    "Name": {
+      "type": "TITLE",
+      "importance": 9
+    },
+    "Rating": {
+      "type": "RATING",
+      "importance": 3
+    },
+    "Location": {
+      "type": "TITLE",
+      "importance": 7
+    }
+  }
+}

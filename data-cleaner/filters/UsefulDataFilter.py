@@ -2,13 +2,14 @@ import json
 
 from enums.chatgpt.Model import Model
 from llm.chatgpt.chatgpt import ChatGPT
-from sampler.TokenLimitSampler import TokenLimitSampler
+from sampler.table.TokenLimitSampler import TokenLimitSampler
 
 
 class UsefulDataFilter:
 
     def __init__(self, data_context):
         self.data_context = data_context
+        self.__chatgpt = ChatGPT(Model.GPT_3_5)
 
     def clean(self, df):
         sampler = TokenLimitSampler(3000)
@@ -31,16 +32,14 @@ class UsefulDataFilter:
 
         json_string = json.dumps(column_dict)
 
-        chatgpt = ChatGPT()
         task = f"You are an expert about {self.data_context}." if self.data_context is not None else ""
         prompt = f"I'm going to give you a json dictionary, return in a json integer list the keys you would classify as 'useful'." \
                  f"Important instruction: don't write any prose about it! I want just the json list in the answer!\n" \
                  f"The json dictionary is the following:\n" \
                  f"{json_string}"
 
-        solution = chatgpt.get_simple_solution(model=Model.GPT_3_5, task=task, prompt=prompt)
 
-        indexes = [int(x) for x in solution]
+        indexes = self.__get_indexes_solution(task=task, prompt=prompt)
 
         num_columns = len(df.columns)
         columns_indexes = list(range(num_columns))
@@ -48,4 +47,19 @@ class UsefulDataFilter:
 
         return result
 
+    def __get_indexes_solution(self, task, prompt):
+        max_retries = 3
+        current = 0
+        success = False
+        indexes = []
 
+        while current < max_retries and not success:
+            try:
+                solution = self.__chatgpt.get_simple_solution(task=task, prompt=prompt)
+                indexes = [int(x) for x in solution]
+                success = True
+            except Exception as e:
+                print(f"Error occurred: {e}")
+                current += 1
+
+        return indexes

@@ -1,5 +1,6 @@
 /record-linkage-manager/tests/datasets/output/jobs.csv
 /record-linkage-manager/tests/datasets/output/companies2.csv
+/data-quality-agent/datasets/finance_lftnput.csv
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,pycharm,java,intellij+all,gradle,maven
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,pycharm,java,intellij+all,gradle,maven

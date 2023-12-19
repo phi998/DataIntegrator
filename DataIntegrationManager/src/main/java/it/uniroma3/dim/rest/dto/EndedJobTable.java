@@ -7,6 +7,6 @@ public class EndedJobTable {
 
     private String tableName;
 
-    private byte[] tableContent;
+    private String tableContent;
 
 }

@@ -9,7 +9,7 @@ public class CreateNewJobRequest {
 
     private String jobName;
 
-    private Collection<String> ontology;
+    private Collection<OntologyItemInput> ontology;
 
     private String jobType;
 

@@ -2,6 +2,7 @@ package it.uniroma3.dim.domain.entity;
 
 import it.uniroma3.dim.domain.enums.JobStatus;
 import it.uniroma3.dim.domain.enums.JobType;
+import it.uniroma3.dim.domain.enums.OntologyItemType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,10 +40,12 @@ public class Job {
         this.jobData.getTables().add(jobTable);
     }
 
-    public void addOntologyItems(Collection<String> ontologyItems) {
-        for(String ontologyItem : ontologyItems) {
-            this.jobData.getOntology().add(new OntologyItem(ontologyItem));
-        }
+    public void addOntologyItem(String item, String ontologyItemType, int importance) {
+        OntologyItem oi = new OntologyItem();
+        oi.setItem(item);
+        oi.setType(OntologyItemType.valueOf(ontologyItemType));
+        oi.setImportance(importance);
+        jobData.getOntology().add(oi);
     }
 
 }

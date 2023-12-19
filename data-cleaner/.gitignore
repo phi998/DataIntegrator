@@ -257,3 +257,6 @@ poetry.toml
 
 # LSP config files
 pyrightconfig.json
+/tests/datasets/bench/
+/tests/datasets/full/ansa_finance.csv
+/tests/datasets/full/imdb.csv

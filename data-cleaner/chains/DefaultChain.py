@@ -1,3 +1,5 @@
+from filters.ColumnEntropyFilter import ColumnEntropyFilter
+from filters.ColumnLabeler import ColumnLabeler
 from filters.EmptyColumnsCleaner import EmptyColumnsCleaner
 from filters.HtmlCleaner import HtmlCleaner
 from filters.Labeler import Labeler
@@ -10,8 +12,11 @@ class DefaultChain:
         self.context = context
         self.ontology = ontology
 
-    def apply(self, df):
-        df = df.iloc[:, 3:]  # delete some columns of naruto output
+    def apply(self, df, columns_to_drop=None):
+        if columns_to_drop is None:
+            columns_to_drop = []
+
+        df = df.drop(index=columns_to_drop)  # delete some columns of naruto output
 
         html_cleaner = HtmlCleaner()
         df = html_cleaner.clean(df)
@@ -23,13 +28,14 @@ class DefaultChain:
 
         print("Cleaned empty columns")
 
-        useful_data_filter = UsefulDataFilter(data_context=self.context)
-        df = useful_data_filter.clean(df)
+        '''
+        entropy_filter = ColumnEntropyFilter(0.2)
+        df = entropy_filter.apply(df, self.ontology)
 
-        print("Filtered useful data")
+        print("Cleaned low entropy columns")
+        '''
 
-        # TODO manage failures
-        labeler = Labeler(data_context=self.context)
+        labeler = ColumnLabeler(data_context=self.context)
         df = labeler.label_columns(df, self.ontology)
 
         print("Column naming finished")

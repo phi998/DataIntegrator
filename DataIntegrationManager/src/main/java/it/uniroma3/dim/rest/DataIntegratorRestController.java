@@ -49,10 +49,11 @@ public class DataIntegratorRestController {
 
     @PostMapping("/jobs/{jobId}/start")
     public JobStartedResponse startJob(
-            @PathVariable Long jobId
+            @PathVariable Long jobId,
+            @RequestBody StartJobRequest startJobRequest
     ) {
-        log.info("startJob(): jobId={}",jobId);
-        return jobService.startJob(jobId);
+        log.info("startJob(): jobId={}, startJobRequest={}",jobId, startJobRequest);
+        return jobService.startJob(jobId, startJobRequest.getColumnsToDrop());
     }
 
 

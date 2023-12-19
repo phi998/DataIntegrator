@@ -1,9 +1,7 @@
 package it.uniroma3.dim.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import it.uniroma3.dim.domain.enums.OntologyItemType;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -16,12 +14,19 @@ public class OntologyItem {
 
     private String item;
 
+    @Enumerated(EnumType.STRING)
+    private OntologyItemType type;
+
+    private Integer importance;
+
     public OntologyItem() {
 
     }
 
     public OntologyItem(String item) {
         this.item = item;
+        this.type = OntologyItemType.UNKNOWN;
+        this.importance = 0;
     }
 
 }

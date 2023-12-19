@@ -10,6 +10,8 @@ public class JobStartedEventData {
 
     private Collection<String> ontology;
 
+    private Collection<Integer> columnsToDrop;
+
     private Collection<TableData> tables;
 
     public JobStartedEventData() {
