@@ -1,3 +1,5 @@
+import random
+
 from sampler.table.Sampler import Sampler
 
 
@@ -7,7 +9,8 @@ class ColumnTokenLimitSampler(Sampler):
         self.__token_limit = token_limit
 
     def sample_column(self, df, column_name):
-        column_list = df[column_name].tolist()
+        column_list = list(set(df[column_name].tolist()))  # i want distinct values
+        random.shuffle(column_list)
         tokens_count = 0
         column_sample = []
 

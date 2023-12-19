@@ -14,7 +14,7 @@ class ChainTest(unittest.TestCase):
 
         df = dc.apply(df)
 
-        df.to_csv("datasets/full/output/test.csv")
+        df.to_csv("datasets/full/output_old/test.csv")
 
     def test_almalaurea(self):
         self.__run_chain(dataset_name="almalaurea", context="job advertising")
@@ -100,7 +100,7 @@ class ChainTest(unittest.TestCase):
 
         df = dc.apply(df, cols_to_drop)
 
-        df.to_csv('datasets/full_manual/output/' + dataset_name + '.csv', index=False)
+        df.to_csv('datasets/full_manual/output_old/' + dataset_name + '.csv', index=False)
 
     def __read_ontology(self, domain):
         ontologies_file_path = "ontologies.json"

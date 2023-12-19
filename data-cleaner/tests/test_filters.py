@@ -43,7 +43,7 @@ class FiltersTest(unittest.TestCase):
         cleaner = UsefulDataFilter()
         df = cleaner.clean(df)
 
-        df.to_csv("datasets/useful_columns_filter/output.csv", header=None)
+        df.to_csv("datasets/useful_columns_filter/output_old.csv", header=None)
 
     def test_labeler(self):
         df = pd.read_csv('datasets/labeler/input.csv', header=None)
@@ -51,7 +51,7 @@ class FiltersTest(unittest.TestCase):
         labeler = Labeler("job advertisement")
         df = labeler.label_columns(df, ["Company name", "Role", "Location", "Description"])
 
-        df.to_csv("datasets/labeler/output.csv")
+        df.to_csv("datasets/labeler/output_old.csv")
 
     def test_column_labeler(self):
         df = pd.read_csv('datasets/labeler/input.csv', header=None)
@@ -59,5 +59,5 @@ class FiltersTest(unittest.TestCase):
         c_labeler = ColumnLabeler("job advertisement")
         df = c_labeler.label_columns(df, ["Company name", "Role", "Location", "Description", "Advertisement Content"])
 
-        df.to_csv("datasets/c_labeler/output.csv")
+        df.to_csv("datasets/c_labeler/output_old.csv")
 

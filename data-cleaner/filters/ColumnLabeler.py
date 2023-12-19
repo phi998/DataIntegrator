@@ -2,7 +2,7 @@ import pandas as pd
 
 from enums.chatgpt.Model import Model
 from llm.chatgpt.chatgpt import ChatGPT
-from sampler.table.FirstNRowsSampler import FirstNRowsSampler
+from sampler.column.ColumnTokenLimitSampler import ColumnTokenLimitSampler
 
 
 class ColumnLabeler:
@@ -14,19 +14,14 @@ class ColumnLabeler:
         if ontology is None:
             ontology = []
 
-        sampler = FirstNRowsSampler()  # use a better sampler
-        sampled_rows = sampler.sample(df, 10)
-        sampled_rows = sampled_rows.dropna(axis=1, how='all')
-
-        sampled_rows = self.__delete_empty_columns(sampled_rows)
-        # sampled_rows = self.__delete_low_entropy_columns(sampled_rows)
+        sampler = ColumnTokenLimitSampler(300)
 
         print("Labelling columns...")
 
         columns_labels_dict = {}
-        for i in sampled_rows.columns:
+        for i in df.columns:
             print(f"Labeling column {i}")
-            column_values = sampled_rows[i].tolist()
+            column_values = sampler.sample_column(df, i)
             try:
                 column_name = self.__label_column(column_values, ontology)
             except Exception as e:
@@ -67,16 +62,3 @@ class ColumnLabeler:
         )
 
         return response["column_name"]
-
-    def __delete_empty_columns(self, df):
-        empty_columns = [col for col in df.columns if
-                         df[col].apply(lambda x: x is None or (isinstance(x, str) and x.strip() == '')).all()]
-
-        df = df.drop(empty_columns, axis=1)
-        return df
-
-    def __delete_low_entropy_columns(self, df):
-        columns_to_drop = df.columns[(df.nunique() == 1) | (df.apply(lambda col: pd.isna(col).all()))]
-        df = df.drop(columns=columns_to_drop)
-
-        return df

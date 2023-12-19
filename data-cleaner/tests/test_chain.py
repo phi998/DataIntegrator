@@ -13,82 +13,58 @@ class ChainTest(unittest.TestCase):
 
         df = dc.apply(df)
 
-        df.to_csv("datasets/full/output/test.csv")
+        df.to_csv("datasets/full/output_old/test.csv")
 
     def test_almalaurea(self):
-        self.__run_chain(dataset_name="almalaurea", context="job advertising")
+        self.__run_chain(dataset_name="almalaurea", context="job advertising", ontology_key="jobs", cols_to_drop=[0, 1, 2])
 
     def test_bakeca(self):
-        self.__run_chain(dataset_name="bakeca", context="job advertising")
+        self.__run_chain(dataset_name="bakeca", context="job advertising", ontology_key="jobs", cols_to_drop=[0, 1, 2])
 
     def test_college_recruiter(self):
-        self.__run_chain(dataset_name="college_recruiter", context="job advertising")
+        self.__run_chain(dataset_name="college_recruiter", context="job advertising", ontology_key="jobs", cols_to_drop=[0, 1, 2, 3])
 
     def test_finanzacom(self):
-        self.__run_chain(dataset_name="finanzacom", context="finance")
+        self.__run_chain(dataset_name="finanzacom", context="finance", ontology_key="finance", cols_to_drop=[0, 1, 2, 3, 4])
 
     def test_glassdoor(self):
-        self.__run_chain(dataset_name="glassdoor", context="job advertising")
+        self.__run_chain(dataset_name="glassdoor", context="job advertising", ontology_key="jobs", cols_to_drop=[0, 1, 2, 3, 4])
 
     def test_indeed(self):
-        self.__run_chain(dataset_name="indeed", context="job advertising")
+        self.__run_chain(dataset_name="indeed", context="job advertising", ontology_key="jobs", cols_to_drop=[0, 1, 2])
 
     def test_monster(self):
-        self.__run_chain(dataset_name="monster", context="job advertising")
+        self.__run_chain(dataset_name="monster", context="job advertising", ontology_key="jobs", cols_to_drop=[0, 1, 2, 3])
 
     def test_wsi(self):
-        self.__run_chain(dataset_name="wsi", context="finance")
+        self.__run_chain(dataset_name="wsi", context="finance", ontology_key="finance", cols_to_drop=[0, 1, 2])
 
     def test_yahoo_finance(self):
-        self.__run_chain(dataset_name="yahoo_finance",
-                         context="finance",
-                         ontology=self.__read_ontology_list("finance"),
-                         cols_to_drop=[0, 1, 2, 3])
+        self.__run_chain(dataset_name="yahoo_finance", context="finance", ontology_key="finance", cols_to_drop=[0, 1, 2, 3])
 
     def test_ansa_finance(self):
-        self.__run_chain(dataset_name="ansa_finance",
-                         context="finance",
-                         ontology=self.__read_ontology_list("finance"),
-                         cols_to_drop=[0, 1, 2, 3, 4])
+        self.__run_chain(dataset_name="ansa_finance", context="finance", ontology_key="finance", cols_to_drop=[0, 1, 2, 3, 4])
 
     def test_alibaba(self):
-        self.__run_chain(dataset_name="alibaba",
-                         context="eshopping",
-                         ontology=self.__read_ontology_list("eshopping"),
-                         cols_to_drop=[0, 1, 2])
+        self.__run_chain(dataset_name="alibaba", context="eshopping", ontology_key="eshopping", cols_to_drop=[0, 1, 2])
 
     def test_booking(self):
-        self.__run_chain(dataset_name="booking",
-                         context="hotels",
-                         ontology=self.__read_ontology_list("hotels"),
-                         cols_to_drop=[0, 1, 2])
+        self.__run_chain(dataset_name="booking", context="hotels", ontology_key="hotels", cols_to_drop=[0, 1, 2])
 
     def test_tecnocasa(self):
-        self.__run_chain(dataset_name="tecnocasa",
-                         context="realestate",
-                         ontology=self.__read_ontology_list("realestate"),
-                         cols_to_drop=[0, 1])
+        self.__run_chain(dataset_name="tecnocasa", context="realestate", ontology_key="realestate", cols_to_drop=[0, 1])
 
     def test_tripadvisor(self):
-        self.__run_chain(dataset_name="tripadvisor",
-                         context="restaurants",
-                         ontology=self.__read_ontology_list("restaurants"),
-                         cols_to_drop=[0, 1, 2])
+        self.__run_chain(dataset_name="tripadvisor", context="restaurants", ontology_key="restaurants", cols_to_drop=[0, 1, 2])
 
     def test_yelp(self):
-        self.__run_chain(dataset_name="yelp",
-                         context="restaurants",
-                         ontology=self.__read_ontology_list("restaurants"),
-                         cols_to_drop=[0, 1])
+        self.__run_chain(dataset_name="yelp", context="restaurants", ontology_key="restaurants", cols_to_drop=[0, 1])
 
     def test_imdb(self):
-        self.__run_chain(dataset_name="imdb",
-                         context="movies",
-                         ontology=self.__read_ontology_list("movies"),
-                         cols_to_drop=[0, 1, 2, 3, 4])
+        self.__run_chain(dataset_name="imdb", context="movies", ontology_key="movies", cols_to_drop=[0, 1, 2, 3, 4])
 
-    def __run_chain(self, dataset_name, context, ontology, cols_to_drop):
-        dc = DefaultChain(context=context, ontology=ontology)
+    def __run_chain(self, dataset_name, context, ontology_key, cols_to_drop):
+        dc = DefaultChain(context=context, ontology=self.__read_ontology_list(ontology_key))
         df = pd.read_csv('datasets/full/' + dataset_name + '.csv', header=None, na_values='')
 
         df = dc.apply(df, cols_to_drop)

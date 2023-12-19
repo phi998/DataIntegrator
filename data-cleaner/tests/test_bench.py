@@ -1,6 +1,6 @@
 '''
 This test is used for adding noise to downloaded datasets
-The noise has the purpose to simulate the behaviour of the output of Naruto, full of html tags, css, so that it can be added to the original dataset
+The noise has the purpose to simulate the behaviour of the output_old of Naruto, full of html tags, css, so that it can be added to the original dataset
 '''
 import json
 import string
@@ -39,7 +39,7 @@ class BenchMarkTest(unittest.TestCase):
         print("Default chain applied")
 
         # save result to file
-        df.to_csv(f"datasets/bench/output/{exp_name}.csv", index=False)
+        df.to_csv(f"datasets/bench/output_old/{exp_name}.csv", index=False)
 
         pass
 
@@ -49,7 +49,7 @@ class BenchMarkTest(unittest.TestCase):
 
         df = dc.apply(df, cols_to_drop)
 
-        df.to_csv('datasets/full/output/' + dataset_name + '.csv', index=False)
+        df.to_csv('datasets/full/output_old/' + dataset_name + '.csv', index=False)
 
     def __read_ontology(self, domain):
         ontologies_file_path = "ontologies_bench.json"

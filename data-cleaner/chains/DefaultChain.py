@@ -1,5 +1,6 @@
 from filters.ColumnEntropyFilter import ColumnEntropyFilter
 from filters.ColumnLabeler import ColumnLabeler
+from filters.ColumnTrimFilter import ColumnTrimFilter
 from filters.EmptyColumnsCleaner import EmptyColumnsCleaner
 from filters.HtmlCleaner import HtmlCleaner
 from filters.Labeler import Labeler
@@ -27,6 +28,9 @@ class DefaultChain:
         df = empty_columns_cleaner.clean(df)
 
         print("Cleaned empty columns")
+
+        table_column_trimmer = ColumnTrimFilter()
+        df = table_column_trimmer.apply(df)
 
         '''
         entropy_filter = ColumnEntropyFilter(0.2)

@@ -4,8 +4,8 @@
       "type": "TITLE",
       "importance": 9
     },
-    "titleType": {
-      "type": "BOOLEAN",
+    "movieType": {
+      "type": "DISCRETE",
       "importance": 3
     },
     "primaryTitle": {
@@ -33,7 +33,7 @@
       "importance": 2
     },
     "genres": {
-      "type": "ENUM",
+      "type": "DISCRETE",
       "importance": 2
     }
   }

@@ -417,3 +417,5 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,java,intellij+all,gradle,maven
+data-quality-agent/datasets/finance_1/golden.csv
+data-quality-agent/datasets/finance_1/input.csv
