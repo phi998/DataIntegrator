@@ -35,3 +35,10 @@ Then, execution with
 The system can be stopped with
 
 ```docker compose down```
+
+## Useful resources
+
+### Standard ontologies
+
+Under the ```resources/``` folder of DataIntegrationManager the file ```ontologies.json``` 
+contains a list of default ontologies that can be used for testing purposes.

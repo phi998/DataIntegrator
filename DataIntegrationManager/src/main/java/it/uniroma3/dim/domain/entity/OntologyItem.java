@@ -12,19 +12,21 @@ public class OntologyItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String item;
+    private String label;
 
     @Enumerated(EnumType.STRING)
     private OntologyItemType type;
 
     private Integer importance;
 
+    private String notes;
+
     public OntologyItem() {
 
     }
 
-    public OntologyItem(String item) {
-        this.item = item;
+    public OntologyItem(String label) {
+        this.label = label;
         this.type = OntologyItemType.UNKNOWN;
         this.importance = 0;
     }

@@ -1,4 +1,4 @@
-from sampler.Sampler import Sampler
+from sampler.table.Sampler import Sampler
 
 
 class FirstNRowsSampler(Sampler):

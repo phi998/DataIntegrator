@@ -7,7 +7,7 @@ import logging
 from os.path import dirname, join
 from timeout_decorator import timeout
 
-from config.CacheFactory import CacheFactory
+from config.ConfigCache import ConfigCache
 from enums.chatgpt.Role import Role
 from enums.llm.DefaultAgentAnswers import DefaultAgentAnswers
 from llm.GenericLLMApi import GenericLLMApi
@@ -20,7 +20,7 @@ class ChatGPT(GenericLLMApi):
     def __init__(self, model):
         self.__key = self.__get_key()
         self.__model = model
-        self.__cache = CacheFactory().get_cache()
+        self.__cache = ConfigCache().get_instance()
 
     def get_simple_solution(self, task="", prompt=""):
         max_retries = 3

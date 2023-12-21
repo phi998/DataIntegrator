@@ -1,0 +1,41 @@
+package it.uniroma3.dim.rest;
+
+
+import it.uniroma3.dim.domain.OntologyService;
+import it.uniroma3.dim.rest.dto.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@Slf4j
+public class DataOntologyRestController {
+
+    @Autowired
+    private OntologyService ontologyService;
+
+    @GetMapping("/ontology/{ontologyId}")
+    public GetOntologyResponse getOntologyInformation(
+            @PathVariable Long ontologyId) {
+        log.info("getOntologyInformation(): ontologyId={}", ontologyId);
+        return ontologyService.getOntologyInformation(ontologyId);
+    }
+
+
+    @PostMapping("/ontology")
+    public CreateNewOntologyResponse createNewOntologyResponse(
+            @RequestBody CreateNewOntologyRequest createNewOntologyRequest) {
+        log.info("createNewOntologyResponse(): createNewOntologyRequest={}", createNewOntologyRequest);
+
+        return ontologyService.createNewOntology(createNewOntologyRequest.getName(), createNewOntologyRequest.getItems());
+    }
+
+    @PostMapping("/ontology/{ontologyId}/items")
+    public void addItemsToOntology(@PathVariable Long ontologyId,
+            @RequestBody AddItemsToOntologyRequest addItemsToOntologyRequest) {
+        log.info("addItemsToOntology(): ontologyId={}, addItemsToOntologyRequest={}",ontologyId,addItemsToOntologyRequest);
+
+        ontologyService.addItemsToOntology(ontologyId, addItemsToOntologyRequest.getOntologyItemsInput());
+    }
+
+}

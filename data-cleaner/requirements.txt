@@ -1,10 +1,8 @@
 pandas~=2.1.1
 beautifulsoup4~=4.9.3
-
 openai~=0.28.1
 numpy~=1.26.1
 tiktoken~=0.5.1
-
 kafka-python
 confluent_kafka
 timeout_decorator

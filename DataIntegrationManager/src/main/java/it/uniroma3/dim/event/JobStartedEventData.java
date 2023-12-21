@@ -4,18 +4,22 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 public class JobStartedEventData {
 
-    private Collection<String> ontology;
+    private String ontologyName;
+
+    private Map<String,OntologyItem> ontologyItems;
 
     private Collection<Integer> columnsToDrop;
 
     private Collection<TableData> tables;
 
     public JobStartedEventData() {
-        ontology = new ArrayList<>();
+        ontologyItems = new HashMap<>();
         tables = new ArrayList<>();
     }
 
@@ -26,8 +30,17 @@ public class JobStartedEventData {
         tables.add(td);
     }
 
+    public void addOntologyItem(String label, int importance, String type, String notes) {
+        OntologyItem oi = new OntologyItem();
+        oi.setType(type);
+        oi.setImportance(importance);
+        oi.setNotes(notes);
+
+        this.ontologyItems.put(label, oi);
+    }
+
     @Data
-    class TableData {
+    static class TableData {
 
         private String tableName;
 

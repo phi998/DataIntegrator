@@ -1,6 +1,6 @@
 import pandas as pd
 
-from sampler.Sampler import Sampler
+from sampler.table.Sampler import Sampler
 
 
 class TokenLimitSampler(Sampler):

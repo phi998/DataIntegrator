@@ -12,24 +12,24 @@ class Publisher:
         }
         self.producer = Producer(conf)
 
-    def publish_cleaned_data(self, job_id, job_name, has_ontology, tables):
-        topic = "cleaned-data-event-channel"
+    def publish_labeled_data(self, job_id, job_name, has_ontology, tables):
+        topic = "labeled-data-event-channel"
         data_cleaned_event = {"jobId": job_id, "jobName": job_name, "hasOntology": has_ontology, "data": tables}
 
-        print(f"PUBLISHING CLEANED DATA: {data_cleaned_event}")
-        self.producer.produce(topic, key='cd', value=json.dumps(data_cleaned_event), callback=self.__delivery_report)
-        print("PUBLISHED CLEANED DATA")
+        print(f"PUBLISHING LABELED DATA: {data_cleaned_event}")
+        self.producer.produce(topic, key='ld', value=json.dumps(data_cleaned_event), callback=self.__delivery_report)
+        print("PUBLISHED LABELED DATA")
 
     def publish_inform_manager(self, job_id):
         topic = "manager-informer-event-channel"
 
         message = {
-            "event": "DATA_CLEANED",
+            "event": "DATA_LABELED",
             "data": {"jobId": job_id}
         }
 
         print(f"INFORMING DATA INTEGRATION MANAGER: {message}")
-        self.producer.produce(topic, key='cd', value=json.dumps(message), callback=self.__delivery_report)  # FIXME
+        self.producer.produce(topic, key='ld', value=json.dumps(message), callback=self.__delivery_report)  # FIXME
         print("INFORMED DATA INTEGRATION MANAGER")
 
     def publish_job_ended_event(self, job_id, job_name, tables):
@@ -38,7 +38,7 @@ class Publisher:
         job_ended_event = {"jobId": job_id, "jobName": job_name, "jobResultResourceUrls": tables}
 
         print(f"PUBLISHING ENDED JOB: {job_ended_event}")
-        self.producer.produce(topic, key='cd', value=json.dumps(job_ended_event), callback=self.__delivery_report)
+        self.producer.produce(topic, key='ld', value=json.dumps(job_ended_event), callback=self.__delivery_report)
         print("PUBLISHED ENDED JOB")
 
     def __delivery_report(self, err, msg):

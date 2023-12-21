@@ -14,15 +14,14 @@ public class JobData {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Collection<OntologyItem> ontology;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Ontology ontology;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<JobTable> tables;
 
     public JobData() {
         tables = new ArrayList<>();
-        ontology = new ArrayList<>();
     }
 
 }

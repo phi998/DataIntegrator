@@ -5,10 +5,6 @@ import it.uniroma3.dim.domain.enums.JobType;
 import it.uniroma3.dim.domain.enums.OntologyItemType;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.Collection;
-import java.util.Map;
 
 @Entity
 @Data
@@ -42,10 +38,10 @@ public class Job {
 
     public void addOntologyItem(String item, String ontologyItemType, int importance) {
         OntologyItem oi = new OntologyItem();
-        oi.setItem(item);
+        oi.setLabel(item);
         oi.setType(OntologyItemType.valueOf(ontologyItemType));
         oi.setImportance(importance);
-        jobData.getOntology().add(oi);
+        jobData.getOntology().addItem(oi);
     }
 
 }

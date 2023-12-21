@@ -2,10 +2,7 @@ package it.uniroma3.dim.domain;
 
 import it.uniroma3.di.common.api.dto.FileUploadedResponse;
 import it.uniroma3.di.common.api.dto.RetrieveFileResponse;
-import it.uniroma3.dim.domain.entity.Job;
-import it.uniroma3.dim.domain.entity.JobResult;
-import it.uniroma3.dim.domain.entity.JobTable;
-import it.uniroma3.dim.domain.entity.OntologyItem;
+import it.uniroma3.dim.domain.entity.*;
 import it.uniroma3.dim.domain.enums.JobStatus;
 import it.uniroma3.dim.domain.enums.JobType;
 import it.uniroma3.dim.event.JobStartedEvent;
@@ -40,7 +37,7 @@ public class JobService {
         job.setJobType(JobType.valueOf(jobType));
 
         for(OntologyItemInput oii: ontologyItemInputs) {
-            job.addOntologyItem(oii.getItem(), oii.getType(), oii.getImportance());
+            job.addOntologyItem(oii.getLabel(), oii.getType(), oii.getImportance());
         }
 
         job = jobRepository.save(job);
@@ -82,12 +79,19 @@ public class JobService {
         jobStartedEvent.setJobId(job.getId());
         jobStartedEvent.setJobName(job.getName());
         jobStartedEvent.getData().setColumnsToDrop(columnsToDrop);
-        jobStartedEvent.getData().getOntology().addAll(job.getJobData().getOntology().stream().map(OntologyItem::getItem).toList());
+
+        Ontology ontology = job.getJobData().getOntology();
+        jobStartedEvent.getData().setOntologyName(ontology.getName());
+        for(OntologyItem oi: ontology.getItems()) {
+            jobStartedEvent.getData().addOntologyItem(oi.getLabel(),oi.getImportance(),oi.getType().name(),oi.getNotes());
+        }
 
         for(JobTable jt : job.getJobData().getTables()) {
             String tableResourceUrl = this.uploadFile(jt.getName(), jt.getTableData());
             jobStartedEvent.getData().addTableData(jt.getName(), tableResourceUrl);
         }
+
+        log.info("PUBLISH MESSAGE: jobStartedEvent={}", jobStartedEvent);
 
         publisher.publish(jobStartedEvent);
 

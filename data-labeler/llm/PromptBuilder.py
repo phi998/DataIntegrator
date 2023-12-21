@@ -1,11 +1,6 @@
 
 class PromptBuilder:
 
-    def build_prompt_with_instructions(self, prompt, instructions):
-        prompt += self.__add_instructions(prompt=prompt, instructions=instructions)
-
-        return prompt
-
     def build_prompt_example(self, input_example, output_example):
         prompt = "\nThis is an example:"
         prompt += f"\nInput={input_example}" \
@@ -13,11 +8,33 @@ class PromptBuilder:
 
         return prompt
 
-    def __add_instructions(self, prompt, instructions):
-        prompt += "\nInstructions:"
+    def build_instructions_subprompt(self, instructions):
+        sub_prompt = "\nInstructions:"
         i = 0
         for instruction in instructions:
-            prompt += f"\n{i}. {instruction}"
+            sub_prompt += f"\n{i}. {instruction}"
             i = i + 1
 
-        return prompt
+        return sub_prompt
+
+    def build_observations_subprompt(self, ontology):
+        sub_prompt = "\nObservations:"
+
+        for k, v in ontology.items():
+            ontology_item_name = k
+            ontology_item_type = v["type"]
+
+            if ontology_item_type == "PROSE":
+                sub_prompt += f"\n{ontology_item_name} is a long text"
+            elif ontology_item_type == "RATING":
+                sub_prompt += f"\n{ontology_item_name} is a value relative to a rating"
+            elif ontology_item_type == "DATE":
+                sub_prompt += f"\n{ontology_item_name} is a date"
+            elif ontology_item_type == "NUMERIC":
+                sub_prompt += f"\n{ontology_item_name} is a number"
+
+            if 'notes' in v:
+                ontology_item_notes = v["notes"]
+                sub_prompt += f"\n{ontology_item_name}: {ontology_item_notes}"
+
+        return sub_prompt

@@ -5,10 +5,12 @@ import lombok.Data;
 @Data
 public class OntologyItemInput {
 
-    private String item;
+    private String label;
 
     private String type;
 
     private int importance; // a parameter that could be used for record linkage
+
+    private String notes;
 
 }
