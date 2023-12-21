@@ -1,20 +1,22 @@
 import pandas as pd
 
+from config.CacheFactory import CacheFactory
 from enums.chatgpt.Model import Model
 from llm.chatgpt.chatgpt import ChatGPT
 from sampler.column.ColumnTokenLimitSampler import ColumnTokenLimitSampler
 
 
-class ColumnLabeler:
+class LabelerByColumn:
 
     def __init__(self, data_context):
         self.__data_context = data_context
+        self.__cache = CacheFactory().get_cache()
 
     def label_columns(self, df, ontology=None):
         if ontology is None:
             ontology = {}
 
-        sampler = ColumnTokenLimitSampler(300)
+        sampler = ColumnTokenLimitSampler(self.__cache.get_configuration("column_token_limit_for_llm"))
 
         print("Labelling columns...")
 
@@ -44,20 +46,23 @@ class ColumnLabeler:
 
         column = [str(col) for col in column if col is not None]
 
-        ontology_items = ','.join(ontology.values())
+        ontology_items = ','.join(ontology.keys())
+        ontology_subprompt = ""
+
+        if self.__cache.get_configuration("ontology_enabled"):
+            ontology_subprompt = "Classify the column given to you into only one of these types that are separated with " \
+                                 f"comma: {ontology_items}"
 
         response = chatgpt.get_one_shot_solution(
             input_example='apple, banana, pear, pineapple',
             output_example='{"column_name":"fruit","confidence": 0.9}',
             task=f"You are an expert about {self.__data_context}",
-            prompt="Answer the question based on the task below, If the question cannot be answered " \
-                   "using the information provided answer with 'other'.\n" \
-                   "Classify the column given to you into only one of these types that are separated with " \
-                   f"comma: {ontology_items}",
+            prompt="Answer the question based on the task below, If the question cannot be answered "
+                   "using the information provided answer with 'other'.\n" + ontology_subprompt,
             instructions=["Look at items values in detail",
                           "Select a class that best represents the meaning of all items",
-                          "For the selected class write the confidence you would give in the interval [0,1]",
-                          "Answer with only a json string like {'column_name':'effective name','confidence':confidence}, no prose"],
+                          "For the selected class write the confidence you would give in the interval between 0 and 1",
+                          "Answer with only a json string like {\"column_name\":\"effective name\",\"confidence\":confidence}, no prose"],
             prompt_input=';'.join(column),
             ontology=ontology
         )

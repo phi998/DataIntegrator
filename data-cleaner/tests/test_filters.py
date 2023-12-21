@@ -2,7 +2,7 @@ import unittest
 import pandas as pd
 from io import StringIO
 
-from filters.ColumnLabeler import ColumnLabeler
+from filters.LabelerByColumn import LabelerByColumn
 from filters.EmptyColumnsCleaner import EmptyColumnsCleaner
 from filters.HtmlCleaner import HtmlCleaner
 from filters.Labeler import Labeler
@@ -56,7 +56,7 @@ class FiltersTest(unittest.TestCase):
     def test_column_labeler(self):
         df = pd.read_csv('datasets/labeler/input.csv', header=None)
 
-        c_labeler = ColumnLabeler("job advertisement")
+        c_labeler = LabelerByColumn("job advertisement")
         df = c_labeler.label_columns(df, ["Company name", "Role", "Location", "Description", "Advertisement Content"])
 
         df.to_csv("datasets/c_labeler/output_old.csv")

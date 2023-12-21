@@ -1,10 +1,9 @@
 from filters.ColumnEntropyFilter import ColumnEntropyFilter
-from filters.ColumnLabeler import ColumnLabeler
+from filters.LabelerByColumn import LabelerByColumn
 from filters.ColumnTrimFilter import ColumnTrimFilter
 from filters.EmptyColumnsCleaner import EmptyColumnsCleaner
 from filters.HtmlCleaner import HtmlCleaner
-from filters.Labeler import Labeler
-from filters.UsefulDataFilter import UsefulDataFilter
+from stats.StatisticsCache import StatisticsCache
 
 
 class DefaultChain:
@@ -17,7 +16,7 @@ class DefaultChain:
         if columns_to_drop is None:
             columns_to_drop = []
 
-        df = df.drop(index=columns_to_drop)  # delete some columns of naruto output
+        df = df.drop(df.columns[columns_to_drop], axis=1)
 
         html_cleaner = HtmlCleaner()
         df = html_cleaner.clean(df)
@@ -32,14 +31,17 @@ class DefaultChain:
         table_column_trimmer = ColumnTrimFilter()
         df = table_column_trimmer.apply(df)
 
-        '''
-        entropy_filter = ColumnEntropyFilter(0.2)
+        entropy_filter = ColumnEntropyFilter(1/len(df) + 0.0001)  # FIXME
         df = entropy_filter.apply(df, self.ontology)
 
         print("Cleaned low entropy columns")
-        '''
 
-        labeler = ColumnLabeler(data_context=self.context)
+        ### STATISTICS ###
+        statistics_cache = StatisticsCache().get_instance()
+        statistics_cache.set_number_of_columns(len(df.columns))
+        ##################
+
+        labeler = LabelerByColumn(data_context=self.context)
         df = labeler.label_columns(df, self.ontology)
 
         print("Column naming finished")

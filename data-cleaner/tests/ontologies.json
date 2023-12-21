@@ -54,7 +54,7 @@
   },
 
   "finance": {
-    "Title": {
+    "Article title": {
       "type": "TITLE",
       "importance": 8
     },
@@ -81,8 +81,8 @@
       "type": "TITLE",
       "importance": 8
     },
-    "Location": {
-      "type": "TITLE",
+    "City": {
+      "type": "NAME",
       "importance": 6
     },
     "Price": {
@@ -100,6 +100,18 @@
     "Benefits": {
       "type": "TITLE",
       "importance": 2
+    },
+    "Check in hours": {
+      "type": "TIME",
+      "importance": 2
+    },
+    "Labels or actions": {
+      "type": "TITLE",
+      "importance": 0
+    },
+    "Additional informations": {
+      "type": "TITLE",
+      "importance": 0
     }
   },
 
@@ -120,7 +132,7 @@
       "type": "DATE",
       "importance": 3
     },
-    "Advertisement Content": {
+    "Advertisement Content or description": {
       "type": "PROSE",
       "importance": 2
     },
@@ -139,6 +151,10 @@
     "Contract type": {
       "type": "DISCRETE",
       "importance": 2
+    },
+    "Links": {
+      "type": "LINK",
+      "importance": 0
     }
   },
 
@@ -162,6 +178,27 @@
     "Broker": {
       "type": "NAME",
       "importance": 2
+    },
+    "Heating system": {
+      "type": "DISCRETE",
+      "importance": 2
+    },
+    "Bathrooms": {
+      "type": "TITLE",
+      "importance": 2
+    },
+    "Number of rooms": {
+      "type": "NUMERIC",
+      "importance": 2
+    },
+    "Energy Class": {
+      "type": "DISCRETE",
+      "importance": 2,
+      "notes": "Possible values are letters from A to G"
+    },
+    "Year of construction": {
+      "type": "YEAR",
+      "importance": 5
     }
   },
 
@@ -181,6 +218,18 @@
     "Address": {
       "type": "TITLE",
       "importance": 4
+    },
+    "Labels/actions": {
+      "type": "TITLE",
+      "importance": 0
+    },
+    "Additional informations": {
+      "type": "TITLE",
+      "importance": 0
+    },
+    "Annotation in webpage": {
+      "type": "TITLE",
+      "importance": 0
     }
   },
   "movies": {
@@ -192,7 +241,7 @@
       "type": "RATING",
       "importance": 3
     },
-    "Duration": {
+    "Duration (in hours)": {
       "type": "NUMERIC",
       "importance": 4
     },
@@ -211,6 +260,18 @@
     "Plot": {
       "type": "PROSE",
       "importance": 2
+    },
+    "Earnings": {
+      "type": "NUMERIC",
+      "importance": 2
+    },
+    "Prize": {
+      "type": "TITLE",
+      "importance": 2
+    },
+    "Production Companies": {
+      "type": "NAME",
+      "importance": 4
     }
   }
 }

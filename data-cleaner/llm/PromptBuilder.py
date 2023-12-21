@@ -25,12 +25,16 @@ class PromptBuilder:
             ontology_item_type = v["type"]
 
             if ontology_item_type == "PROSE":
-                sub_prompt += f"\n{ontology_item_name} is a text"
+                sub_prompt += f"\n{ontology_item_name} is a long text"
             elif ontology_item_type == "RATING":
                 sub_prompt += f"\n{ontology_item_name} is a value relative to a rating"
             elif ontology_item_type == "DATE":
                 sub_prompt += f"\n{ontology_item_name} is a date"
             elif ontology_item_type == "NUMERIC":
                 sub_prompt += f"\n{ontology_item_name} is a number"
+
+            if 'notes' in v:
+                ontology_item_notes = v["notes"]
+                sub_prompt += f"\n{ontology_item_name}: {ontology_item_notes}"
 
         return sub_prompt

@@ -1,19 +1,15 @@
 import json
+import os
 import unittest
+import time
+
 import pandas as pd
 
 from chains.DefaultChain import DefaultChain
+from stats.StatisticsCache import StatisticsCache
 
 
 class ChainTest(unittest.TestCase):
-
-    def test_default_chain(self):
-        dc = DefaultChain()
-        df = pd.read_csv('datasets/test.csv', header=None)
-
-        df = dc.apply(df)
-
-        df.to_csv("datasets/full/output_old/test.csv")
 
     def test_almalaurea(self):
         self.__run_chain(dataset_name="almalaurea", context="job advertising", ontology_key="jobs", cols_to_drop=[0, 1, 2])
@@ -64,12 +60,21 @@ class ChainTest(unittest.TestCase):
         self.__run_chain(dataset_name="imdb", context="movies", ontology_key="movies", cols_to_drop=[0, 1, 2, 3, 4])
 
     def __run_chain(self, dataset_name, context, ontology_key, cols_to_drop):
-        dc = DefaultChain(context=context, ontology=self.__read_ontology_list(ontology_key))
+        statistics_cache = StatisticsCache().get_instance()
+        statistics_cache.init_cache(dataset_name, context)
+
+        dc = DefaultChain(context=context, ontology=self.__read_ontology(ontology_key))
         df = pd.read_csv('datasets/full/' + dataset_name + '.csv', header=None, na_values='')
 
+        start_time = time.time()
         df = dc.apply(df, cols_to_drop)
+        end_time = time.time()
+        statistics_cache.set_execution_time(start_time, end_time)
 
         df.to_csv('datasets/full/output/' + dataset_name + '.csv', index=False)
+
+        statistics_cache.print_to_file(stats_file="stats/stats.csv", fails_file="stats/fails.csv")
+        self.__print_columns(dataset_name, df)
 
     def __read_ontology(self, domain):
         ontologies_file_path = "ontologies.json"
@@ -77,6 +82,7 @@ class ChainTest(unittest.TestCase):
             ontologies = json.load(file)
         return ontologies[domain]
 
-    def __read_ontology_list(self, domain):
-        ontology = self.__read_ontology(domain)
-        return list(ontology.keys())
+    def __print_columns(self, exp_name, df):
+        column_names_string = ','.join(map(str, df.columns)) + "\n"
+        with open(f"colnames/{exp_name}.csv", 'a') as file:
+            file.write(column_names_string)

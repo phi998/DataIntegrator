@@ -32,14 +32,14 @@ class BenchMarkTest(unittest.TestCase):
         print("Noise added")
 
         # put it into pipeline
-        ontology = self.__read_ontology_list(domain=context)
+        ontology = self.__read_ontology(domain=context)
         dc = DefaultChain(context=context, ontology=ontology)
         print("Applying default chain...")
         df = dc.apply(df)
         print("Default chain applied")
 
         # save result to file
-        df.to_csv(f"datasets/bench/output_old/{exp_name}.csv", index=False)
+        df.to_csv(f"datasets/bench/output/{exp_name}.csv", index=False)
 
         pass
 
@@ -49,17 +49,13 @@ class BenchMarkTest(unittest.TestCase):
 
         df = dc.apply(df, cols_to_drop)
 
-        df.to_csv('datasets/full/output_old/' + dataset_name + '.csv', index=False)
+        df.to_csv('datasets/full/output/' + dataset_name + '.csv', index=False)
 
     def __read_ontology(self, domain):
         ontologies_file_path = "ontologies_bench.json"
         with open(ontologies_file_path, 'r') as file:
             ontologies = json.load(file)
         return ontologies[domain]
-
-    def __read_ontology_list(self, domain):
-        ontology = self.__read_ontology(domain)
-        return list(ontology.keys())
 
     def __add_noise(self, df):
         # add html noise
