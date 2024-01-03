@@ -35,7 +35,7 @@ class Engine:
                 fp.print_table_to_csv(table_name=table_name, table_content=table_content_csv)
 
         # Publish to message queues
-        self.publisher.publish_cleaned_data(job_id=job["jobId"], job_name=job["jobName"], has_ontology=bool(job["data"]["ontology"]), tables=cleaned_tables_urls)
+        self.publisher.publish_labeled_data(job_id=job["jobId"], job_name=job["jobName"], ontology=job["data"]["ontology"], tables=cleaned_tables_urls)
         self.publisher.publish_inform_manager(job_id=job["jobId"])
-        self.publisher.publish_job_ended_event(job_id=job["jobId"], job_name=job["jobName"],tables=cleaned_tables_urls)
+        self.publisher.publish_job_ended_event(job_id=job["jobId"], job_name=job["jobName"], tables=cleaned_tables_urls)
 

@@ -1,7 +1,7 @@
 package it.uniroma3.di.common.api;
 
-import it.uniroma3.di.common.api.dto.FileUploadedResponse;
-import it.uniroma3.di.common.api.dto.RetrieveFileResponse;
+import it.uniroma3.di.common.api.dto.dis.FileUploadedResponse;
+import it.uniroma3.di.common.api.dto.dis.RetrieveFileResponse;
 
 public interface FileStorager {
 

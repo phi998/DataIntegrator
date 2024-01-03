@@ -6,4 +6,6 @@ public class Endpoints {
 
     public static final String DIM_ENDPOINT = "http://dim:8080";
 
+    public static final String TSS_ENDPOINT = "http://tss:8080";
+
 }

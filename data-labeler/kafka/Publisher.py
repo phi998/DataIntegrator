@@ -12,9 +12,9 @@ class Publisher:
         }
         self.producer = Producer(conf)
 
-    def publish_labeled_data(self, job_id, job_name, has_ontology, tables):
+    def publish_labeled_data(self, job_id, job_name, ontology, tables):
         topic = "labeled-data-event-channel"
-        data_cleaned_event = {"jobId": job_id, "jobName": job_name, "hasOntology": has_ontology, "data": tables}
+        data_cleaned_event = {"jobId": job_id, "jobName": job_name, "ontology": ontology, "data": tables}
 
         print(f"PUBLISHING LABELED DATA: {data_cleaned_event}")
         self.producer.produce(topic, key='ld', value=json.dumps(data_cleaned_event), callback=self.__delivery_report)
@@ -33,7 +33,7 @@ class Publisher:
         print("INFORMED DATA INTEGRATION MANAGER")
 
     def publish_job_ended_event(self, job_id, job_name, tables):
-        topic = "manager-informer-event-channel"
+        topic = "job-end-service-event-channel"
 
         job_ended_event = {"jobId": job_id, "jobName": job_name, "jobResultResourceUrls": tables}
 

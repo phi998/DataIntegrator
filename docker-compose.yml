@@ -28,9 +28,9 @@ services:
       KAFKA_CREATE_TOPICS: "
         job-service-event-channel:1:1,
         cleaned-data-event-channel:1:1,
+        labeled-data-event-channel:1:1,
         aligned-data-event-channel:1:1,
-        manager-informer-event-channel:1:1
-        "
+        manager-informer-event-channel:1:1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -61,12 +61,39 @@ services:
     depends_on:
       - "kafka"
 
-  #msm:
-  #  build: ./mediated-schemas-manager
-  #  depends_on:
-  #    - "kafka"
+  dl:
+    build: ./data-labeler
+    depends_on:
+      - "kafka"
 
-  # Databases
+  solr:
+    image: solr
+    ports:
+      - "8983:8983"
+    volumes:
+      - data:/var/solr
+    command:
+      - solr-precreate
+      - test
+
+  tss:
+    build: ./TableStorageService
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_PROFILE=default
+    depends_on:
+      - "consul"
+      - "solr"
+
+  copywritergpt:
+    build: ./CopywriterGPT
+    ports:
+      - "8090:8080"
+    environment:
+      - SPRING_PROFILE=default
+    depends_on:
+      - "consul"
 
   dimdb:
     image: postgres
@@ -93,3 +120,19 @@ services:
       POSTGRES_DB: disdb
     depends_on:
       - "consul"
+
+  copywritergptdb:
+    image: postgres
+    volumes:
+      - "$PWD/postgres:/docker-entrypoint-initdb.d"
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: copywritergptdb
+    depends_on:
+      - "consul"
+
+volumes:
+  data:

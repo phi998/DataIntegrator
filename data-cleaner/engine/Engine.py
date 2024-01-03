@@ -24,7 +24,7 @@ class Engine:
             table_name = cleaned_table["tableName"]
             table_df = cleaned_table["df"]
 
-            table_content_csv = table_df.to_csv(index=False)
+            table_content_csv = table_df.to_csv(index=False, header=None)
             uploaded_file_response = file_storage_api.upload_file(table_name, table_content_csv)
             resource_url = uploaded_file_response["resourceUrl"]
 
@@ -35,7 +35,7 @@ class Engine:
                 fp.print_table_to_csv(table_name=table_name, table_content=table_content_csv)
 
         # Publish to message queues
-        self.publisher.publish_cleaned_data(job_id=job["jobId"], job_name=job["jobName"], has_ontology=bool(job["data"]["ontology"]), tables=cleaned_tables_urls)
+        self.publisher.publish_cleaned_data(job_id=job["jobId"], job_name=job["jobName"], ontology=job["data"]["ontologyItems"], tables=cleaned_tables_urls)
         self.publisher.publish_inform_manager(job_id=job["jobId"])
-        self.publisher.publish_job_ended_event(job_id=job["jobId"], job_name=job["jobName"],tables=cleaned_tables_urls)
+        # self.publisher.publish_job_ended_event(job_id=job["jobId"], job_name=job["jobName"], tables=cleaned_tables_urls)
 

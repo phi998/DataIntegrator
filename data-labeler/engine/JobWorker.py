@@ -23,7 +23,7 @@ class JobWorker:
 
         for table in tables:
             table_name = table["tableName"]
-            table_content_resource_url = table["tableContentResourceUrl"]
+            table_content_resource_url = table["tableUrl"]
 
             file_storage_api = FileStorageApi()
             table_content = file_storage_api.get_file(table_content_resource_url)

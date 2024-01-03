@@ -61,6 +61,12 @@ public class OntologyService {
         this.ontologyRepository.save(ontology);
     }
 
+    public Ontology getOntologyByName(String ontologyName) {
+        Ontology ontology = this.ontologyRepository.findAllByName(ontologyName).get(0);
+
+        return ontology;
+    }
+
     static class Converter {
 
         static CreateNewOntologyResponse toCreateNewOntologyResponse(Ontology ontology) {

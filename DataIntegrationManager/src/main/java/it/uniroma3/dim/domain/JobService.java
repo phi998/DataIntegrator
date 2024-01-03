@@ -1,14 +1,17 @@
 package it.uniroma3.dim.domain;
 
-import it.uniroma3.di.common.api.dto.FileUploadedResponse;
-import it.uniroma3.di.common.api.dto.RetrieveFileResponse;
+import it.uniroma3.di.common.api.dto.dis.FileUploadedResponse;
+import it.uniroma3.di.common.api.dto.dis.RetrieveFileResponse;
 import it.uniroma3.dim.domain.entity.*;
 import it.uniroma3.dim.domain.enums.JobStatus;
 import it.uniroma3.dim.domain.enums.JobType;
 import it.uniroma3.dim.event.JobStartedEvent;
 import it.uniroma3.dim.eventpublisher.impl.JobCreatedEventPublisher;
-import it.uniroma3.dim.proxy.FileStorageClient;
+import it.uniroma3.dim.proxy.DisStorageClient;
+import it.uniroma3.dim.proxy.TssStorageClient;
 import it.uniroma3.dim.rest.dto.*;
+import it.uniroma3.dim.utils.CSVUtils;
+import it.uniroma3.dim.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,29 +19,32 @@ import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
 @Slf4j
 public class JobService {
 
+    private static final int ROWS_TO_SAMPLE = 10;
+
     @Autowired
     private JobRepository jobRepository;
 
     @Autowired
+    private OntologyService ontologyService;
+
+    @Autowired
     private JobCreatedEventPublisher publisher;
 
-    public CreateNewJobResponse createNewJob(String jobName, Collection<OntologyItemInput> ontologyItemInputs, String jobType) {
-        log.info("createNewJob(): jobName={}, ontology={}, jobType={}", jobName, ontologyItemInputs, jobName);
+    public CreateNewJobResponse createNewJob(String jobName, String ontologyName, String jobType) {
+        log.info("createNewJob(): jobName={}, ontologyName={}, jobType={}", jobName, ontologyName, jobName);
 
         Job job = new Job();
         job.setName(jobName);
         job.setStatus(JobStatus.CREATED);
         job.setJobType(JobType.valueOf(jobType));
-
-        for(OntologyItemInput oii: ontologyItemInputs) {
-            job.addOntologyItem(oii.getLabel(), oii.getType(), oii.getImportance());
-        }
+        job.getJobData().setOntology(ontologyService.getOntologyByName(ontologyName));
 
         job = jobRepository.save(job);
 
@@ -87,7 +93,7 @@ public class JobService {
         }
 
         for(JobTable jt : job.getJobData().getTables()) {
-            String tableResourceUrl = this.uploadFile(jt.getName(), jt.getTableData());
+            String tableResourceUrl = this.uploadFileToDis(jt.getName(), jt.getTableData());
             jobStartedEvent.getData().addTableData(jt.getName(), tableResourceUrl);
         }
 
@@ -111,7 +117,7 @@ public class JobService {
             String tableName = tn2u.getKey();
             String tableUrl = tn2u.getValue();
 
-            RetrieveFileResponse retrieveFileResponse = new FileStorageClient(new RestTemplate()).retrieveFile(tableUrl);
+            RetrieveFileResponse retrieveFileResponse = new DisStorageClient(new RestTemplate()).retrieveFile(tableUrl);
             JobTable jobTable = new JobTable();
             jobTable.setName(tableName);
             jobTable.setTableData(retrieveFileResponse.getFileContent());
@@ -125,14 +131,59 @@ public class JobService {
         jobRepository.save(job);
     }
 
+    public void changeJobStatus(Long jobId, String status) {
+
+    }
+
+    public Map<String, String> getEndedJobResultPreview(Long jobId) {
+        log.info("getEndedJobResultPreview(): jobId={}", jobId);
+
+        Map<String, String> previews = new HashMap<>();
+
+        Job job = jobRepository.findById(jobId).get();
+
+        for(JobTable jobTable: job.getJobResult().getResultTables()) {
+            String tableContent = Utils.convertBinaryToString(jobTable.getTableData());
+            tableContent = CSVUtils.sample(tableContent, ROWS_TO_SAMPLE);
+            previews.put(jobTable.getName(), tableContent);
+        }
+
+        return previews;
+    }
+
+    public void push(Long jobId) {
+        log.info("push(): jobId={}", jobId);
+
+        Job job = this.jobRepository.findById(jobId).get();
+
+        Map<String, String> ontology = new HashMap<>();
+        for(OntologyItem ontologyItem: job.getJobData().getOntology().getItems()) {
+            ontology.put(ontologyItem.getLabel(), ontologyItem.getType().name());
+        }
+
+        for(JobTable jobTable: job.getJobResult().getResultTables()) {
+            String tableName = jobTable.getName();
+            byte[] tableContent = jobTable.getTableData();
+            String category = job.getName(); // FIXME add category attribute to job
+
+            this.uploadToTss(tableName,category,tableContent,ontology);
+        }
+    }
+
     /**
      * @return table content url on dis service
      * */
-    private String uploadFile(String tableName, byte[] tableData) {
-        FileStorageClient fileStorageClient = new FileStorageClient(new RestTemplate());
-        FileUploadedResponse fileUploadedResponse = fileStorageClient.uploadFile(tableName, tableData, true);
+    private String uploadFileToDis(String tableName, byte[] tableData) {
+        DisStorageClient disStorageClient = new DisStorageClient(new RestTemplate());
+        FileUploadedResponse fileUploadedResponse = disStorageClient.uploadFile(tableName, tableData, true);
 
         return fileUploadedResponse.getResourceUrl();
+    }
+
+
+    private void uploadToTss(String tableName, String category, byte[] resultTableContent, Map<String,String> ontology2type) {
+        TssStorageClient tssStorageClient = new TssStorageClient(new RestTemplate());
+        tssStorageClient.uploadJobResultTable(tableName,category,resultTableContent,ontology2type);
     }
 
     static class Converter {
@@ -160,6 +211,12 @@ public class JobService {
             createNewJobResponse.setJobId(job.getId());
             createNewJobResponse.setJobName(job.getName());
             createNewJobResponse.setJobStatus(job.getStatus().name());
+
+            Ontology o = job.getJobData().getOntology();
+            for(OntologyItem oi: o.getItems()) {
+                createNewJobResponse.addOntologyItemLabel(oi.getLabel());
+            }
+
             return createNewJobResponse;
         }
 

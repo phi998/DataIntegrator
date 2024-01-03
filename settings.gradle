@@ -1,6 +1,7 @@
 rootProject.name = 'DataIntegrator'
 
-include 'DataIntegrationManager'
-include 'common'
-include 'DataIntegrationStorage'
-include 'DataIntegratorGui'
+include ':DataIntegrationManager'
+include ':DataIntegrationStorage'
+include ':TableStorageService'
+include ':CopywriterGPT'
+include ':common'

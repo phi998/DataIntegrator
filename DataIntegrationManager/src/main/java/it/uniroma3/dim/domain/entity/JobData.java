@@ -17,7 +17,7 @@ public class JobData {
     @OneToOne(cascade = CascadeType.ALL)
     private Ontology ontology;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<JobTable> tables;
 
     public JobData() {

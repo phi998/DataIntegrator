@@ -1,8 +1,8 @@
 package it.uniroma3.dis.rest;
 
-import it.uniroma3.di.common.api.dto.FileUploadedResponse;
-import it.uniroma3.di.common.api.dto.RetrieveFileResponse;
-import it.uniroma3.di.common.api.dto.UploadFileRequest;
+import it.uniroma3.di.common.api.dto.dis.FileUploadedResponse;
+import it.uniroma3.di.common.api.dto.dis.RetrieveFileResponse;
+import it.uniroma3.di.common.api.dto.dis.UploadFileRequest;
 import it.uniroma3.dis.domain.DataStorageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -35,7 +35,7 @@ public class DomainEventConsumer {
     private void onManagerInformedEvent(ManagerInformEvent mie) {
         log.info("onManagerInformedEvent(): mie={}", mie);
 
-        // TODO update
+        jobService.changeJobStatus(mie.getData().getJobId(), mie.getEvent());
     }
 
     private void onJobEndedEvent(JobEndedEvent jee) {

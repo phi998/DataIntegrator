@@ -14,7 +14,7 @@ class JobWorker:
 
     def clean_tables(self, job):
         context = job["jobName"]
-        ontology = job["data"]["ontology"]
+        ontology = job["data"]["ontologyItems"]
         tables = job["data"]["tables"]
         columns_to_drop = job["data"]["columnsToDrop"]
 

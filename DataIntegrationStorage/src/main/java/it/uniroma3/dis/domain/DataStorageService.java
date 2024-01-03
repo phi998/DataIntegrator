@@ -1,7 +1,7 @@
 package it.uniroma3.dis.domain;
 
-import it.uniroma3.di.common.api.dto.FileUploadedResponse;
-import it.uniroma3.di.common.api.dto.RetrieveFileResponse;
+import it.uniroma3.di.common.api.dto.dis.FileUploadedResponse;
+import it.uniroma3.di.common.api.dto.dis.RetrieveFileResponse;
 import it.uniroma3.di.common.utils.Endpoints;
 import it.uniroma3.dis.domain.entity.StoredFile;
 import it.uniroma3.dis.domain.entity.enums.StoreStatus;

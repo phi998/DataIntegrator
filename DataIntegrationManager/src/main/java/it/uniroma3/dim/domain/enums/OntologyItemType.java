@@ -10,6 +10,7 @@ public enum OntologyItemType {
     RATING,
     NAME,
     DISCRETE,
+    LINK,
     UNKNOWN
 
 }

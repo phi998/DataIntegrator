@@ -17,7 +17,7 @@ public class DomainEventListener {
     @Autowired
     private DomainEventConsumer domainEventConsumer;
 
-    @KafkaListener(topics = {ManagerInformEventChannel.channel, JobEndServiceEventChannel.channel}, autoStartup = "${listen.auto.start:false}")
+    @KafkaListener(topics = {ManagerInformEventChannel.channel, JobEndServiceEventChannel.channel}, groupId="data-integration-manager")
     public void listen(ConsumerRecord<String, DomainEvent> record) throws Exception {
         log.info("EVENT LISTENER: " + record.toString());
         DomainEvent event = record.value();

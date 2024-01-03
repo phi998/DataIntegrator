@@ -41,8 +41,8 @@ class DefaultChain:
         statistics_cache.set_number_of_columns(len(df.columns))
         ##################
 
-        labeler = LabelerByColumn(data_context=self.context)
-        df = labeler.label_columns(df, self.ontology)
+        #labeler = LabelerByColumn(data_context=self.context)
+        #df = labeler.label_columns(df, self.ontology)
 
         print("Column naming finished")
 
