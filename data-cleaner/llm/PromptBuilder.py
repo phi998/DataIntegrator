@@ -17,24 +17,11 @@ class PromptBuilder:
 
         return sub_prompt
 
-    def build_observations_subprompt(self, ontology):
+    def build_observations_subprompt(self, observations):
         sub_prompt = "\nObservations:"
-
-        for k, v in ontology.items():
-            ontology_item_name = k
-            ontology_item_type = v["type"]
-
-            if ontology_item_type == "PROSE":
-                sub_prompt += f"\n{ontology_item_name} is a long text"
-            elif ontology_item_type == "RATING":
-                sub_prompt += f"\n{ontology_item_name} is a value relative to a rating"
-            elif ontology_item_type == "DATE":
-                sub_prompt += f"\n{ontology_item_name} is a date"
-            elif ontology_item_type == "NUMERIC":
-                sub_prompt += f"\n{ontology_item_name} is a number"
-
-            if 'notes' in v:
-                ontology_item_notes = v["notes"]
-                sub_prompt += f"\n{ontology_item_name}: {ontology_item_notes}"
+        i = 0
+        for observation in observations:
+            sub_prompt += f"\n{i}. {observation}"
+            i = i + 1
 
         return sub_prompt

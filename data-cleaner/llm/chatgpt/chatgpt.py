@@ -63,14 +63,14 @@ class ChatGPT(GenericLLMApi):
 
         return response_content
 
-    def get_one_shot_solution(self, input_example, output_example, task, prompt, prompt_input, instructions, ontology):
+    def get_one_shot_solution(self, input_example, output_example, task, prompt, prompt_input, instructions, observations):
         max_retries = self.__cache.get_configuration("max_llm_attempts")
         current_retry = 0
 
         while current_retry < max_retries:
             try:
                 solution_text = self.__get_one_shot_solution_text(input_example, output_example, task, prompt,
-                                                                  prompt_input, instructions, ontology)
+                                                                  prompt_input, instructions, observations)
                 solution_text = self.__format_text_response(solution_text)
                 solution = json.loads(solution_text)
                 return solution
@@ -94,14 +94,14 @@ class ChatGPT(GenericLLMApi):
         return None
 
     @timeout(20)
-    def __get_one_shot_solution_text(self, input_example, output_example, task, prompt, prompt_input, instructions, ontology):
+    def __get_one_shot_solution_text(self, input_example, output_example, task, prompt, prompt_input, instructions, observations):
         prompt_builder = PromptBuilder()
 
         instructions_subprompt = prompt_builder.build_instructions_subprompt(instructions)
         observations_subprompt = ""
 
         if self.__cache.get_configuration("observations_enabled"):
-            observations_subprompt = prompt_builder.build_observations_subprompt(ontology)
+            observations_subprompt = prompt_builder.build_observations_subprompt(observations)
 
         prompt += instructions_subprompt
         prompt += observations_subprompt

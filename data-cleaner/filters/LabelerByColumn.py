@@ -62,7 +62,29 @@ class LabelerByColumn:
                           "For the selected class write the confidence you would give in the interval between 0 and 1",
                           "Answer with only a json string like {\"column_name\":\"effective name\",\"confidence\":confidence}, no prose"],
             prompt_input=';'.join(column),
-            ontology=ontology
+            observations=self.__build_observations_list(ontology)
         )
 
         return response["column_name"]
+
+    def __build_observations_list(self, ontology):
+        observations = []
+
+        for k, v in ontology.items():
+            ontology_item_name = k
+            ontology_item_type = v["type"]
+
+            if ontology_item_type == "PROSE":
+                observations.append(f"{ontology_item_name} is a long text")
+            elif ontology_item_type == "RATING":
+                observations.append(f"\n{ontology_item_name} is a value relative to a rating")
+            elif ontology_item_type == "DATE":
+                observations.append(f"\n{ontology_item_name} is a date")
+            elif ontology_item_type == "NUMERIC":
+                observations.append(f"\n{ontology_item_name} is a number")
+
+            if 'notes' in v and not v["notes"] == "":
+                ontology_item_notes = v["notes"]
+                observations.append(f"\n{ontology_item_name}: {ontology_item_notes}")
+
+        return observations
