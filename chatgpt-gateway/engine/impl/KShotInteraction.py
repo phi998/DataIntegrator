@@ -1,5 +1,0 @@
-
-
-class KShotInteraction:
-
-    pass

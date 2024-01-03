@@ -1,2 +1,5 @@
 flask~=3.0.0
 
+timeout_decorator
+tiktoken~=0.5.1
+openai~=0.28.1
