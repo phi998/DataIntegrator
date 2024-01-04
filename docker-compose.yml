@@ -95,6 +95,9 @@ services:
     depends_on:
       - "consul"
 
+  chatgpt:
+    build: ./chatgpt-gateway
+
   dimdb:
     image: postgres
     volumes:
