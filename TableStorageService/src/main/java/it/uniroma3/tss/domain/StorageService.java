@@ -4,7 +4,7 @@ import it.uniroma3.tss.domain.vo.ResultEntry;
 import it.uniroma3.tss.domain.vo.TableField;
 import it.uniroma3.tss.proxy.ProxyFacade;
 import it.uniroma3.tss.proxy.solr.SolrProxyFacade;
-import it.uniroma3.tss.rest.dto.ResultEntryResponse;
+import it.uniroma3.di.common.api.dto.tss.ResultEntryResponse;
 import it.uniroma3.tss.utils.CSVUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,12 +19,12 @@ public class StorageService {
     public void storeTable(String tableName, String collectionName, String content, Collection<TableField> fields) {
         log.info("storeTable(): tableName={}, collectionName={}, fields={}", tableName, collectionName, fields);
 
-        ProxyFacade proxyFacade = new SolrProxyFacade(collectionName);
-        proxyFacade.uploadData(CSVUtils.toTableRows(content,fields.stream().map(TableField::getSymbolicName).toList()));
+        ProxyFacade proxyFacade = new SolrProxyFacade();
+        proxyFacade.uploadData(CSVUtils.toTableRows(content,fields.stream().map(TableField::getName).toList()));
     }
 
     public Collection<ResultEntryResponse> query(String collectionName, Map<String,String> attributes2values, int n) {
-        ProxyFacade proxyFacade = new SolrProxyFacade(collectionName);
+        ProxyFacade proxyFacade = new SolrProxyFacade();
 
         return proxyFacade.retrieveData(attributes2values, n).stream().map(Converter::toResultEntryResponse).toList();
     }

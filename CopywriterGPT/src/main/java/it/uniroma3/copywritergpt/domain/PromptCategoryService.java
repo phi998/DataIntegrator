@@ -1,7 +1,7 @@
 package it.uniroma3.copywritergpt.domain;
 
 import it.uniroma3.copywritergpt.domain.entity.PromptCategory;
-import it.uniroma3.copywritergpt.rest.dto.PromptCategoryCreatedResponse;
+import it.uniroma3.di.common.api.dto.copywritergpt.PromptCategoryCreatedResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

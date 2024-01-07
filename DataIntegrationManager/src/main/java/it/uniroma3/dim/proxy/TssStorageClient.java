@@ -25,7 +25,7 @@ public class TssStorageClient {
         this.restTemplate = restTemplate;
     }
 
-    public void uploadJobResultTable(String tableName, String category, byte[] resultTableContent, Map<String,String> ontology2type) {
+    public void uploadJobResultTable(String tableName, String category, String resultTableContent, Map<String,String> ontology2type) {
         TableStorageRequest tsr = new TableStorageRequest();
         tsr.setCategory(category);
         tsr.setContent(resultTableContent);

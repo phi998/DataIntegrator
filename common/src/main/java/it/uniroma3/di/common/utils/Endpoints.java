@@ -8,4 +8,6 @@ public class Endpoints {
 
     public static final String TSS_ENDPOINT = "http://tss:8080";
 
+    public static final String CHATGPT_ENDPOINT = "http://chatgpt:5000";
+
 }

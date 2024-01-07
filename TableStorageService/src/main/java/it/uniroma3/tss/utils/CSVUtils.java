@@ -1,6 +1,7 @@
 package it.uniroma3.tss.utils;
 
 import it.uniroma3.tss.domain.vo.TableRow;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -11,9 +12,12 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
+@Slf4j
 public class CSVUtils {
 
     public static Map<Integer, TableRow> toTableRows(String csvString, Collection<String> headers) {
+        log.info("toTableRows(): csvString={}, headers={}", csvString, headers);
+
         Map<Integer, TableRow> rows = new TreeMap<>();
 
         try {

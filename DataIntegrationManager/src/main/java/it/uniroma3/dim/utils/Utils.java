@@ -1,11 +1,12 @@
 package it.uniroma3.dim.utils;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class Utils {
 
     public static String convertBinaryToString(byte[] binaryData) {
-        return new String(binaryData);
+        return new String(binaryData, StandardCharsets.UTF_8);
     }
 
     public static String convertToBase64String(String originalString) {

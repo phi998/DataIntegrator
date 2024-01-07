@@ -5,6 +5,7 @@ import it.uniroma3.di.common.api.dto.dis.RetrieveFileResponse;
 import it.uniroma3.dim.domain.entity.*;
 import it.uniroma3.dim.domain.enums.JobStatus;
 import it.uniroma3.dim.domain.enums.JobType;
+import it.uniroma3.dim.domain.vo.TableInfo;
 import it.uniroma3.dim.event.JobStartedEvent;
 import it.uniroma3.dim.eventpublisher.impl.JobCreatedEventPublisher;
 import it.uniroma3.dim.proxy.DisStorageClient;
@@ -25,8 +26,6 @@ import java.util.Map;
 @Service
 @Slf4j
 public class JobService {
-
-    private static final int ROWS_TO_SAMPLE = 10;
 
     @Autowired
     private JobRepository jobRepository;
@@ -106,21 +105,24 @@ public class JobService {
         return Converter.toJobStartedResponse(job);
     }
 
-    public void setJobEnded(Long jobId, Map<String,String> tableName2Url) {
-        log.info("addNewTableToJob(): jobId={}, tableName2Url={}", jobId, tableName2Url);
+    public void setJobEnded(Long jobId, Map<String, TableInfo> tableName2Info) {
+        log.info("addNewTableToJob(): jobId={}, tableName2Info={}", jobId, tableName2Info);
 
         Job job = jobRepository.findById(jobId).get();
 
         JobResult jobResult = new JobResult();
 
-        for(Map.Entry<String,String> tn2u: tableName2Url.entrySet()) {
-            String tableName = tn2u.getKey();
-            String tableUrl = tn2u.getValue();
+        for(Map.Entry<String,TableInfo> tn2i: tableName2Info.entrySet()) {
+            String tableName = tn2i.getKey();
+            TableInfo tableInfo = tn2i.getValue();
 
-            RetrieveFileResponse retrieveFileResponse = new DisStorageClient(new RestTemplate()).retrieveFile(tableUrl);
+            RetrieveFileResponse retrieveFileResponse = new DisStorageClient(new RestTemplate()).retrieveFile(tableInfo.getUrl());
             JobTable jobTable = new JobTable();
             jobTable.setName(tableName);
-            jobTable.setTableData(retrieveFileResponse.getFileContent());
+            jobTable.editColumnNames(tableInfo.getColumnNames());
+
+            byte[] tableContent = retrieveFileResponse.getFileContent();
+            jobTable.setTableData(tableContent);
 
             jobResult.addJobTable(jobTable);
         }
@@ -132,23 +134,39 @@ public class JobService {
     }
 
     public void changeJobStatus(Long jobId, String status) {
+        log.info("changeJobStatus(): jobId={}, status={}", jobId, status);
 
+        Job job = this.jobRepository.findById(jobId).get();
+        job.setStatus(JobStatus.valueOf(status));
+
+        this.jobRepository.save(job);
     }
 
-    public Map<String, String> getEndedJobResultPreview(Long jobId) {
+    public TablesPreviewResponse getEndedJobResultPreview(Long jobId, int rows) {
         log.info("getEndedJobResultPreview(): jobId={}", jobId);
 
-        Map<String, String> previews = new HashMap<>();
+        TablesPreviewResponse tpr = new TablesPreviewResponse();
 
         Job job = jobRepository.findById(jobId).get();
 
         for(JobTable jobTable: job.getJobResult().getResultTables()) {
+            String tableName = jobTable.getName();
             String tableContent = Utils.convertBinaryToString(jobTable.getTableData());
-            tableContent = CSVUtils.sample(tableContent, ROWS_TO_SAMPLE);
-            previews.put(jobTable.getName(), tableContent);
+            tableContent = CSVUtils.sample(tableContent, true, rows);
+            Map<String, Collection<String>> structuredTablePreview = CSVUtils.convertCsvStringToStructure(tableContent);
+
+            tpr.addTable(tableName, structuredTablePreview);
         }
 
-        return previews;
+        return tpr;
+    }
+
+    public void renameColumns(Long jobId, Map<String,Collection<String>> tableName2columnsNames) {
+        log.info("renameColumns(): jobId={}, tableName2columnsNames={}", jobId, tableName2columnsNames);
+
+        Job job = this.jobRepository.findById(jobId).get();
+
+        // rename column in both csv blob and collection
     }
 
     public void push(Long jobId) {
@@ -163,7 +181,7 @@ public class JobService {
 
         for(JobTable jobTable: job.getJobResult().getResultTables()) {
             String tableName = jobTable.getName();
-            byte[] tableContent = jobTable.getTableData();
+            String tableContent = Utils.convertBinaryToString(jobTable.getTableData());
             String category = job.getName(); // FIXME add category attribute to job
 
             this.uploadToTss(tableName,category,tableContent,ontology);
@@ -181,7 +199,7 @@ public class JobService {
     }
 
 
-    private void uploadToTss(String tableName, String category, byte[] resultTableContent, Map<String,String> ontology2type) {
+    private void uploadToTss(String tableName, String category, String resultTableContent, Map<String,String> ontology2type) {
         TssStorageClient tssStorageClient = new TssStorageClient(new RestTemplate());
         tssStorageClient.uploadJobResultTable(tableName,category,resultTableContent,ontology2type);
     }

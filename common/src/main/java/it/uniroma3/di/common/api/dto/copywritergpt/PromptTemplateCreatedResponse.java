@@ -1,4 +1,4 @@
-package it.uniroma3.copywritergpt.rest.dto;
+package it.uniroma3.di.common.api.dto.copywritergpt;
 
 import lombok.Data;
 

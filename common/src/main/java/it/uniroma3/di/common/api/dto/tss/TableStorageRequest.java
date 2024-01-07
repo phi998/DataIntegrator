@@ -13,7 +13,7 @@ public class TableStorageRequest {
 
     private String category;
 
-    private byte[] content;
+    private String content;
 
     private Collection<TableStorageField> fields;
 

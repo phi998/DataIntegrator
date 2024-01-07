@@ -27,8 +27,9 @@ class Engine:
             table_content_csv = table_df.to_csv(index=False)
             uploaded_file_response = file_storage_api.upload_file(table_name, table_content_csv)
             resource_url = uploaded_file_response["resourceUrl"]
+            column_names = table_df.columns.tolist()
 
-            cleaned_tables_urls.append({"tableName": table_name, "tableUrl": resource_url})
+            cleaned_tables_urls.append({"tableName": table_name, "tableUrl": resource_url, "columnNames": column_names})
 
             if self.modality == "DEBUG":
                 fp = FilePrinter()

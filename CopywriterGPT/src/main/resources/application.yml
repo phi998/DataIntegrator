@@ -1,0 +1,39 @@
+# application.yml
+---
+spring:
+  config:
+    activate:
+      on-profile: default
+  application:
+    name: cwgpt
+  datasource:
+    username: postgres
+    url: jdbc:postgresql://copywritergptdb:5432/copywritergptdb
+    password: postgres
+    driverClassName: org.postgresql.Driver
+  sql:
+    init:
+      mode: always
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: create-drop
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        instanceId: ${spring.application.name}-${spring.cloud.client.hostname}-${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 10s
+        healthCheckCriticalTimeout: 45s
+        queryPassing: true
+    loadbalancer:
+      ribbon.enabled: false
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO

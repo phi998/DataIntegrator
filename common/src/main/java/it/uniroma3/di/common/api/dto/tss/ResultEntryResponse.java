@@ -1,4 +1,4 @@
-package it.uniroma3.tss.rest.dto;
+package it.uniroma3.di.common.api.dto.tss;
 
 import lombok.Data;
 

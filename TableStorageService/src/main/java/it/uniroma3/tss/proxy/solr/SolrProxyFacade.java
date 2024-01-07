@@ -5,15 +5,19 @@ import it.uniroma3.tss.domain.vo.TableField;
 import it.uniroma3.tss.domain.vo.TableRow;
 import it.uniroma3.tss.proxy.ProxyFacade;
 import it.uniroma3.tss.proxy.solr.impl.SolrQueryBuilder;
+import it.uniroma3.tss.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.request.CoreAdminRequest;
+import org.apache.solr.client.solrj.response.CoreAdminResponse;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
+import org.apache.solr.common.params.CoreAdminParams;
 
 import java.io.IOException;
 import java.util.*;
@@ -21,14 +25,14 @@ import java.util.*;
 @Slf4j
 public class SolrProxyFacade implements ProxyFacade {
 
-    private static final String SOLR_ENDPOINT = "http://localhost:8983";
+    private static final String SOLR_ENDPOINT = "http://solr:8983";
 
     private final SolrClient solrClient;
     private final String collectionName;
 
-    public SolrProxyFacade(String collectionName) {
-        this.collectionName = collectionName;
-        this.solrClient = new HttpSolrClient.Builder(SOLR_ENDPOINT + "/solr/" + collectionName).build();
+    public SolrProxyFacade() {
+        this.collectionName = Constants.CORE_NAME;
+        this.solrClient = new HttpSolrClient.Builder(SOLR_ENDPOINT + "/solr").build();
     }
 
     @Override
@@ -38,7 +42,15 @@ public class SolrProxyFacade implements ProxyFacade {
 
     @Override
     public void uploadData(Map<Integer, TableRow> table) {
-        log.info("uploadData()");
+        log.info("uploadData(), table={}", table);
+
+        if(!checkIfCollectionExists()) {
+            try {
+                this.createCollection();
+            } catch (SolrServerException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         try {
             for(Map.Entry<Integer, TableRow> row: table.entrySet()) {
@@ -49,10 +61,10 @@ public class SolrProxyFacade implements ProxyFacade {
                 for(Map.Entry<String,String> c: rowCells.entrySet()) {
                     doc.addField(c.getKey(),c.getValue());
                 }
-                this.solrClient.add(doc);
+                this.solrClient.add(collectionName, doc);
             }
 
-            this.solrClient.commit();
+            this.solrClient.commit(collectionName);
         } catch (SolrServerException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -73,7 +85,7 @@ public class SolrProxyFacade implements ProxyFacade {
 
         QueryResponse response = null;
         try {
-            response = solrClient.query(solrQuery);
+            response = solrClient.query(collectionName, solrQuery);
         } catch (SolrServerException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -83,8 +95,33 @@ public class SolrProxyFacade implements ProxyFacade {
         return Converter.solrDocumentListToMapCollection(results);
     }
 
-    private void createCollection() {
+    private void createCollection() throws SolrServerException, IOException {
+        log.info("createCollection()");
 
+        CoreAdminRequest.Create createRequest = new CoreAdminRequest.Create();
+        createRequest.setCoreName(this.collectionName);
+        createRequest.setInstanceDir("./" + this.collectionName);
+        createRequest.setConfigSet("_default");
+        createRequest.process(solrClient);
+    }
+
+    private boolean checkIfCollectionExists() {
+        CoreAdminRequest request = new CoreAdminRequest();
+        request.setAction(CoreAdminParams.CoreAdminAction.STATUS);
+        CoreAdminResponse cores=null;
+
+        try {
+            cores = request.process(solrClient);
+        } catch (SolrServerException | IOException e) {
+            e.printStackTrace();
+        }
+
+        List<String> coreList = new ArrayList<String>();
+        for (int i = 0; i < cores.getCoreStatus().size(); i++) {
+            coreList.add(cores.getCoreStatus().getName(i));
+        }
+
+        return coreList.contains(this.collectionName);
     }
 
     private static class Converter {

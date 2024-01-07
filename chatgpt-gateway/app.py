@@ -5,7 +5,7 @@ from engine.ChatGPT import ChatGPT
 app = Flask(__name__)
 
 
-@app.route('/chat', methods=["GET"])
+@app.route('/chat', methods=["POST"])
 def chat():
     data = request.json
 
@@ -28,4 +28,4 @@ def chat():
 
 
 if __name__ == '__main__':
-    app.run(threaded=True, debug=False)
+    app.run(threaded=True, debug=False, host='0.0.0.0', port=5000)

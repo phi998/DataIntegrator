@@ -1,8 +1,8 @@
 package it.uniroma3.copywritergpt.rest;
 
 import it.uniroma3.copywritergpt.domain.PromptTemplateService;
-import it.uniroma3.copywritergpt.rest.dto.CreatePromptTemplateRequest;
-import it.uniroma3.copywritergpt.rest.dto.PromptTemplateCreatedResponse;
+import it.uniroma3.di.common.api.dto.copywritergpt.CreatePromptTemplateRequest;
+import it.uniroma3.di.common.api.dto.copywritergpt.PromptTemplateCreatedResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

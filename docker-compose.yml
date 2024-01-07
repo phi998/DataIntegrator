@@ -70,11 +70,9 @@ services:
     image: solr
     ports:
       - "8983:8983"
-    volumes:
-      - data:/var/solr
     command:
       - solr-precreate
-      - test
+      - main_core
 
   tss:
     build: ./TableStorageService
@@ -97,6 +95,22 @@ services:
 
   chatgpt:
     build: ./chatgpt-gateway
+    ports:
+      - "8083:5000"
+
+  copywritergptdb:
+    image: postgres
+    volumes:
+      - "$PWD/postgres:/docker-entrypoint-initdb.d"
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: copywritergptdb
+    depends_on:
+      - "consul"
+
 
   dimdb:
     image: postgres
@@ -108,6 +122,19 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: dimdb
+    depends_on:
+      - "consul"
+
+  tssdb:
+    image: postgres
+    volumes:
+      - "$PWD/postgres:/docker-entrypoint-initdb.d"
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tssdb
     depends_on:
       - "consul"
 
@@ -123,19 +150,3 @@ services:
       POSTGRES_DB: disdb
     depends_on:
       - "consul"
-
-  copywritergptdb:
-    image: postgres
-    volumes:
-      - "$PWD/postgres:/docker-entrypoint-initdb.d"
-    ports:
-      - "5434:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: copywritergptdb
-    depends_on:
-      - "consul"
-
-volumes:
-  data:

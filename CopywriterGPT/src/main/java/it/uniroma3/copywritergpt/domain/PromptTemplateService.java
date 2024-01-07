@@ -1,7 +1,7 @@
 package it.uniroma3.copywritergpt.domain;
 
 import it.uniroma3.copywritergpt.domain.entity.PromptTemplate;
-import it.uniroma3.copywritergpt.rest.dto.PromptTemplateCreatedResponse;
+import it.uniroma3.di.common.api.dto.copywritergpt.PromptTemplateCreatedResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,10 @@ public class PromptTemplateService {
 
     @Autowired
     private PromptCategoryService promptCategoryService;
+
+    public PromptTemplate getPromptTemplateById(Long templateId) {
+        return this.promptTemplateRepository.findById(templateId).get();
+    }
 
     public PromptTemplateCreatedResponse createPromptTemplate(Long categoryId, String templateName, String templateContent) {
         log.info("createPromptTemplate(): categoryId={}, templateName={}, templateContent={}", categoryId, templateName, templateContent);

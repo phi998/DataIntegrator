@@ -1,9 +1,7 @@
 package it.uniroma3.tss.domain.model;
 
 import it.uniroma3.tss.domain.model.enums.AttributeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -11,6 +9,7 @@ import lombok.Data;
 public class CategoryAttribute {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
