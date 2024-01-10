@@ -36,6 +36,6 @@ class Engine:
 
         # Publish to message queues
         self.publisher.publish_cleaned_data(job_id=job["jobId"], job_name=job["jobName"], ontology=job["data"]["ontologyItems"], tables=cleaned_tables_urls)
-        self.publisher.publish_inform_manager(job_id=job["jobId"])
+        # self.publisher.publish_inform_manager(job_id=job["jobId"])
         # self.publisher.publish_job_ended_event(job_id=job["jobId"], job_name=job["jobName"], tables=cleaned_tables_urls)
 

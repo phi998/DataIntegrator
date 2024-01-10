@@ -11,6 +11,7 @@ public enum OntologyItemType {
     NAME,
     DISCRETE,
     LINK,
+    PRICE,
     UNKNOWN
 
 }

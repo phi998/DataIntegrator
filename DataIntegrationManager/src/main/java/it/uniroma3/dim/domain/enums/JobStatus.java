@@ -4,6 +4,8 @@ public enum JobStatus {
 
     CREATED,
     IN_EXECUTION,
+    DATA_CLEANED,
+    DATA_LABELED,
     FAILED,
     COMPLETED,
     STARTED

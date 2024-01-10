@@ -44,7 +44,7 @@ public class DomainEventConsumer {
         log.info("onJobEndedEvent(): jee={}", jee);
 
         Map<String, TableInfo> tableName2tableInfo = new HashMap<>();
-        for(JobTableEventData jted: jee.getJobResultTables()) {
+        for(JobTableEventData jted: jee.getJobResultResourceUrls()) {
             TableInfo ti = new TableInfo();
             ti.setUrl(jted.getTableUrl());
             ti.setColumnNames(new ArrayList<>(jted.getColumnNames()));

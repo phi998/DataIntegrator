@@ -2,6 +2,7 @@ package it.uniroma3.dim.rest;
 
 import it.uniroma3.dim.domain.JobService;
 import it.uniroma3.dim.rest.dto.*;
+import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,18 @@ public class JobRestController {
 
         return jobInfoResponse;
     }
+
+    @GetMapping("/jobs")
+    public GetJobInfoResponse getJobInfoByName(@PathParam("name") String name, @RequestParam(name = "showTables", defaultValue = "false") boolean showTables) {
+        log.info("getJobInfoByName(): jobName={}", name);
+
+        GetJobInfoResponse jobInfoResponse = jobService.getJobInfoByName(name, showTables);
+        log.info("getJobInfoByName(): jobInfoResponse={}", jobInfoResponse);
+
+        return jobInfoResponse;
+    }
+
+
 
     @PostMapping("/jobs/{jobId}/tables")
     public TableAddedToJobResponse addTableToJob(

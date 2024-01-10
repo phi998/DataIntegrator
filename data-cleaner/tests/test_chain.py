@@ -71,7 +71,7 @@ class ChainTest(unittest.TestCase):
         end_time = time.time()
         statistics_cache.set_execution_time(start_time, end_time)
 
-        df.to_csv('datasets/full/output/' + dataset_name + '.csv', index=False)
+        df.to_csv('datasets/full/output_cleaning/' + dataset_name + '.csv', index=False, header=None)
 
         statistics_cache.print_to_file(stats_file="stats/stats.csv", fails_file="stats/fails.csv")
         self.__print_columns(dataset_name, df)

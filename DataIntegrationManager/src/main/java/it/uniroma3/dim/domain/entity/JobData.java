@@ -14,7 +14,8 @@ public class JobData {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ontology_id")
+    @ManyToOne
     private Ontology ontology;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

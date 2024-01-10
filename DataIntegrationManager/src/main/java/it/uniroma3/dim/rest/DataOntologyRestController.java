@@ -3,6 +3,7 @@ package it.uniroma3.dim.rest;
 
 import it.uniroma3.dim.domain.OntologyService;
 import it.uniroma3.dim.rest.dto.*;
+import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +22,19 @@ public class DataOntologyRestController {
         return ontologyService.getOntologyInformation(ontologyId);
     }
 
-
     @PostMapping("/ontology")
     public CreateNewOntologyResponse createNewOntologyResponse(
             @RequestBody CreateNewOntologyRequest createNewOntologyRequest) {
         log.info("createNewOntologyResponse(): createNewOntologyRequest={}", createNewOntologyRequest);
 
         return ontologyService.createNewOntology(createNewOntologyRequest.getName(), createNewOntologyRequest.getItems());
+    }
+
+    @GetMapping("/ontology")
+    public GetOntologyCollectionResponse getOntologies(@PathParam("name") String name) {
+        log.info("getOntologies(): name={}", name);
+
+        return ontologyService.getOntologies(name);
     }
 
     @PostMapping("/ontology/{ontologyId}/items")

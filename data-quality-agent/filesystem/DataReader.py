@@ -11,6 +11,11 @@ class DataReader:
 
         return df
 
+    def read_cleaned(self, dataset_name):
+        df = pd.read_csv(self.__datasets_folder + dataset_name + "/input.csv", header=None)
+
+        return df
+
     def read_result(self, dataset_name):
         df = pd.read_csv(self.__datasets_folder + dataset_name + "/output.csv")
 

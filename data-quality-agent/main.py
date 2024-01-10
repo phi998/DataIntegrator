@@ -12,7 +12,7 @@ def main():
     with open(ontologies_file_path, 'r') as file:
         ontologies = json.load(file)
 
-    jobs_file_path = "jobs.json"
+    jobs_file_path = "jobs_1.json"
     with open(jobs_file_path, 'r') as file:
         jobs = json.load(file)
 
@@ -21,8 +21,9 @@ def main():
 
         job_df = dr.read_dataset(job['datasetName'])
         job_ontology = ontologies[job['ontologyName']]
+        job_ontology = pc.create_ontology(job['ontologyName'], job_ontology)
 
-        new_job_created_response = pc.create_new_job(job['name'], job_ontology)
+        new_job_created_response = pc.create_new_job(job['name'], job['ontologyName'])
         new_job_id = new_job_created_response["jobId"]
 
         # upload tables

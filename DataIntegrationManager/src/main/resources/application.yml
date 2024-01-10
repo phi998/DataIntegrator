@@ -34,6 +34,9 @@ spring:
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      auto-offset-reset: earliest
+      group-id: ${spring.application.name}
     bootstrap-servers: kafka:9092
 
 server:

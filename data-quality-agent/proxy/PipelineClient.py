@@ -8,8 +8,13 @@ class PipelineClient:
     def __init__(self, base_url):
         self.__base_url = base_url
 
-    def create_new_job(self, job_name, ontology):
-        url_suffix = "/jobs"
+    def create_ontology(self, ontology_name, ontology):
+
+        prev_ontology = self.get_ontology_by_name(ontology_name)
+        if prev_ontology is not None:
+            return prev_ontology
+
+        url_suffix = "/ontology"
 
         ontology_list = []
         for k, v in ontology.items():
@@ -18,14 +23,37 @@ class PipelineClient:
             item_importance = v["importance"]
 
             ontology_list.append({
-                "item": item_name,
+                "label": item_name,
                 "type": item_type,
                 "importance": item_importance
             })
 
+        response = requests.post(self.__base_url + url_suffix, json={"name": ontology_name, "items": ontology_list})
+
+        return response.json()
+
+    def get_ontology_by_name(self, ontology_name):
+        url_suffix = "/ontology"
+
+        query_params = {
+            "name": ontology_name
+        }
+
+        response = requests.get(self.__base_url + url_suffix, params=query_params)
+
+        print(f"Get ontology by name {ontology_name}: {response}")
+
+        if len(response.json()["ontologies"]) == 0:
+            return None
+
+        return response.json()["ontologies"][0]
+
+    def create_new_job(self, job_name, ontology_name):
+        url_suffix = "/jobs"
+
         data = {
             "jobName": job_name,
-            "ontology": ontology_list,
+            "ontologyName": ontology_name,
             "jobType": "COLUMN_NAMING"
         }
 

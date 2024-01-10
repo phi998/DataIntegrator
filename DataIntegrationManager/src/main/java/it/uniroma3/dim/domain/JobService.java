@@ -64,6 +64,12 @@ public class JobService {
         return Converter.toGetJobInfoResponse(job, showTables);
     }
 
+    public GetJobInfoResponse getJobInfoByName(String name, boolean showTables) {
+        Job job = jobRepository.findAllByName(name).get(0);
+
+        return Converter.toGetJobInfoResponse(job, showTables);
+    }
+
     public TableAddedToJobResponse addNewTableToJob(Long jobId, String tableName, String tableContent) {
         log.info("addNewTableToJob(): jobId={}, tableName={}", jobId, tableName);
 
@@ -122,7 +128,7 @@ public class JobService {
             String tableName = tn2i.getKey();
             TableInfo tableInfo = tn2i.getValue();
 
-            RetrieveFileResponse retrieveFileResponse = new DisStorageClient(new RestTemplate()).retrieveFile(tableInfo.getUrl());
+            RetrieveFileResponse retrieveFileResponse = new DisStorageClient(new RestTemplate()).retrieveFileFromUrl(tableInfo.getUrl());
             JobTable jobTable = new JobTable();
             jobTable.setName(tableName);
             jobTable.editColumnNames(tableInfo.getColumnNames());

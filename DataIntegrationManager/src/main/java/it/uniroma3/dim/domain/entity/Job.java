@@ -22,9 +22,11 @@ public class Job {
     @Enumerated(EnumType.STRING)
     private JobType jobType;
 
+    @JoinColumn
     @OneToOne(cascade = CascadeType.ALL)
     private JobData jobData;
 
+    @JoinColumn
     @OneToOne(cascade = CascadeType.ALL)
     private JobResult jobResult;
 
