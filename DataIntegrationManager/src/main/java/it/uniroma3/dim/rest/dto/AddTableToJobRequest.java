@@ -11,6 +11,4 @@ public class AddTableToJobRequest {
 
     private String tableContent; // table content encoded in base64 format
 
-    private Collection<Integer> columnsToIgnoreIndexes;
-
 }

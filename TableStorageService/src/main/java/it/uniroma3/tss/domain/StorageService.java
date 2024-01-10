@@ -8,6 +8,7 @@ import it.uniroma3.di.common.api.dto.tss.ResultEntryResponse;
 import it.uniroma3.tss.utils.CSVUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Map;
@@ -16,6 +17,7 @@ import java.util.Map;
 @Slf4j
 public class StorageService {
 
+    @Transactional
     public void storeTable(String tableName, String collectionName, String content, Collection<TableField> fields) {
         log.info("storeTable(): tableName={}, collectionName={}, fields={}", tableName, collectionName, fields);
 

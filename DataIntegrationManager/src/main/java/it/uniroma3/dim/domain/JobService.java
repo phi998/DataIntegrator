@@ -18,10 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import static it.uniroma3.di.common.utils.Constants.CSV_SEPARATOR;
 
 @Service
 @Slf4j
@@ -32,6 +35,9 @@ public class JobService {
 
     @Autowired
     private OntologyService ontologyService;
+
+    @Autowired
+    private JobTableRepository jobTableRepository;
 
     @Autowired
     private JobCreatedEventPublisher publisher;
@@ -166,7 +172,19 @@ public class JobService {
 
         Job job = this.jobRepository.findById(jobId).get();
 
-        // rename column in both csv blob and collection
+        for(JobTable jobTable: job.getJobResult().getResultTables()) {
+            String tableName = jobTable.getName();
+            String tableContent = Utils.convertBinaryToString(jobTable.getTableData());
+
+            Collection<String> columnsNames = tableName2columnsNames.get(tableName);
+            String newCsvHeader = String.join(CSV_SEPARATOR, columnsNames);
+            tableContent = tableContent.replaceFirst(".*\n", newCsvHeader + "\n");
+
+            jobTable.setTableData(tableContent.getBytes(StandardCharsets.UTF_8));
+            jobTable.editColumnNames(columnsNames);
+            this.jobTableRepository.save(jobTable);
+        }
+
     }
 
     public void push(Long jobId) {
@@ -181,7 +199,13 @@ public class JobService {
 
         for(JobTable jobTable: job.getJobResult().getResultTables()) {
             String tableName = jobTable.getName();
-            String tableContent = Utils.convertBinaryToString(jobTable.getTableData());
+
+            String tableContent = "";
+            try {
+                tableContent = CSVUtils.mergeColumnsWithSameName(Utils.convertBinaryToString(jobTable.getTableData()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             String category = job.getName(); // FIXME add category attribute to job
 
             this.uploadToTss(tableName,category,tableContent,ontology);

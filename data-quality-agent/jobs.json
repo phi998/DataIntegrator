@@ -1,0 +1,15 @@
+[
+  {"name": "companies_1", "datasetName": "companies_1", "ontologyName": "companies", "ignore": []},
+  {"name": "companies_2", "datasetName": "companies_2", "ontologyName": "companies", "ignore": []},
+  {"name": "companies_3", "datasetName": "companies_3", "ontologyName": "companies", "ignore": []},
+  {"name": "eshopping_1", "datasetName": "eshopping_1", "ontologyName": "eshopping", "ignore": [0,1,2]},
+  {"name": "finance_1", "datasetName": "finance_1", "ontologyName": "finance", "ignore": [0,1,2,3,4]},
+  {"name": "finance_2", "datasetName": "finance_2", "ontologyName": "finance", "ignore": [0,1,2,3]},
+  {"name": "hotels_1", "datasetName": "hotels_1", "ontologyName": "hotels", "ignore": [0,1]},
+  {"name": "hotels_2", "datasetName": "hotels_2", "ontologyName": "hotels", "ignore": [0,1,2]},
+  {"name": "jobs_1", "datasetName": "jobs_1", "ontologyName": "jobs", "ignore": [0,1,2]},
+  {"name": "jobs_2", "datasetName": "jobs_2", "ontologyName": "jobs", "ignore": [0,1,2,3,4]},
+  {"name": "realestate_1", "datasetName": "realestate_1", "ontologyName": "realestate", "ignore": [0,1]},
+  {"name": "restaurants_1", "datasetName": "restaurants_1", "ontologyName": "restaurants", "ignore": [0,1]},
+  {"name": "restaurants_2", "datasetName": "restaurants_2", "ontologyName": "restaurants", "ignore": [0,1]}
+]

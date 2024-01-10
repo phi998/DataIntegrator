@@ -9,6 +9,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -29,9 +30,7 @@ public class CSVUtils {
             for (CSVRecord record : csvParser) {
                 rows.put(currentRow, new TableRow());
                 for(String header: headers) {
-                    if(record.isSet(header)) {
-                        rows.get(currentRow).addCell(header, record.get(header));
-                    }
+                    rows.get(currentRow).addCell(header, record.get(header));
                 }
                 currentRow++;
             }
@@ -41,7 +40,28 @@ public class CSVUtils {
             e.printStackTrace();
         }
 
+        log.info("toTableRows(): rows={}", rows);
+
         return rows;
+    }
+
+    public static List<String> getTableHeaders(String csvString) {
+        StringReader stringReader = new StringReader(csvString);
+
+        String[] headerNames = null;
+
+        try {
+            CSVParser csvParser = new CSVParser(stringReader, CSVFormat.DEFAULT.withHeader());
+
+            headerNames = csvParser.getHeaderMap().keySet().toArray(new String[0]);
+
+            csvParser.close();
+            stringReader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return List.of(headerNames);
     }
 
 }

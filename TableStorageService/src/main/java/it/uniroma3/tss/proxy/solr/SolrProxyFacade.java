@@ -44,14 +44,6 @@ public class SolrProxyFacade implements ProxyFacade {
     public void uploadData(Map<Integer, TableRow> table) {
         log.info("uploadData(), table={}", table);
 
-        if(!checkIfCollectionExists()) {
-            try {
-                this.createCollection();
-            } catch (SolrServerException | IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
         try {
             for(Map.Entry<Integer, TableRow> row: table.entrySet()) {
                 TableRow r = row.getValue();

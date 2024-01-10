@@ -33,7 +33,7 @@ class PipelineClient:
 
         return response.json()
 
-    def upload_table(self, table_name, df, job_id, columns_to_ignore):
+    def upload_table(self, table_name, df, job_id, columns_to_ignore=None):
         url_suffix = f"/jobs/{job_id}/tables"
 
         csv_data = df.to_csv(index=False)
@@ -41,8 +41,7 @@ class PipelineClient:
 
         data = {
             "tableName": table_name,
-            "tableContent": base64_encoded,
-            "columnsToIgnoreIndexes": columns_to_ignore
+            "tableContent": base64_encoded
         }
 
         requests.post(self.__base_url + url_suffix, json=data)
