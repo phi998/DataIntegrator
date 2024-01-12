@@ -1,14 +1,15 @@
 package it.uniroma3.dim.domain;
 
+import it.uniroma3.di.common.api.dto.dim.*;
 import it.uniroma3.dim.domain.entity.Ontology;
 import it.uniroma3.dim.domain.entity.OntologyItem;
 import it.uniroma3.dim.domain.enums.OntologyItemType;
-import it.uniroma3.dim.rest.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -48,12 +49,19 @@ public class OntologyService {
     public GetOntologyCollectionResponse getOntologies(String name) {
         log.info("getOntologies(): name={}", name);
 
-        List<Ontology> ontologyList = ontologyRepository.findAllByName(name);
+        List<Ontology> ontologyList;
+
+        if(name == null || name.equals("")) {
+            ontologyList = new ArrayList<>();
+            ontologyRepository.findAll().iterator().forEachRemaining(ontologyList::add);
+        } else {
+            ontologyList = ontologyRepository.findAllByName(name);
+        }
 
         log.info("getOntologies(): ontologyList={}", ontologyList);
 
         GetOntologyCollectionResponse getOntologyCollectionResponse = new GetOntologyCollectionResponse();
-        ontologyList.stream().forEach(o -> getOntologyCollectionResponse.addOntology(Converter.toGetOntologyResponse(o)));
+        ontologyList.forEach(o -> getOntologyCollectionResponse.addOntology(Converter.toGetOntologyResponse(o)));
 
         return getOntologyCollectionResponse;
     }

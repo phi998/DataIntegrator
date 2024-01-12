@@ -2,10 +2,6 @@
 
 class QualityMeasurer:
 
-    def __init__(self, df_expected, df_result):
-        self.df_expected = df_expected
-        self.df_result = df_result
-
     def get_metrics(self, output_df, expected_df):
         quality_dict = {"tp": 0, "fp": 0, "tn": 0, "fn": 0}
 
@@ -25,9 +21,9 @@ class QualityMeasurer:
                 if expected == actual:
                     quality_dict["tp"] += 1
                 elif expected in default_negative_labels and actual in default_negative_labels:
-                    quality_dict["tn"] +=1
+                    quality_dict["tn"] += 1
             else:
-                if expected in default_negative_labels and actual not in default_negative_labels:
+                if not actual == expected or (expected in default_negative_labels and actual not in default_negative_labels):
                     quality_dict["fp"] += 1
                 elif expected not in default_negative_labels and actual in default_negative_labels:
                     quality_dict["fn"] += 1

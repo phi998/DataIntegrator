@@ -1,5 +1,6 @@
 package it.uniroma3.dim.domain;
 
+import it.uniroma3.di.common.api.dto.dim.*;
 import it.uniroma3.di.common.api.dto.dis.FileUploadedResponse;
 import it.uniroma3.di.common.api.dto.dis.RetrieveFileResponse;
 import it.uniroma3.dim.domain.entity.*;
@@ -10,7 +11,6 @@ import it.uniroma3.dim.event.JobStartedEvent;
 import it.uniroma3.dim.eventpublisher.impl.JobCreatedEventPublisher;
 import it.uniroma3.dim.proxy.DisStorageClient;
 import it.uniroma3.dim.proxy.TssStorageClient;
-import it.uniroma3.dim.rest.dto.*;
 import it.uniroma3.dim.utils.CSVUtils;
 import it.uniroma3.dim.utils.Utils;
 import lombok.extern.slf4j.Slf4j;

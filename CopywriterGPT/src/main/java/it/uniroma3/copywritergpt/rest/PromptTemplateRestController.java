@@ -1,0 +1,32 @@
+package it.uniroma3.copywritergpt.rest;
+
+import it.uniroma3.copywritergpt.domain.PromptTemplateService;
+import it.uniroma3.di.common.api.dto.copywritergpt.CreatePromptTemplateRequest;
+import it.uniroma3.di.common.api.dto.copywritergpt.GetPromptTemplateResponse;
+import it.uniroma3.di.common.api.dto.copywritergpt.PromptTemplateCreatedResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@Slf4j
+public class PromptTemplateRestController {
+
+    @Autowired
+    private PromptTemplateService promptTemplateService;
+
+    @PostMapping("/category/{categoryId}/template")
+    public PromptTemplateCreatedResponse createPromptTemplate(@PathVariable("categoryId") Long categoryId, @RequestBody CreatePromptTemplateRequest createPromptTemplateRequest) {
+        log.info("createPromptTemplate(): categoryId={}, createPromptTemplateRequest={}", categoryId, createPromptTemplateRequest);
+
+        return promptTemplateService.createPromptTemplate(categoryId, createPromptTemplateRequest.getName(), createPromptTemplateRequest.getContent());
+    }
+
+    @GetMapping("/templates/{templateId}")
+    public GetPromptTemplateResponse getPromptTemplateResponse(@PathVariable("templateId") Long templateId) {
+        log.info("getPromptTemplateResponse(): templateId={}", templateId);
+
+        return promptTemplateService.getPromptTemplate(templateId);
+    }
+
+}

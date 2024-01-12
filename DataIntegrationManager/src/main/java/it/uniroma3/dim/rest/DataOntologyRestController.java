@@ -1,8 +1,8 @@
 package it.uniroma3.dim.rest;
 
 
+import it.uniroma3.di.common.api.dto.dim.*;
 import it.uniroma3.dim.domain.OntologyService;
-import it.uniroma3.dim.rest.dto.*;
 import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,8 @@ import unittest
 import pandas as pd
 from io import StringIO
 
-from filters.LabelerByColumn import LabelerByColumn
+from filters.ColumnEntropyFilter import ColumnEntropyFilter
+from filters.ColumnTrimFilter import ColumnTrimFilter
 from filters.EmptyColumnsCleaner import EmptyColumnsCleaner
 from filters.HtmlCleaner import HtmlCleaner
 from filters.Labeler import Labeler
@@ -40,10 +41,22 @@ class FiltersTest(unittest.TestCase):
     def test_useful_columns_filter(self):
         df = pd.read_csv('datasets/useful_columns_filter/input.csv', header=None)
 
-        cleaner = UsefulDataFilter()
+        cleaner = UsefulDataFilter("context")
         df = cleaner.clean(df)
 
         df.to_csv("datasets/useful_columns_filter/output_old.csv", header=None)
+
+    def test_low_entropy_columns_filter(self):
+        df = pd.read_csv('datasets/low_entropy/input.csv', header=None)
+
+        table_column_trimmer = ColumnTrimFilter()
+        df = table_column_trimmer.apply(df)
+
+        entropy_filter = ColumnEntropyFilter(0.1)  # FIXME
+        df = entropy_filter.apply(df, ontology=None)
+
+        df.to_csv("datasets/low_entropy/output.csv", header=None)
+
 
     def test_labeler(self):
         df = pd.read_csv('datasets/labeler/input.csv', header=None)
@@ -53,11 +66,4 @@ class FiltersTest(unittest.TestCase):
 
         df.to_csv("datasets/labeler/output_old.csv")
 
-    def test_column_labeler(self):
-        df = pd.read_csv('datasets/labeler/input.csv', header=None)
-
-        c_labeler = LabelerByColumn("job advertisement")
-        df = c_labeler.label_columns(df, ["Company name", "Role", "Location", "Description", "Advertisement Content"])
-
-        df.to_csv("datasets/c_labeler/output_old.csv")
 

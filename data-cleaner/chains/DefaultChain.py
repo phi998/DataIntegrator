@@ -31,7 +31,7 @@ class DefaultChain:
         table_column_trimmer = ColumnTrimFilter()
         df = table_column_trimmer.apply(df)
 
-        entropy_filter = ColumnEntropyFilter(1/len(df) + 0.0001)  # FIXME
+        entropy_filter = ColumnEntropyFilter(0.1)  # FIXME
         df = entropy_filter.apply(df, self.ontology)
 
         print("Cleaned low entropy columns")

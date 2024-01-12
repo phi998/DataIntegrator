@@ -1,14 +1,12 @@
 package it.uniroma3.dim.rest;
 
 import it.uniroma3.dim.domain.JobService;
-import it.uniroma3.dim.rest.dto.EditTableColumnsNamesRequest;
-import it.uniroma3.dim.rest.dto.TablesPreviewResponse;
+import it.uniroma3.di.common.api.dto.dim.EditTableColumnsNamesRequest;
+import it.uniroma3.di.common.api.dto.dim.TablesPreviewResponse;
 import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @Slf4j

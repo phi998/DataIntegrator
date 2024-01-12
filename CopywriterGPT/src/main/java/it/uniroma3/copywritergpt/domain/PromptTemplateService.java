@@ -1,6 +1,7 @@
 package it.uniroma3.copywritergpt.domain;
 
 import it.uniroma3.copywritergpt.domain.entity.PromptTemplate;
+import it.uniroma3.di.common.api.dto.copywritergpt.GetPromptTemplateResponse;
 import it.uniroma3.di.common.api.dto.copywritergpt.PromptTemplateCreatedResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,12 @@ public class PromptTemplateService {
         return Converter.toPromptTemplateCreatedResponse(promptTemplate);
     }
 
+    public GetPromptTemplateResponse getPromptTemplate(Long templateId) {
+        log.info("getPromptTemplate(): templateId={}", templateId);
+
+        return Converter.toGetPromptTemplateResponse(promptTemplateRepository.findById(templateId).get());
+    }
+
     private class Converter {
 
         static PromptTemplateCreatedResponse toPromptTemplateCreatedResponse(PromptTemplate promptTemplate) {
@@ -42,6 +49,15 @@ public class PromptTemplateService {
             promptTemplateCreatedResponse.setCategoryId(promptTemplate.getCategory().getId());
             promptTemplateCreatedResponse.setCategory(promptTemplate.getCategory().getName());
             return promptTemplateCreatedResponse;
+        }
+
+        static GetPromptTemplateResponse toGetPromptTemplateResponse(PromptTemplate promptTemplate) {
+            GetPromptTemplateResponse getPromptTemplateResponse = new GetPromptTemplateResponse();
+            getPromptTemplateResponse.setId(promptTemplate.getId());
+            getPromptTemplateResponse.setName(promptTemplate.getName());
+            getPromptTemplateResponse.setContent(promptTemplate.getContent());
+
+            return getPromptTemplateResponse;
         }
 
     }
