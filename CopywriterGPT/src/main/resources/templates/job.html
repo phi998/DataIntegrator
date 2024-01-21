@@ -1,10 +1,87 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs</title>
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+
+    <!-- Include JS -->
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </head>
+
 <body>
+<th:block th:replace="bar/topnav :: navbar"></th:block>
+
+<div class="container-fluid">
+    <div class="row">
+        <th:block th:replace="bar/side :: sidebar"></th:block>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2">Job(#<span th:text="${job.id}">job_id</span>): <span th:text="${job.name}">job_name</span></h1>
+            </div>
+
+            <h2 th:text="${job.name}">job_name</h2>
+            <div class="table-responsive">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Job ID</th><td>pjb_id</td>
+                        </tr><tr>
+                            <th>Job Status</th><td></td>
+                        </tr><tr>
+                            <th>Job ontology</th>
+                            <td>
+                                <span th:each="item : ${job.ontology.items}" th:text="${item.label}">item</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <form method="post" th:if="${job.jobStatus eq 'CREATED'}" th:action="@{'/jobs/' + ${job.id} + '/start'}" th:object="${startJobForm}">
+                <input type="submit" value="Start Job" class="btn-primary btn">
+            </form>
+
+            <h2 th:if="${job.jobStatus eq 'DATA_LABELED'}">Jobs Result Preview</h2>
+
+            <div class="table-responsive" th:if="${job.jobStatus eq 'DATA_LABELED'}" th:each="table : ${tables.entrySet()}">
+                <h3 th:text="${table.key}">table_name</h3>
+                <table>
+                    <thead><tr>
+                        <th>Column Name</th>
+                        <th>New column name</th>
+                        <th>Column Preview</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr th:each="column : ${table.value.table}">
+                            <td th:text="${column.key}">column_name</td>
+                            <td>
+                                <input type="text" th:value="${column.key}">
+                            </td>
+                            <td>
+                                <table>
+                                    <tbody>
+                                    <tr th:each="cell: ${column.value}">
+                                        <td th:text="${cell}" style="padding: 5px;">cell_val</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </main>
+    </div>
+</div>
+
 
 </body>
 </html>

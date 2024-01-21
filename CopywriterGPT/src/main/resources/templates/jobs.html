@@ -7,49 +7,18 @@
   <title>Jobs</title>
 
   <!-- Link CSS -->
-  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 
   <!-- Include JS -->
-  <script th:src="@{/js/script.js}"></script>
+  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </head>
 
 <body>
-<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">CopywriterGPT</a>
-  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-  <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#"></a>
-    </li>
-  </ul>
-</nav>
+<th:block th:replace="bar/topnav :: navbar"></th:block>
 
 <div class="container-fluid">
   <div class="row">
-    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-      <div class="sidebar-sticky">
-        <ul class="nav flex-column">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">
-              <span data-feather="layers"></span>
-              Jobs
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file"></span>
-              Templates
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              Ontologies
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <th:block th:replace="bar/side :: sidebar"></th:block>
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
@@ -75,11 +44,45 @@
           </tr>
           </thead>
           <tbody>
-            <tr>
-              JOBS LIST GOES HERE
+            <tr th:each="job : ${jobs.getJobInfoResponseList}">
+              <td th:text="${job.id}">job_id</td>
+              <td th:text="${job.name}">job_name</td>
+              <td th:text="${job.ontology.name}">ontology_name</td>
+              <td th:text="${job.jobStatus}">job_status</td>
+              <td>
+                <a th:href="@{'/jobs/' + ${job.id}}" class="btn btn-info" role="button">Details</a>
+              </td>
             </tr>
           </tbody>
         </table>
+
+        <h2>New Job</h2>
+        <form th:action="@{'/jobs'}" th:object="${jobForm}" method="post" enctype="multipart/form-data">
+          <table class="table table-striped table-sm">
+            <tbody>
+              <tr>
+                <th>Job name</th><th>OntologyName</th><th>Tables</th><th></th>
+              </tr>
+              <tr>
+                <td>
+                  <input type="text" placeholder="Job name" th:field="*{jobName}">
+                </td>
+                <td>
+                  <select th:field="*{ontologyName}">
+                    <option th:each="ontology : ${ontologies.ontologies}" th:text="${ontology.name}" th:value="${ontology.name}"></option>
+                  </select>
+                </td>
+                <td>
+                  <input type="file" name="files" multiple>
+                </td>
+                <td>
+                  <input type="submit" value="Create Job" class="btn btn-primary">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+
       </div>
     </main>
   </div>

@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 
 
@@ -7,16 +9,16 @@ class DataReader:
         self.__datasets_folder = datasets_folder
 
     def read_dataset(self, dataset_name):
-        df = pd.read_csv(self.__datasets_folder + dataset_name + "/input.csv", header=None)
+        df = pd.read_csv(os.path.join(self.__datasets_folder, "input", f'{dataset_name}.csv'), header=None)
 
         return df
 
-    def read_expected(self, dataset_name):
-        df = pd.read_csv(self.__datasets_folder + dataset_name + "/expected.csv")
+    def read_expected(self, dataset_name, case):
+        df = pd.read_csv(os.path.join(self.__datasets_folder, "expected", f'case{case}', f'{dataset_name}.csv'), header=None)
 
         return df
 
-    def read_result(self, dataset_name):
-        df = pd.read_csv(self.__datasets_folder + dataset_name + "/output.csv")
+    def read_output(self, dataset_name, case):
+        df = pd.read_csv(os.path.join(self.__datasets_folder, "output", f'case{case}', f'{dataset_name}.csv'), header=None)
 
         return df

@@ -14,6 +14,8 @@ public class GetJobInfoResponse {
 
     private String jobStatus;
 
+    private GetOntologyResponse ontology;
+
     private Collection<EndedJobTable> endedJobTables;
 
     public GetJobInfoResponse() {

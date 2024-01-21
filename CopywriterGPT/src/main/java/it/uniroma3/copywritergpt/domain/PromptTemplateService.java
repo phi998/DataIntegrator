@@ -1,5 +1,6 @@
 package it.uniroma3.copywritergpt.domain;
 
+import it.uniroma3.copywritergpt.domain.entity.PromptCategory;
 import it.uniroma3.copywritergpt.domain.entity.PromptTemplate;
 import it.uniroma3.di.common.api.dto.copywritergpt.GetPromptTemplateResponse;
 import it.uniroma3.di.common.api.dto.copywritergpt.PromptTemplateCreatedResponse;
@@ -28,6 +29,23 @@ public class PromptTemplateService {
         promptTemplate.setName(templateName);
         promptTemplate.setContent(templateContent);
         promptTemplate.setCategory(promptCategoryService.getPromptCategoryById(categoryId));
+
+        promptTemplate = promptTemplateRepository.save(promptTemplate);
+
+        return Converter.toPromptTemplateCreatedResponse(promptTemplate);
+    }
+
+    public PromptTemplateCreatedResponse createPromptTemplate(String categoryName, String templateName, String templateContent) {
+        log.info("createPromptTemplate(): categoryName={}, templateName={}, templateContent={}", categoryName, templateName, templateContent);
+
+        PromptCategory promptCategory = this.promptCategoryService.getPromptCategoryByName(categoryName);
+        if(promptCategory == null)
+            promptCategory = this.promptCategoryService.createNewCategory(categoryName);
+
+        PromptTemplate promptTemplate = new PromptTemplate();
+        promptTemplate.setName(templateName);
+        promptTemplate.setContent(templateContent);
+        promptTemplate.setCategory(promptCategory);
 
         promptTemplate = promptTemplateRepository.save(promptTemplate);
 

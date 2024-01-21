@@ -1,10 +1,12 @@
 
 class PromptBuilder:
 
-    def build_prompt_example(self, input_example, output_example):
+    def build_prompt_examples(self, examples, input_example, output_example):
         prompt = "\nThis is an example:"
-        prompt += f"\nInput={input_example}" \
-                  f"\nOutput={output_example}"
+
+        for example in examples:
+            prompt += f"\nInput={example['input']}" \
+                      f"\nOutput={example['output']}"
 
         return prompt
 
@@ -34,7 +36,8 @@ class PromptBuilder:
                 sub_prompt += f"\n{ontology_item_name} is a number"
 
             if 'notes' in v:
-                ontology_item_notes = v["notes"]
-                sub_prompt += f"\n{ontology_item_name}: {ontology_item_notes}"
+                ontology_item_notes = v['notes']
+                if not (ontology_item_notes is None or ontology_item_notes.isspace() or len(ontology_item_notes) == 0):
+                    sub_prompt += f"\n{ontology_item_name}: {ontology_item_notes}"
 
         return sub_prompt

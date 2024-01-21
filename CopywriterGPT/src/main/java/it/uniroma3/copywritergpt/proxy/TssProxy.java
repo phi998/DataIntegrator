@@ -22,13 +22,13 @@ public class TssProxy {
         this.restTemplate = restTemplate;
     }
 
-    public QueryResponse getTopResults(Map<String, String> query, String collectionName, int n) {
+    public QueryResponse getTopResults(Map<String, String> query, int n) {
         query.put("n", String.valueOf(n));
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        String url = Endpoints.TSS_ENDPOINT + "/" + collectionName + "/query";
+        String url = Endpoints.TSS_ENDPOINT + "/query";
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
         for (Map.Entry<String, String> entry : query.entrySet()) {
@@ -40,13 +40,13 @@ public class TssProxy {
         return responseEntity.getBody();
     }
 
-    public List<Document> getDocumentsById(String collectionName, Collection<String> documentIds) {
+    public List<Document> getDocumentsById(Collection<String> documentIds) {
         Map<String,String> solrQuery = new HashMap<>();
         solrQuery.put("id", this.buildQueryById(documentIds));
 
         List<Document> documents = new ArrayList<>();
 
-        QueryResponse qr = this.getTopResults(solrQuery, collectionName, documentIds.size());
+        QueryResponse qr = this.getTopResults(solrQuery, documentIds.size());
         for(ResultEntryResponse doc: qr.getDocuments()) {
             Document document = new Document();
             document.setFields(new HashMap<>(doc.getColumnName2Content()));

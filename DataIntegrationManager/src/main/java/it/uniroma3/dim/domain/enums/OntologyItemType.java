@@ -13,6 +13,7 @@ public enum OntologyItemType {
     LINK,
     PRICE,
     YEAR,
+    TIME,
     UNKNOWN
 
 }

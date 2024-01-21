@@ -20,9 +20,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static it.uniroma3.di.common.utils.Constants.CSV_SEPARATOR;
 
@@ -58,16 +56,37 @@ public class JobService {
         return Converter.toCreateNewJobResponse(job);
     }
 
+    public GetJobListResponse getAllJobs(boolean showTables) {
+        log.info("getAllJobs()");
+        GetJobListResponse getJobListResponse = new GetJobListResponse();
+
+        this.jobRepository.findAll().forEach(
+            job -> getJobListResponse.addJobInfoResponse(Converter.toGetJobInfoResponse(job, showTables))
+        );
+
+        return getJobListResponse;
+    }
+
     public GetJobInfoResponse getJobInfo(Long jobId, boolean showTables) {
         Job job = jobRepository.findById(jobId).get();
 
         return Converter.toGetJobInfoResponse(job, showTables);
     }
 
-    public GetJobInfoResponse getJobInfoByName(String name, boolean showTables) {
-        Job job = jobRepository.findAllByName(name).get(0);
+    public GetJobListResponse getJobsList(String name, boolean showTables) {
 
-        return Converter.toGetJobInfoResponse(job, showTables);
+        List<Job> jobs;
+        if(name==null || name.equals("")) {
+            jobs = new ArrayList<>();
+            jobRepository.findAll().forEach(jobs::add);
+        } else {
+            jobs = jobRepository.findAllByName(name);
+        }
+
+        GetJobListResponse jobsList = new GetJobListResponse();
+        jobs.forEach(j -> jobsList.addJobInfoResponse(Converter.toGetJobInfoResponse(j, showTables)));
+
+        return jobsList;
     }
 
     public TableAddedToJobResponse addNewTableToJob(Long jobId, String tableName, String tableContent) {
@@ -161,16 +180,38 @@ public class JobService {
 
         Job job = jobRepository.findById(jobId).get();
 
-        for(JobTable jobTable: job.getJobResult().getResultTables()) {
-            String tableName = jobTable.getName();
-            String tableContent = Utils.convertBinaryToString(jobTable.getTableData());
-            tableContent = CSVUtils.sample(tableContent, true, rows);
-            Map<String, Collection<String>> structuredTablePreview = CSVUtils.convertCsvStringToStructure(tableContent);
+        if(job.getJobResult() != null) {
+            for (JobTable jobTable : job.getJobResult().getResultTables()) {
+                String tableName = jobTable.getName();
+                String tableContent = Utils.convertBinaryToString(jobTable.getTableData());
+                tableContent = CSVUtils.sample(tableContent, true, rows);
+                Map<String, Collection<String>> structuredTablePreview = CSVUtils.convertCsvStringToStructure(tableContent);
 
-            tpr.addTable(tableName, structuredTablePreview);
+                tpr.addTable(tableName, structuredTablePreview);
+            }
         }
 
         return tpr;
+    }
+
+    public GetEndedJobTablesResponse getEndedJobResult(Long jobId) {
+        log.info("getEndedJobResult(): jobId={}", jobId);
+
+        GetEndedJobTablesResponse ejtr = new GetEndedJobTablesResponse();
+        ejtr.setJobId(jobId);
+
+        Job job = jobRepository.findById(jobId).get();
+
+        if(job.getJobResult() != null) {
+            for (JobTable jobTable : job.getJobResult().getResultTables()) {
+                String tableName = jobTable.getName();
+                String tableContent = Utils.convertBinaryToString(jobTable.getTableData());
+
+                ejtr.addResultTable(tableName, tableContent);
+            }
+        }
+
+        return ejtr;
     }
 
     public void renameColumns(Long jobId, Map<String,Collection<String>> tableName2columnsNames) {
@@ -273,6 +314,26 @@ public class JobService {
             jobInfoResponse.setId(job.getId());
             jobInfoResponse.setName(job.getName());
             jobInfoResponse.setJobStatus(job.getStatus().name());
+
+            Ontology ontology = job.getJobData().getOntology();
+            if(ontology != null) {
+                GetOntologyResponse ontologyResponse = new GetOntologyResponse();
+                ontologyResponse.setId(ontology.getId());
+                ontologyResponse.setName(ontology.getName());
+
+
+                for(OntologyItem ontologyItem : ontology.getItems()) {
+                    OntologyItemOutput oio = new OntologyItemOutput();
+                    oio.setLabel(ontologyItem.getLabel());
+                    oio.setType(ontologyItem.getType().name());
+                    oio.setImportance(ontologyItem.getImportance());
+                    oio.setNotes(ontologyItem.getNotes());
+
+                    ontologyResponse.addItem(oio);
+                }
+
+                jobInfoResponse.setOntology(ontologyResponse);
+            }
 
             if(showTables) {
                 for(JobTable jt: job.getJobData().getTables()) {

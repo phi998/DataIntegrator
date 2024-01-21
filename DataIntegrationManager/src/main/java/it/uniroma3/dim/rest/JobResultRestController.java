@@ -1,5 +1,6 @@
 package it.uniroma3.dim.rest;
 
+import it.uniroma3.di.common.api.dto.dim.GetEndedJobTablesResponse;
 import it.uniroma3.dim.domain.JobService;
 import it.uniroma3.di.common.api.dto.dim.EditTableColumnsNamesRequest;
 import it.uniroma3.di.common.api.dto.dim.TablesPreviewResponse;
@@ -19,6 +20,12 @@ public class JobResultRestController {
     public TablesPreviewResponse getTablesPreviews(@PathVariable("jobId") Long jobId, @PathParam("rows") int rows) {
         log.info("getTablesPreviews(), jobId={}, rows={}", jobId, rows);
         return jobService.getEndedJobResultPreview(jobId, rows);
+    }
+
+    @GetMapping("/jobs/{jobId}/result")
+    public GetEndedJobTablesResponse getJobResult(@PathVariable("jobId") Long jobId, @PathParam("rows") int rows) {
+        log.info("getTablesPreviews(), jobId={}, rows={}", jobId, rows);
+        return jobService.getEndedJobResult(jobId);
     }
 
     @PutMapping("/jobs/{jobId}/preview")

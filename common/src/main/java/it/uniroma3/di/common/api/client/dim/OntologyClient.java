@@ -47,8 +47,20 @@ public class OntologyClient extends Client {
         return responseEntity.getBody();
     }
 
+    public GetOntologyResponse getOntologyById(Long ontologyId) {
+        String url = ONTOLOGY_ENDPOINT + "/" + ontologyId;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        ResponseEntity<GetOntologyResponse> responseEntity =
+                restTemplate.getForEntity(url, GetOntologyResponse.class);
+
+        return responseEntity.getBody();
+    }
+
     public void addItemsToOntology(Long ontologyId, AddItemsToOntologyRequest addItemsToOntologyRequest) {
-        String url = ONTOLOGY_ENDPOINT + "/ontology/" + ontologyId + "/items";
+        String url = ONTOLOGY_ENDPOINT + "/" + ontologyId + "/items";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

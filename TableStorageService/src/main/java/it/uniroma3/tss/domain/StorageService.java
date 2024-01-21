@@ -25,7 +25,7 @@ public class StorageService {
         proxyFacade.uploadData(CSVUtils.toTableRows(content,fields.stream().map(TableField::getName).toList()));
     }
 
-    public Collection<ResultEntryResponse> query(String collectionName, Map<String,String> attributes2values, int n) {
+    public Collection<ResultEntryResponse> query(Map<String,String> attributes2values, int n) {
         ProxyFacade proxyFacade = new SolrProxyFacade();
 
         return proxyFacade.retrieveData(attributes2values, n).stream().map(Converter::toResultEntryResponse).toList();

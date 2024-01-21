@@ -1,6 +1,10 @@
 # application.yml
 ---
 spring:
+  servlet:
+    multipart:
+      max-file-size: 300MB
+      max-request-size: 300MB
   config:
     activate:
       on-profile: default

@@ -31,3 +31,32 @@ class ConfigCache:
 
     def get_configuration(self, key):
         return self.__configs[key]
+
+    def get_prompt_examples(self):
+
+        examples = [
+              {
+                "input": "apple, banana, pear, pineapple",
+                "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+              },
+              {
+                "input": "John, Emily, Alex, Sarah, Michael",
+                "output": "{\"column_name\":\"name\",\"confidence\":0.9}"
+              },
+              {
+                "input": "8kg, 12kg, 90kg, 45g, 1ton",
+                "output": "{\"column_name\":\"weight\",\"confidence\":0.9}"
+              },
+              {
+                "input": "Rome, Paris, London, New York, Beijing",
+                "output": "{\"column_name\":\"city\",\"confidence\":0.9}"
+              },
+              {
+                "input": "hp, lenovo, lg, samsung, apple, microsoft",
+                "output": "{\"column_name\":\"company name\",\"confidence\":0.9}"
+              }
+            ]
+
+        num_of_shots = self.__configs["shots"]
+
+        return examples[:num_of_shots]

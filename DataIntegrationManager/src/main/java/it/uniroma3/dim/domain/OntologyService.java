@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -31,7 +32,12 @@ public class OntologyService {
             ontologyItem.setLabel(item.getLabel());
             ontologyItem.setImportance(item.getImportance());
             ontologyItem.setNotes(item.getNotes());
-            ontologyItem.setType(OntologyItemType.valueOf(item.getType()));
+
+            if(Stream.of(OntologyItemType.values()).map(Enum::name).toList().contains(item.getType()))
+                ontologyItem.setType(OntologyItemType.valueOf(item.getType()));
+            else
+                ontologyItem.setType(OntologyItemType.UNKNOWN);
+
             ontology.addItem(ontologyItem);
         }
 

@@ -10,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class PromptCategoryService {
@@ -18,11 +21,24 @@ public class PromptCategoryService {
     private PromptCategoryRepository promptCategoryRepository;
 
     public PromptCategory getPromptCategoryByName(String name) {
-        return promptCategoryRepository.findAllByName(name).get(0);
+
+        List<PromptCategory> categories = promptCategoryRepository.findAllByName(name);
+        if(categories.isEmpty())
+            return null;
+
+        return categories.get(0);
     }
 
     public PromptCategory getPromptCategoryById(Long categoryId) {
-        return promptCategoryRepository.findById(categoryId).get();
+        Optional<PromptCategory> promptCategory = promptCategoryRepository.findById(categoryId);
+
+        return promptCategory.orElse(null);
+    }
+
+    public PromptCategory createNewCategory(String categoryName) {
+        PromptCategory category = new PromptCategory();
+        category.setName(categoryName);
+        return promptCategoryRepository.save(category);
     }
 
     public PromptCategoryCreatedResponse createNewPromptCategory(String categoryName) {

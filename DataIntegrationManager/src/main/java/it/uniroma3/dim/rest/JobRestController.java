@@ -38,16 +38,14 @@ public class JobRestController {
     }
 
     @GetMapping("/jobs")
-    public GetJobInfoResponse getJobInfoByName(@PathParam("name") String name, @RequestParam(name = "showTables", defaultValue = "false") boolean showTables) {
+    public GetJobListResponse getJobsList(@PathParam("name") String name, @RequestParam(name = "showTables", defaultValue = "false") boolean showTables) {
         log.info("getJobInfoByName(): jobName={}", name);
 
-        GetJobInfoResponse jobInfoResponse = jobService.getJobInfoByName(name, showTables);
-        log.info("getJobInfoByName(): jobInfoResponse={}", jobInfoResponse);
+        GetJobListResponse jobsList = jobService.getJobsList(name, showTables);
+        log.info("getJobInfoByName(): jobsList={}", jobsList);
 
-        return jobInfoResponse;
+        return jobsList;
     }
-
-
 
     @PostMapping("/jobs/{jobId}/tables")
     public TableAddedToJobResponse addTableToJob(

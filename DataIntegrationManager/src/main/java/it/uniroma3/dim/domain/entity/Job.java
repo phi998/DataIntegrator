@@ -6,6 +6,8 @@ import it.uniroma3.dim.domain.enums.OntologyItemType;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.stream.Stream;
+
 @Entity
 @Data
 public class Job {
@@ -41,7 +43,12 @@ public class Job {
     public void addOntologyItem(String item, String ontologyItemType, int importance) {
         OntologyItem oi = new OntologyItem();
         oi.setLabel(item);
-        oi.setType(OntologyItemType.valueOf(ontologyItemType));
+
+        if(Stream.of(OntologyItemType.values()).map(Enum::name).toList().contains(ontologyItemType))
+            oi.setType(OntologyItemType.valueOf(ontologyItemType));
+        else
+            oi.setType(OntologyItemType.UNKNOWN);
+
         oi.setImportance(importance);
         jobData.getOntology().addItem(oi);
     }

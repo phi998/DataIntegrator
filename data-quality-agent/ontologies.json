@@ -277,5 +277,77 @@
       "type": "NAME",
       "importance": 4
     }
+  },
+  "books": {
+    "Book Title": {
+      "type": "TITLE",
+      "importance": 9
+    },
+    "Author": {
+      "type": "NAME",
+      "importance": 7
+    },
+    "Editor": {
+      "type": "NAME",
+      "importance": 5
+    },
+    "Date of publication": {
+      "type": "YEAR",
+      "importance": 4
+    },
+    "Price": {
+      "type": "PRICE",
+      "importance": 2
+    },
+    "Seller": {
+      "type": "NAME",
+      "importance": 2
+    },
+    "Pages": {
+      "type": "NUMERIC",
+      "importance": 2
+    },
+    "Code/ID": {
+      "type": "NUMERIC",
+      "importance": 2
+    },
+    "Book Description": {
+      "type": "PROSE",
+      "importance": 2
+    }
+  },
+  "footballplayers": {
+    "Player Name": {
+      "type": "NAME",
+      "importance": 9
+    },
+    "Date of birth": {
+      "type": "DATE",
+      "importance": 6
+    },
+    "Height": {
+      "type": "NUMERIC",
+      "importance": 3
+    },
+    "Nationality": {
+      "type": "NAME",
+      "importance": 5
+    },
+    "Additional Information": {
+      "type": "PROSE",
+      "importance": 2
+    },
+    "Team": {
+      "type": "NAME",
+      "importance": 6
+    },
+    "Value": {
+      "type": "PRICE",
+      "importance": 2
+    },
+    "Role": {
+      "type": "NAME",
+      "importance": 4
+    }
   }
 }

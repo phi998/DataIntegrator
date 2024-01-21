@@ -1,10 +1,7 @@
 package it.uniroma3.copywritergpt.service;
 
 import it.uniroma3.di.common.api.client.dim.OntologyClient;
-import it.uniroma3.di.common.api.dto.dim.AddItemsToOntologyRequest;
-import it.uniroma3.di.common.api.dto.dim.CreateNewOntologyRequest;
-import it.uniroma3.di.common.api.dto.dim.CreateNewOntologyResponse;
-import it.uniroma3.di.common.api.dto.dim.GetOntologyCollectionResponse;
+import it.uniroma3.di.common.api.dto.dim.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -29,6 +26,12 @@ public class OntologyService {
         log.info("getOntologies(): name={}", name);
 
         return this.ontologyClient.getOntologies(name);
+    }
+
+    public GetOntologyResponse getOntologyById(Long ontologyId) {
+        log.info("getOntologyById(): ontologyId={}", ontologyId);
+
+        return this.ontologyClient.getOntologyById(ontologyId);
     }
 
     public void addItemsToOntology(Long ontologyId, AddItemsToOntologyRequest addItemsToOntologyRequest) {

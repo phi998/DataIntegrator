@@ -28,15 +28,16 @@ class JobWorker:
             file_storage_api = FileStorageApi()
             table_content = file_storage_api.get_file(table_content_resource_url)
 
-            csv_file = StringIO(table_content)
-            df = pd.read_csv(csv_file, encoding="utf-8", header=None)
-            print(f"Applying chain to table {table_name}")
-            df_cleaned = chain.apply(df)
-            print(f"Uploading table {table_name}")
-            cleaned_tables.append({
-                "tableName": table_name,
-                "df": df_cleaned
-            })
+            if not table_content.isspace():
+                csv_file = StringIO(table_content)
+                df = pd.read_csv(csv_file, encoding="utf-8", header=None)
+                print(f"Applying chain to table {table_name}")
+                df_cleaned = chain.apply(df)
+                print(f"Uploading table {table_name}")
+                cleaned_tables.append({
+                    "tableName": table_name,
+                    "df": df_cleaned
+                })
 
         return cleaned_tables
 

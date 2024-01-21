@@ -26,6 +26,6 @@ class MockLLM(GenericLLMApi):
 
         return mock_dict
 
-    def get_one_shot_solution(self, input_example, output_example, task, prompt, prompt_input, instructions,
+    def get_one_shot_solution(self, examples, input_example, output_example, task, prompt, prompt_input, instructions,
                               model=Model.DEFAULT):
         return json.loads("{}")

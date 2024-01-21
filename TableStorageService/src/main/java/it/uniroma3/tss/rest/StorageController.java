@@ -40,10 +40,10 @@ public class StorageController {
         storageService.storeTable(tsr.getTableName(), tsr.getCategory(), tableContent, tableFields);
     }
 
-    @GetMapping("/{collectionName}/query")
-    public QueryResponse getTopResults(@RequestParam Map<String,String> queryParams, @PathVariable("collectionName") String collectionName) {
+    @GetMapping("/query")
+    public QueryResponse getTopResults(@RequestParam Map<String,String> queryParams) {
 
-        log.info("getTopResults(): collectionName={}, queryParams={}", collectionName, queryParams);
+        log.info("getTopResults(): queryParams={}", queryParams);
 
         int nResults = Integer.parseInt(queryParams.get(TSS_N_RESULTS_KEY));
         queryParams.remove(TSS_N_RESULTS_KEY);
@@ -52,7 +52,7 @@ public class StorageController {
             queryParams.put("*","*");
 
         QueryResponse qr = new QueryResponse();
-        qr.setDocuments(storageService.query(collectionName, queryParams, nResults));
+        qr.setDocuments(storageService.query(queryParams, nResults));
 
         return qr;
     }

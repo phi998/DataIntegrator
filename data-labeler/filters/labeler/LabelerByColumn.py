@@ -51,9 +51,12 @@ class LabelerByColumn:
             ontology_subprompt = "Classify the column given to you into only one of these types that are separated with " \
                                  f"comma: {ontology_items}"
 
+
+
         response = chatgpt.get_one_shot_solution(
+            examples=self.__cache.get_prompt_examples(),
             input_example='apple, banana, pear, pineapple',
-            output_example='{"column_name":"fruit","confidence": 0.9}',
+            output_example='{"column_name":"fruit","confidence":0.9}',
             task=f"You are an expert about {self.__data_context}",
             prompt="Answer the question based on the task below, If the question cannot be answered "
                    "using the information provided answer with 'other'.\n" + ontology_subprompt,

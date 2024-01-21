@@ -16,7 +16,7 @@ public class CSVUtils {
         StringBuilder sampledLines = new StringBuilder();
 
         try (StringReader stringReader = new StringReader(csvString);
-             CSVParser csvParser = CSVFormat.DEFAULT.parse(stringReader)) {
+             CSVParser csvParser = CSVFormat.DEFAULT.withHeader().parse(stringReader)) {
 
             int count = 0;
             for (CSVRecord record : csvParser) {
@@ -38,7 +38,7 @@ public class CSVUtils {
         Map<String, Collection<String>> csvStructure = new HashMap<>();
 
         try (StringReader stringReader = new StringReader(csvTable);
-             CSVParser csvParser = CSVFormat.DEFAULT.parse(stringReader)) {
+             CSVParser csvParser = CSVFormat.DEFAULT.withHeader().parse(stringReader)) {
 
             String[] headers = csvParser.getHeaderMap().keySet().toArray(new String[0]);
 
