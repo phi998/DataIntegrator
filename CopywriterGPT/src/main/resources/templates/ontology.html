@@ -1,0 +1,109 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs</title>
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+
+    <!-- Include JS -->
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</head>
+
+<body>
+<th:block th:replace="bar/topnav :: navbar"></th:block>
+
+<div class="container-fluid">
+    <div class="row">
+        <th:block th:replace="bar/side :: sidebar"></th:block>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2">Ontology(#<span th:text="${ontology.id}">ontology_id</span>): <span th:text="${ontology.name}">ontology_name</span></h1>
+            </div>
+
+            <h2 th:text="${ontology.name}">ontology_name</h2>
+            <div class="table-responsive">
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Ontology ID</th><td th:text="${ontology.id}">ontology_id</td>
+                    </tr><tr>
+                        <th>Ontology Items</th>
+                        <td><span th:each="item : ${ontology.items}" th:text="${item.label}">item</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Items</h2>
+            <div class="table-responsive">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>#</th>
+                            <th>Label</th>
+                            <th>Importance</th>
+                            <th>Type</th>
+                            <th>Notes</th>
+                        </tr>
+                        <tr th:each="item : ${ontology.items}">
+                            <td></td>
+                            <td th:text="${item.label}">label</td>
+                            <td th:text="${item.importance}">importance</td>
+                            <td th:text="${item.type}">type</td>
+                            <td th:text="${item.notes}">notes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>New item</h2>
+            <form th:action="@{'/ontology/' + ${ontology.id} + '/items'}" th:object="${itemForm}" method="post">
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>Item label</th>
+                            <th>Importance</th>
+                            <th>Item Type</th>
+                            <th>Notes</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" placeholder="Item label" th:field="*{label}">
+                            </td>
+                            <td>
+                                <select th:field="*{importance}">
+                                    <option th:each="value : ${importanceValues}" th:value="${value}" th:text="${value}" th:selected="${itemForm.importance == value}"></option>
+                                </select>
+
+                            </td>
+                            <td>
+                                <select th:field="*{type}">
+                                    <option th:each="itemType : ${itemTypes}" th:value="${itemType.name()}" th:text="${itemType.name()}">item</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" placeholder="Add notes" th:field="*{notes}">
+                            </td>
+                            <td>
+                                <input type="submit" value="Add item" class="btn btn-primary">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+
+        </main>
+    </div>
+</div>
+
+
+</body>
+</html>

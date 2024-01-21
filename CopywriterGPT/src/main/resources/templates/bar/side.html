@@ -1,0 +1,24 @@
+<nav class="col-md-2 d-none d-md-block bg-light sidebar" th:fragment="sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/jobs}">
+                    <span data-feather="layers"></span>
+                    Jobs
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/templates}">
+                    <span data-feather="file"></span>
+                    Templates
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/ontology}">
+                    <span data-feather="bar-chart-2"></span>
+                    Ontologies
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
