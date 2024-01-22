@@ -314,6 +314,10 @@
     "Book Description": {
       "type": "PROSE",
       "importance": 2
+    },
+    "Category": {
+      "type": "NAME",
+      "importance": 4
     }
   },
   "footballplayers": {
