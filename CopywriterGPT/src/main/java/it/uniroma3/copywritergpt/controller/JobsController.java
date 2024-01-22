@@ -1,9 +1,6 @@
 package it.uniroma3.copywritergpt.controller;
 
-import it.uniroma3.copywritergpt.controller.dto.NewJobForm;
-import it.uniroma3.copywritergpt.controller.dto.PreviewRenameColumnsForm;
-import it.uniroma3.copywritergpt.controller.dto.RenameTableColumnsForm;
-import it.uniroma3.copywritergpt.controller.dto.StartJobForm;
+import it.uniroma3.copywritergpt.controller.dto.*;
 import it.uniroma3.copywritergpt.service.JobService;
 import it.uniroma3.copywritergpt.service.OntologyService;
 import it.uniroma3.copywritergpt.utils.Util;
@@ -18,10 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -95,6 +89,8 @@ public class JobsController {
         final int N_PREVIEW_ROWS = 10;
         TablesPreviewResponse preview = this.jobService.getTablesPreview(jobId, N_PREVIEW_ROWS);
 
+        log.info("getJobInfo(): preview={}", preview);
+
         if(!preview.getTables().isEmpty()) {
             model.addAttribute("tables", preview.getTables());
         } else {
@@ -103,7 +99,29 @@ public class JobsController {
 
         model.addAttribute("startJobForm", new StartJobForm());
 
+        RenameTableColumnsForm renameTableColumnsForm = new RenameTableColumnsForm();
+        for(Map.Entry<String, TablePreview> entry: preview.getTables().entrySet()) {
+            String tableName = entry.getKey();
+            TablePreview tp = entry.getValue();
+
+            TablePreviewForm tablePreviewForm = new TablePreviewForm();
+
+            for(Map.Entry<Integer, ColumnPreview> cpEntry: tp.getTable().entrySet()) {
+                int columnIndex = cpEntry.getKey();
+                ColumnPreview cp = cpEntry.getValue();
+                String columnName = cp.getColumnName();
+                List<String> cellsPreview = cp.getCells();
+                tablePreviewForm.addColumn(columnIndex, columnName, cellsPreview);
+            }
+
+            renameTableColumnsForm.addTable(tableName,tablePreviewForm);
+        }
+
+        List<String> ontology = jobInfo.getOntology().getItems().stream().map(OntologyItemOutput::getLabel).toList();
+
         model.addAttribute("job", jobInfo);
+        model.addAttribute("renameTableColumnsForm", renameTableColumnsForm);
+        model.addAttribute("ontology", ontology);
 
         return "job";
     }
@@ -125,22 +143,21 @@ public class JobsController {
     @PostMapping("/jobs/{jobId}/push")
     public String pushJob(
             @PathVariable("jobId") Long jobId,
-            @ModelAttribute("previewForm") PreviewRenameColumnsForm previewRenameColumnsForm,
+            @ModelAttribute("renameTableColumnsForm") RenameTableColumnsForm renameTableColumnsForm,
             Model model) {
-        log.info("pushJob(): jobId={}", jobId);
+        log.info("pushJob(): jobId={}, renameTableColumnsForm={}", jobId, renameTableColumnsForm);
 
         EditTableColumnsNamesRequest editTableColumnsNamesRequest = new EditTableColumnsNamesRequest();
-        previewRenameColumnsForm.getTableName2newColumnsNames().forEach((tableName,entry) -> {
-            RenameTableColumnsForm renameTableColumnsForm = entry;
-            Collection<String> colNames = new ArrayList<>(renameTableColumnsForm.getColIndex2newName().values());
 
+        renameTableColumnsForm.getTableName2Table().forEach((tableName,entry) -> {
+            Collection<String> colNames = new ArrayList<>(entry.getColIndex2Name().values());
             editTableColumnsNamesRequest.addTable(tableName,colNames);
         });
 
         this.jobService.renameColumns(jobId, editTableColumnsNamesRequest);
         this.jobService.pushJob(jobId);
 
-        return "redirect:jobs/" + jobId;
+        return "redirect:/jobs/" + jobId;
     }
 
 }

@@ -15,9 +15,9 @@ public class TablesPreviewResponse {
         this.tables = new HashMap<>();
     }
 
-    public void addTable(String tableName, Map<String, Collection<String>> columnName2Cells) {
+    public void addTable(String tableName, Map<Integer, ColumnPreview> colIndex2Column) {
         TablePreview tp = new TablePreview();
-        tp.setTable(columnName2Cells);
+        tp.setTable(colIndex2Column);
         this.tables.put(tableName, tp);
     }
 

@@ -1,5 +1,10 @@
 package it.uniroma3.dim.utils;
 
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
+import it.uniroma3.di.common.api.dto.dim.ColumnPreview;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
@@ -9,46 +14,65 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CSVUtils {
 
     public static String sample(String csvString, boolean hasHeader, int n) {
-        StringBuilder sampledLines = new StringBuilder();
+        try (CSVReader csvReader = new CSVReader(new StringReader(csvString))) {
+            // Read the specified number of lines
+            List<String[]> sampledLines = csvReader.readAll();
 
-        try (StringReader stringReader = new StringReader(csvString);
-             CSVParser csvParser = CSVFormat.DEFAULT.withHeader().parse(stringReader)) {
-
-            int count = 0;
-            for (CSVRecord record : csvParser) {
-                if (count >= n) {
-                    break;
-                }
-                sampledLines.append(record.toString()).append("\n");
-                count++;
+            // Limit the list to the specified number of lines
+            if (sampledLines.size() > n) {
+                sampledLines = sampledLines.subList(0, n);
             }
 
-        } catch (Exception e) {
+            // Convert the sampled lines to a string
+            String result = sampledLines.stream()
+                    .map(line -> String.join(",", Arrays.asList(line)))
+                    .collect(Collectors.joining("\n"));
+
+            return result;
+        } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
 
-        return sampledLines.toString();
+        return null; // Return null in case of an error
     }
 
-    public static Map<String, Collection<String>> convertCsvStringToStructure(String csvTable) {
-        Map<String, Collection<String>> csvStructure = new HashMap<>();
+    public static Map<Integer, ColumnPreview> convertCsvStringToStructure(String csvTable, List<String> headers, int n) {
+        if(n==0)
+            n = Integer.MAX_VALUE;
+
+        Map<Integer, ColumnPreview> csvStructure = new TreeMap<>();
 
         try (StringReader stringReader = new StringReader(csvTable);
-             CSVParser csvParser = CSVFormat.DEFAULT.withHeader().parse(stringReader)) {
+             CSVReader csvReader = new CSVReaderBuilder(stringReader)
+                     .withCSVParser(new CSVParserBuilder().withSeparator(',').withQuoteChar('"')
+                     .withEscapeChar('\\').build())
+                     .build()) {
 
-            String[] headers = csvParser.getHeaderMap().keySet().toArray(new String[0]);
+            String[] headersArray = csvReader.readNext();
 
-            for (String header : headers) {
-                csvStructure.put(header, new ArrayList<>());
+            if (headersArray != null) {
+                headers = Arrays.asList(headersArray);
             }
 
-            for (CSVRecord record : csvParser) {
-                for (String header : headers) {
-                    csvStructure.get(header).add(record.get(header));
+            int i = 0;
+            for (String header : headers) {
+                ColumnPreview cp = new ColumnPreview();
+                cp.setColumnName(header);
+                csvStructure.put(i, cp);
+                i++;
+            }
+
+            List<String[]> records = csvReader.readAll();
+            for(i = 0; i < n; i++) {
+                String[] record = records.get(i);
+                int nElements = headers.size();
+                for (int j = 0; j < nElements; j++) {
+                    csvStructure.get(j).getCells().add(record[j]);
                 }
             }
 
@@ -59,34 +83,53 @@ public class CSVUtils {
         return csvStructure;
     }
 
-    public static String mergeColumnsWithSameName(String csvString) throws IOException {
-        StringReader stringReader = new StringReader(csvString);
-        CSVParser csvParser = CSVFormat.DEFAULT.withHeader().parse(stringReader);
-        StringWriter stringWriter = new StringWriter();
-        CSVPrinter csvPrinter = new CSVPrinter(stringWriter, CSVFormat.DEFAULT);
+    public static String mergeColumnsWithSameName(String inputCSV) throws IOException {
+        try {
+            // Read the CSV string
+            CSVParser parser = new CSVParser(new StringReader(inputCSV), CSVFormat.DEFAULT.withHeader());
+            Map<String, Integer> headerMap = new HashMap<>();
+            StringWriter writer = new StringWriter();
+            CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
 
-        Map<String, Integer> columnIndexes = new HashMap<>();
+            // Write the header
+            int h = 0;
+            int hh = 0;
+            Map<Integer,String> index2HeaderName = new TreeMap<>();
+            for (String header : parser.getHeaderNames()) {
+                index2HeaderName.put(hh, header); hh++;
 
-        String[] header = csvParser.getHeaderMap().keySet().toArray(new String[0]);
-        for (int i = 0; i < header.length; i++) {
-            String columnName = header[i];
-            if (!columnIndexes.containsKey(columnName)) {
-                columnIndexes.put(columnName, i);
-            } else {
-                header[i] = columnName + "_" + columnIndexes.get(columnName);
-                columnIndexes.put(columnName, columnIndexes.get(columnName) + 1);
+                if(!headerMap.containsKey(header)) {
+                    headerMap.put(header, h);
+                    h++;
+                    printer.print(header);
+                }
             }
+            printer.println();
+
+            // Merge columns with the same header name and write the merged values
+            for (CSVRecord record : parser) {
+                Map<String, String> header2Content = new HashMap<>();
+                for(int i = 0; i < record.size(); i++) {
+                    String content = record.get(i);
+                    String headerName = index2HeaderName.get(i);
+
+                    header2Content.putIfAbsent(headerName, "");
+                    String toPrint = String.join("\n", content, header2Content.get(headerName)).trim();
+                    header2Content.put(headerName, toPrint);
+                }
+
+                for(Map.Entry<String, String> entry: header2Content.entrySet())
+                    printer.print(entry.getValue());
+
+                printer.println();
+            }
+
+            printer.close();
+            return writer.toString();
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle the exception according to your needs
+            return null;
         }
-        csvPrinter.printRecord(header);
-
-        for (CSVRecord record : csvParser) {
-            csvPrinter.printRecord(record);
-        }
-
-        csvPrinter.close();
-        csvParser.close();
-
-        return stringWriter.toString();
     }
 
 }

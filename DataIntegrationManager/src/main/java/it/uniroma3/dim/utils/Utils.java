@@ -10,9 +10,9 @@ public class Utils {
     }
 
     public static String convertToBase64String(String originalString) {
-        byte[] bytes = originalString.getBytes();
+        byte[] bytes = originalString.getBytes(StandardCharsets.UTF_8);
         byte[] encodedBytes = Base64.getEncoder().encode(bytes);
-        return new String(encodedBytes);
+        return new String(encodedBytes, StandardCharsets.UTF_8);
     }
 
 }

@@ -27,7 +27,9 @@ public class StorageController {
     public void storeTable(@RequestBody TableStorageRequest tsr) {
         log.info("storeTable(): trs={}", tsr);
 
-        String tableContent = new String(Base64.getDecoder().decode(tsr.getContent()), StandardCharsets.UTF_8);
+        String tableContent =  tsr.getContent();
+
+        log.info("storeTable(): tableContent={}", tableContent);
 
         Collection<TableStorageField> fields = tsr.getFields();
         Collection<TableField> tableFields = new ArrayList<>();
@@ -61,7 +63,12 @@ public class StorageController {
         static TableField toTableField(TableStorageField storageField) {
             TableField tf = new TableField();
             tf.setName(storageField.getName());
-            tf.setType(FieldType.valueOf(storageField.getType()));
+
+            if(Arrays.stream(FieldType.values()).map(FieldType::toString).toList().contains(storageField.getType()))
+                tf.setType(FieldType.valueOf(storageField.getType()));
+            else
+                tf.setType(FieldType.STRING);
+
             tf.setSymbolicName(storageField.getSymbolicName());
             return tf;
         }

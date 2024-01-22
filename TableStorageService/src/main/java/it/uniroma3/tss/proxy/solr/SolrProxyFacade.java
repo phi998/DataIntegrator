@@ -51,7 +51,7 @@ public class SolrProxyFacade implements ProxyFacade {
 
                 SolrInputDocument doc = new SolrInputDocument();
                 for(Map.Entry<String,String> c: rowCells.entrySet()) {
-                    doc.addField(c.getKey(),c.getValue());
+                    doc.addField(c.getKey(),c.getValue() + " ");
                 }
                 this.solrClient.add(collectionName, doc);
             }

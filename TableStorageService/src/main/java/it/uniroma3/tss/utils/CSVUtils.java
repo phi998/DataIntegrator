@@ -30,7 +30,8 @@ public class CSVUtils {
             for (CSVRecord record : csvParser) {
                 rows.put(currentRow, new TableRow());
                 for(String header: headers) {
-                    rows.get(currentRow).addCell(header, record.get(header));
+                    if(record.isSet(header))
+                        rows.get(currentRow).addCell(header, record.get(header));
                 }
                 currentRow++;
             }

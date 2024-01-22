@@ -3,10 +3,11 @@ package it.uniroma3.di.common.api.dto.tss;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Data
-@ToString(exclude = "content")
 public class TableStorageRequest {
 
     private String tableName;
@@ -15,9 +16,13 @@ public class TableStorageRequest {
 
     private String content;
 
-    private Collection<TableStorageField> fields;
+    private List<TableStorageField> fields;
 
     private boolean hasHeader;
+
+    public TableStorageRequest() {
+        this.fields = new ArrayList<>();
+    }
 
     public void addField(TableStorageField field) {
         this.fields.add(field);

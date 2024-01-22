@@ -14,11 +14,11 @@ class DataReader:
         return df
 
     def read_expected(self, dataset_name, case):
-        df = pd.read_csv(os.path.join(self.__datasets_folder, "expected", f'case{case}', f'{dataset_name}.csv'), header=None)
+        df = pd.read_csv(os.path.join(self.__datasets_folder, "expected", f'case{case}', f'{dataset_name}.csv'))
 
         return df
 
     def read_output(self, dataset_name, case):
-        df = pd.read_csv(os.path.join(self.__datasets_folder, "output", f'case{case}', f'{dataset_name}.csv'), header=None)
+        df = pd.read_csv(os.path.join(self.__datasets_folder, "output", f'case{case}', f'{dataset_name}.csv'))
 
         return df

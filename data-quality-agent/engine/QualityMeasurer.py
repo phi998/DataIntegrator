@@ -30,5 +30,6 @@ class QualityMeasurer:
 
         precision = quality_dict["tp"]/(quality_dict["tp"] + quality_dict["fp"])
         recall = quality_dict["tp"]/(quality_dict["tp"] + quality_dict["fn"])
+        accuracy = (quality_dict["tp"] + quality_dict["tn"])/(quality_dict["tp"] + quality_dict["tn"] + quality_dict["fp"] + quality_dict["fn"])
 
-        return {"p": precision, "r": recall, "f1": 2*(precision*recall)/(precision+recall)}
+        return {"a": accuracy, "p": precision, "r": recall, "f1": 2*(precision*recall)/(precision+recall)}

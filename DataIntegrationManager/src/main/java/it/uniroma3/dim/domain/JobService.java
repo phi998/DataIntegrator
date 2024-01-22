@@ -16,6 +16,7 @@ import it.uniroma3.dim.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -184,8 +185,7 @@ public class JobService {
             for (JobTable jobTable : job.getJobResult().getResultTables()) {
                 String tableName = jobTable.getName();
                 String tableContent = Utils.convertBinaryToString(jobTable.getTableData());
-                tableContent = CSVUtils.sample(tableContent, true, rows);
-                Map<String, Collection<String>> structuredTablePreview = CSVUtils.convertCsvStringToStructure(tableContent);
+                Map<Integer, ColumnPreview> structuredTablePreview = CSVUtils.convertCsvStringToStructure(tableContent, null, rows);
 
                 tpr.addTable(tableName, structuredTablePreview);
             }
@@ -214,6 +214,7 @@ public class JobService {
         return ejtr;
     }
 
+    @Transactional
     public void renameColumns(Long jobId, Map<String,Collection<String>> tableName2columnsNames) {
         log.info("renameColumns(): jobId={}, tableName2columnsNames={}", jobId, tableName2columnsNames);
 

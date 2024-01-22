@@ -96,7 +96,7 @@ public class JobClient extends Client {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        restTemplate.postForEntity(url, editTableColumnsNamesRequest, Void.class);
+        restTemplate.put(url, editTableColumnsNamesRequest, Void.class);
     }
 
     public void pushJob(Long jobId) {

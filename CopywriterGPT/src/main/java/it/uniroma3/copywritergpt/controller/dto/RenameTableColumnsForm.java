@@ -2,16 +2,20 @@ package it.uniroma3.copywritergpt.controller.dto;
 
 import lombok.Data;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 @Data
 public class RenameTableColumnsForm {
 
-    private Map<Integer, String> colIndex2newName;
+    private Map<String, TablePreviewForm> tableName2Table;
 
     public RenameTableColumnsForm() {
-        this.colIndex2newName = new TreeMap<>();
+        this.tableName2Table = new HashMap<>();
+    }
+
+    public void addTable(String tableName, TablePreviewForm tablePreviewForm) {
+        this.tableName2Table.put(tableName, tablePreviewForm);
     }
 
 }
