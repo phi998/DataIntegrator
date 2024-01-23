@@ -7,6 +7,26 @@ from filesystem import DataReader
 from proxy import PipelineClient
 
 
+def get_ontology(job_dataset_name, ontology_name):
+    with open('ontologies.json', 'r') as json_file:
+        ontologies_list = json.load(json_file)
+
+    if ontology_name in ontologies_list:
+        return ontologies_list[ontology_name]
+
+    # generate default ontology from ground truth
+    dr = DataReader.DataReader("datasets/")
+    df = dr.read_groundtruth(job_dataset_name)
+    column_names = df.columns.tolist()
+    ontology = {}
+    for column_name in column_names:
+        ontology[column_name] = {
+            "type": "TITLE",
+            "importance": 5
+        }
+    return ontology
+
+
 def get_datasets_list(folder_name):
     return os.listdir(folder_name)
 
@@ -20,9 +40,7 @@ def start_job(job, case):
     job_ontology_name = job["ontologyName"]
     job_ignore_columns = job["ignore"]
 
-    with open('ontologies.json', 'r') as json_file:
-        ontologies_list = json.load(json_file)
-    job_ontology = ontologies_list[job_ontology_name]
+    job_ontology = get_ontology(job_dataset_name, job_ontology_name)
 
     input_df = dr.read_dataset(job_dataset_name)
 
@@ -54,4 +72,4 @@ def main(jobs_filename, case):
 
 
 if __name__ == "__main__":
-    main("jobs/jobs_test.json", 1)
+    main("jobs/jobs_groundtruth.json", 1)

@@ -16,6 +16,7 @@ public class PromptTemplate {
     @ManyToOne(cascade = CascadeType.ALL)
     private PromptCategory category;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 
 }

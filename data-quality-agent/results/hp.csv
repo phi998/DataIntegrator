@@ -1,0 +1,35 @@
+output_colname,expected_colname,distance
+Product Title,ProductTitle,0.6593625498007969
+Category,Category,0.5555555555555556
+ProductTitle,ProductTitle,0.6341991341991342
+Prod_id,Prod_id,0.719626168224299
+Requested_prod_id,Prod_id,0.7222222222222222
+Product_Views,Prod_id,0.719626168224299
+Prod_id.1,Prod_id,0.719626168224299
+Category.1,Category,0.8169014084507042
+Prod_id.2,Model,0.6242038216560509
+GTIN(EAN/UPC),ProductMultimediaObject ExpirationDate,0.95
+GTIN(EAN/UPC).1,ProductMultimediaObject ExpirationDate,0.95
+Product_Views.1,ReasonsToBuy,0.9153726708074534
+Category.2,Category,0.5555555555555556
+Prod_id.3,Icecat_id,0.7
+Prod_id.4,Product_Views,0.7
+ExpirationDate,ProductSeries,0.967741935483871
+ExpirationDate.1,ProductMultimediaObject ExpirationDate,0.9722222222222222
+ProductPDF,Prod_id,0.874251497005988
+Long product name,ProductTitle,0.7296137339055794
+ShortDesc,ProductTitle,0.7366255144032922
+ProductTitle.1,ProductTitle,0.7866379310344828
+LongDesc,ProductTitle,0.7926078028747433
+ShortDesc.1,LongDesc,0.6941124391323594
+ShortSummaryDescription,ProductTitle,0.6373390557939914
+ShortDesc.2,ProductTitle,0.6436058700209644
+Product_Title,ShortSummaryDescription,0.7286821705426356
+ProductTitle.2,ProductTitle,0.6373390557939914
+LongSummaryDescription,ProductTitle,0.6464435146443515
+Product_Title.1,LongSummaryDescription,0.653061224489796
+Requested_prod_id.1,Prod_id,0.719626168224299
+ProductTitle.3,Prod_id,0.7222222222222222
+Requested_prod_id.2,Prod_id,0.719626168224299
+Prod_id.5,Prod_id,0.719626168224299
+Category.3,Category,0.8169014084507042

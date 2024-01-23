@@ -1,5 +1,6 @@
 package it.uniroma3.copywritergpt.controller;
 
+import it.uniroma3.copywritergpt.controller.dto.NewCategoryForm;
 import it.uniroma3.copywritergpt.controller.dto.NewTemplateForm;
 import it.uniroma3.copywritergpt.domain.PromptCategoryService;
 import it.uniroma3.copywritergpt.domain.PromptTemplateService;
@@ -33,6 +34,7 @@ public class PromptTemplateController {
         GetCategoriesCollectionResponse categories = promptCategoryService.getAllCategories(categoryName);
 
         model.addAttribute("categories", categories);
+        model.addAttribute("categoryForm", new NewCategoryForm());
         model.addAttribute("templateForm", new NewTemplateForm());
 
         return "templates";
@@ -46,6 +48,15 @@ public class PromptTemplateController {
         log.info("createTemplate(): templateForm={}", templateForm);
 
         this.promptTemplateService.createPromptTemplate(templateForm.getCategory(), templateForm.getName(), templateForm.getContent());
+
+        return "redirect:/templates";
+    }
+
+    @PostMapping("/categories")
+    public String createCategory(@ModelAttribute("categoryForm") NewCategoryForm newCategoryForm) {
+        log.info("createCategory(): newCategoryForm={}", newCategoryForm);
+
+        this.promptCategoryService.createNewPromptCategory(newCategoryForm.getCategoryName());
 
         return "redirect:/templates";
     }

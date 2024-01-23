@@ -37,6 +37,10 @@ public class TssProxy {
         url = builder.build().toUriString();
 
         ResponseEntity<QueryResponse> responseEntity = restTemplate.getForEntity(url, QueryResponse.class);
+        QueryResponse qr = responseEntity.getBody();
+        if(qr!=null)
+            qr.getDocuments().forEach(doc -> doc.getColumnName2Content().remove("_version_"));
+
         return responseEntity.getBody();
     }
 

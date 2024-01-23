@@ -49,7 +49,7 @@
             <td th:text="${template.name}">template_name</td>
             <td th:text="${template.content}">template_content</td>
             <td>
-              Generate article button
+              <a th:href="@{'/query?templateId=' + ${template.id}}" class="btn btn-primary">Select</a>
             </td>
           </tr>
           </tbody>
@@ -73,6 +73,14 @@
         </table>
         </form>
 
+      </div>
+
+      <div>
+        <h3>New category</h3>
+        <form th:action="@{'/categories'}" method="post" th:object="${categoryForm}">
+          <textarea placeholder="Category Name" th:field="*{categoryName}"></textarea>
+          <input type="submit" class="btn btn-primary">
+        </form>
       </div>
 
 

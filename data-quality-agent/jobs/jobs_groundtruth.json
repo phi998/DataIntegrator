@@ -1,0 +1,4 @@
+[
+  {"name": "hp", "datasetName": "hp", "ontologyName": "electronics", "ignore": [0,1,2]},
+  {"name": "imdb", "datasetName": "imdb", "ontologyName": "movies", "ignore": [0,1,2]}
+]

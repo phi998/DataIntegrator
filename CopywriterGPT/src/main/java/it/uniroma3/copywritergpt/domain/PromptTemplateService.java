@@ -22,6 +22,10 @@ public class PromptTemplateService {
         return this.promptTemplateRepository.findById(templateId).get();
     }
 
+    public GetPromptTemplateResponse getPromptTemplateResponse(Long templateId) {
+        return Converter.toGetPromptTemplateResponse(this.getPromptTemplateById(templateId));
+    }
+
     public PromptTemplateCreatedResponse createPromptTemplate(Long categoryId, String templateName, String templateContent) {
         log.info("createPromptTemplate(): categoryId={}, templateName={}, templateContent={}", categoryId, templateName, templateContent);
 

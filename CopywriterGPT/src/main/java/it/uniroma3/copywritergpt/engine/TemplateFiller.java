@@ -32,6 +32,8 @@ public class TemplateFiller {
             }
         }
 
+        log.info("fillTemplate(): result={}", result);
+
         return result;
     }
 
@@ -39,6 +41,9 @@ public class TemplateFiller {
         String result = template;
 
         Map<String,String> attr2content = document.getFields();
+
+        attr2content.remove("id");
+        attr2content.remove("_version_");
 
         for(Map.Entry<String,String> entry: attr2content.entrySet()) {
             String attr = entry.getKey();
@@ -59,9 +64,10 @@ public class TemplateFiller {
             Map<String,String> attr2cont = document.getFields();
             for(String attr: attrsToConsider) {
                 if(attr2cont.containsKey(attr)) {
-                    resultBuilder.append(attr).append(": ").append(attr2cont.get(attr));
+                    resultBuilder.append(attr).append(": ").append(attr2cont.get(attr)).append("\n");
                 }
             }
+            resultBuilder.append("\n");
         }
 
         return template.replaceAll("%%.*", resultBuilder.toString());

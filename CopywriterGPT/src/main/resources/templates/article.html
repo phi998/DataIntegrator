@@ -1,10 +1,44 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ontologies</title>
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+
+    <!-- Include JS -->
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </head>
+
 <body>
+<th:block th:replace="bar/topnav :: navbar"></th:block>
+
+<div class="container-fluid">
+    <div class="row">
+        <th:block th:replace="bar/side :: sidebar"></th:block>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2">Artcle</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <button class="btn btn-sm btn-outline-secondary"></button>
+                        <button class="btn btn-sm btn-outline-secondary"></button>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Article</h2>
+
+            <div th:text="${articleContent}">article_content</div>
+
+        </main>
+    </div>
+</div>
+
 
 </body>
 </html>
