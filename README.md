@@ -42,3 +42,7 @@ The system can be stopped with
 
 Under the ```resources/``` folder of DataIntegrationManager the file ```ontologies.json``` 
 contains a list of default ontologies that can be used for testing purposes.
+
+### OpenAI Key
+
+Set your OpenAI key for ChatGPT in docker-compose.yml file
