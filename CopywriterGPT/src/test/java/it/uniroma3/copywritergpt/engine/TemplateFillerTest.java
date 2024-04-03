@@ -39,13 +39,12 @@ class TemplateFillerTest {
         document2.getFields().put("Seller","seller2");
         docs.add(document2);
 
-        String template = "Write an article where %%[Description, Seller]";
+        //String template = "Write an article where %%[Description, Seller]";
+        String template = "Write an article where %%[Description,Price,Rating,Color,Seller,Product_Name,Product_Category]";
         TemplateFiller templateFiller = new TemplateFiller();
         String result = templateFiller.fillTemplate(template, docs, ArticleType.MULTIPLE_DOCS);
 
         assertEquals("Write an article where Description: desc\nSeller: seller\n\nDescription: desc2\nSeller: seller2\n\n", result);
     }
-
-
 
 }

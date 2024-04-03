@@ -60,29 +60,33 @@ services:
     build: ./data-cleaner
     depends_on:
       - "kafka"
+    environment:
+      - OPENAI_KEY
 
   dl:
     build: ./data-labeler
     depends_on:
       - "kafka"
-
-  solr:
-    image: solr
-    ports:
-      - "8983:8983"
-    command:
-      - solr-precreate
-      - main_core
-
-  tss:
-    build: ./TableStorageService
-    ports:
-      - "8082:8080"
     environment:
-      - SPRING_PROFILE=default
-    depends_on:
-      - "consul"
-      - "solr"
+      - OPENAI_KEY
+
+  #solr:
+  #  image: solr
+  #  ports:
+  #    - "8983:8983"
+  #  command:
+  #    - solr-precreate
+  #    - main_core
+
+  #tss:
+  #  build: ./TableStorageService
+  #  ports:
+  #    - "8082:8080"
+  #  environment:
+  #    - SPRING_PROFILE=default
+  #    - WAREHOUSE_TECHNOLOGY=CLICKHOUSE
+  #  depends_on:
+  #    - "consul"
 
   copywritergpt:
     build: ./CopywriterGPT
@@ -97,6 +101,8 @@ services:
     build: ./chatgpt-gateway
     ports:
       - "8083:5000"
+    environment:
+      - OPENAI_KEY
 
   copywritergptdb:
     image: postgres
@@ -125,18 +131,18 @@ services:
     depends_on:
       - "consul"
 
-  tssdb:
-    image: postgres
-    volumes:
-      - "$PWD/postgres:/docker-entrypoint-initdb.d"
-    ports:
-      - "5435:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: tssdb
-    depends_on:
-      - "consul"
+  #tssdb:
+  #  image: postgres
+  #  volumes:
+  #    - "$PWD/postgres:/docker-entrypoint-initdb.d"
+  #  ports:
+  #    - "5435:5432"
+  #  environment:
+  #    POSTGRES_USER: postgres
+  #    POSTGRES_PASSWORD: postgres
+  #    POSTGRES_DB: tssdb
+  #  depends_on:
+  #    - "consul"
 
   disdb:
     image: postgres
@@ -150,3 +156,13 @@ services:
       POSTGRES_DB: disdb
     depends_on:
       - "consul"
+
+  datawarehouse-db:
+    image: yandex/clickhouse-server:21.1.2.15
+    container_name: datawarehouse-db
+    ports:
+      - 8123:8123
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144

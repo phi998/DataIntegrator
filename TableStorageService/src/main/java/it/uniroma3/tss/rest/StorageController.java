@@ -15,10 +15,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static it.uniroma3.di.common.utils.Constants.TSS_N_RESULTS_KEY;
+import static it.uniroma3.di.common.utils.Constants.TSS_TABLE_NAME_KEY;
 
 @RestController
 @Slf4j
 public class StorageController {
+
+    private final static String ATTR_LIST_SEP = ",";
 
     @Autowired
     private StorageService storageService;
@@ -27,12 +30,13 @@ public class StorageController {
     public void storeTable(@RequestBody TableStorageRequest tsr) {
         log.info("storeTable(): trs={}", tsr);
 
-        String tableContent =  tsr.getContent();
+        String tableContent = CSVUtils.considerFirstColByName(tsr.getContent());
+        tableContent = CSVUtils.deleteColumnsByName(tableContent, "other","unknown");
 
         log.info("storeTable(): tableContent={}", tableContent);
 
         Collection<TableStorageField> fields = tsr.getFields();
-        Collection<TableField> tableFields = new ArrayList<>();
+        Collection<TableField> tableFields;
         if(fields.isEmpty()) {
             tableFields = CSVUtils.getTableHeaders(tableContent).stream().map(Converter::toStandardTableField).toList();
         } else {
@@ -50,11 +54,13 @@ public class StorageController {
         int nResults = Integer.parseInt(queryParams.get(TSS_N_RESULTS_KEY));
         queryParams.remove(TSS_N_RESULTS_KEY);
 
-        if(queryParams.isEmpty())
-            queryParams.put("*","*");
+        String collectionName = queryParams.get(TSS_TABLE_NAME_KEY);
+        queryParams.remove(TSS_TABLE_NAME_KEY);
 
         QueryResponse qr = new QueryResponse();
-        qr.setDocuments(storageService.query(queryParams, nResults));
+        Map<String,List<String>> queryParamsLists = new HashMap<>();
+        queryParams.forEach((k,v) -> queryParamsLists.put(k, List.of(v.split(ATTR_LIST_SEP))));
+        qr.setDocuments(storageService.query(collectionName, queryParamsLists, nResults));
 
         return qr;
     }

@@ -23,7 +23,7 @@ public class DataOntologyRestController {
     }
 
     @PostMapping("/ontology")
-    public CreateNewOntologyResponse createNewOntologyResponse(
+    public CreateNewOntologyResponse createNewOntology(
             @RequestBody CreateNewOntologyRequest createNewOntologyRequest) {
         log.info("createNewOntologyResponse(): createNewOntologyRequest={}", createNewOntologyRequest);
 

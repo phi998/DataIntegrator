@@ -47,7 +47,7 @@
                         <td th:text="${ontology.id}">ontology_id</td>
                         <td th:text="${ontology.name}">ontology_name</td>
                         <td>
-                            <span th:each="item : ${ontology.items}" th:text="${item.label}">item_label</span>
+                            <span th:each="item : ${ontology.items}" th:text="${item.label}" class="badge bg-light text-dark">item_label</span>
                         </td>
                         <td>
                             <a th:href="@{'/ontology/' + ${ontology.id}}" class="btn btn-info" role="button">Details</a>
@@ -63,6 +63,7 @@
                     <tbody>
                     <tr>
                         <th>Ontology name</th>
+                        <th>Actions</th>
                     </tr>
                     <tr>
                         <td>

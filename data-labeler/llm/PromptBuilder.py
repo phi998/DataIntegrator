@@ -10,6 +10,13 @@ class PromptBuilder:
 
         return prompt
 
+    def build_prompt_example(self, input_example, output_example):
+        prompt = "\nThis is an example:"
+        prompt += f"\nInput={input_example}" \
+                  f"\nOutput={output_example}"
+
+        return prompt
+
     def build_instructions_subprompt(self, instructions):
         sub_prompt = "\nInstructions:"
         i = 0

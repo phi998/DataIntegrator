@@ -27,13 +27,13 @@
 
             <h2 th:text="${ontology.name}">ontology_name</h2>
             <div class="table-responsive">
-                <table>
+                <table class="table table-sm">
                     <tbody>
                     <tr>
                         <th>Ontology ID</th><td th:text="${ontology.id}">ontology_id</td>
                     </tr><tr>
                         <th>Ontology Items</th>
-                        <td><span th:each="item : ${ontology.items}" th:text="${item.label}">item</span></td>
+                        <td><span th:each="item : ${ontology.items}" th:text="${item.label}" class="badge badge-light">item</span></td>
                     </tr>
                     </tbody>
                 </table>
@@ -41,17 +41,15 @@
 
             <h2>Items</h2>
             <div class="table-responsive">
-                <table>
+                <table class="table table-sm">
                     <tbody>
                         <tr>
-                            <th>#</th>
                             <th>Label</th>
                             <th>Importance</th>
                             <th>Type</th>
                             <th>Notes</th>
                         </tr>
                         <tr th:each="item : ${ontology.items}">
-                            <td></td>
                             <td th:text="${item.label}">label</td>
                             <td th:text="${item.importance}">importance</td>
                             <td th:text="${item.type}">type</td>

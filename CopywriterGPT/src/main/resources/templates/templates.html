@@ -32,6 +32,11 @@
       </div>
 
       <h2>Categories</h2>
+
+      <div th:if="${categories.categories.isEmpty()}">
+        No categories to show
+      </div>
+
       <div class="table-responsive" style="margin-bottom: 30px;" th:each="category : ${categories.categories}">
         <h3 th:text="${category.name}">category_name</h3>
         <table class="table table-striped table-sm">
@@ -49,7 +54,7 @@
             <td th:text="${template.name}">template_name</td>
             <td th:text="${template.content}">template_content</td>
             <td>
-              <a th:href="@{'/query?templateId=' + ${template.id}}" class="btn btn-primary">Select</a>
+              <a th:href="@{'/query?templateId=' + ${template.id} + '&collectionName'}" class="btn btn-primary">Select</a>
             </td>
           </tr>
           </tbody>
@@ -58,15 +63,15 @@
         <!-- NEW TEMPLATE FORM -->
         <form th:action="@{'/templates'}" th:object="${templateForm}" method="post">
           <input type="hidden" th:field="*{category}" th:value="${category.name}">
-        <table class="table table-striped table-sm">
+        <table class="table table-striped">
           <tbody><tr>
-            <td>
+            <td class="col-sm-3">
               <input type="text" placeholder="Template name" th:field="*{name}">
             </td>
-            <td>
-              <textarea placeholder="Template content" th:field="*{content}"></textarea>
+            <td class="col-sm-5">
+              <textarea style="width: 100%;" rows="7" placeholder="Template content" th:field="*{content}"></textarea>
             </td>
-            <td>
+            <td class="col-sm-2">
               <input type="submit" value="Create template" class="btn btn-primary">
             </td>
           </tr></tbody>
@@ -76,10 +81,17 @@
       </div>
 
       <div>
-        <h3>New category</h3>
+        <h4>New category</h4>
         <form th:action="@{'/categories'}" method="post" th:object="${categoryForm}">
-          <textarea placeholder="Category Name" th:field="*{categoryName}"></textarea>
-          <input type="submit" class="btn btn-primary">
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <td class="col-sm-5">
+          <input type="text" placeholder="Category Name" th:field="*{categoryName}"></td>
+                <td class="col-sm-2"><input type="submit" class="btn btn-primary" value="Confirm"></td>
+              </tr>
+            </tbody>
+          </table>
         </form>
       </div>
 

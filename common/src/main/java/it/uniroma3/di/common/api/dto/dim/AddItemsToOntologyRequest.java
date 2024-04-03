@@ -4,11 +4,12 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 public class AddItemsToOntologyRequest {
 
-    private Collection<OntologyItemInput> ontologyItemsInput;
+    private List<OntologyItemInput> ontologyItemsInput;
 
     public AddItemsToOntologyRequest() {
         this.ontologyItemsInput = new ArrayList<>();

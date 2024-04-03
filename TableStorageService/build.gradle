@@ -23,8 +23,8 @@ repositories {
 
 ext {
 	set('springCloudVersion', "2023.0.0")
-	set('luceneVersion', '9.9.1')
 	set('solrVersion', '9.4.0')
+	set('clickhouseJDBCVersion', '0.2.4')
 }
 
 dependencies {
@@ -39,13 +39,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 
-	implementation "org.apache.lucene:lucene-core:${luceneVersion}"
-	implementation "org.apache.lucene:lucene-analysis-common:${luceneVersion}"
-	implementation "org.apache.lucene:lucene-queryparser:${luceneVersion}"
-	implementation "org.apache.lucene:lucene-misc:${luceneVersion}"
-	implementation "org.apache.lucene:lucene-codecs:${luceneVersion}"
-
 	implementation "org.apache.solr:solr-solrj:${solrVersion}"
+	implementation "ru.yandex.clickhouse:clickhouse-jdbc:${clickhouseJDBCVersion}"
 
 	implementation 'org.apache.commons:commons-csv:1.10.0'
 }

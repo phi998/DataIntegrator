@@ -11,6 +11,8 @@ public class DocumentsSelectionForm {
 
     private Long templateId;
 
+    private String collectionName;
+
     private List<DocumentResultEntry> documents;
 
     public DocumentsSelectionForm() {

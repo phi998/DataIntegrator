@@ -36,12 +36,12 @@ public class SolrProxyFacade implements ProxyFacade {
     }
 
     @Override
-    public void loadTableStructure(String collectionName, Collection<TableField> fields) {
+    public void loadTableStructure(String collectionName, List<TableField> fields) {
 
     }
 
     @Override
-    public void uploadData(Map<Integer, TableRow> table) {
+    public Map<Integer, TableRow> uploadData(String collectionName, Map<Integer, TableRow> table) {
         log.info("uploadData(), table={}", table);
 
         try {
@@ -53,23 +53,25 @@ public class SolrProxyFacade implements ProxyFacade {
                 for(Map.Entry<String,String> c: rowCells.entrySet()) {
                     doc.addField(c.getKey(),c.getValue() + " ");
                 }
-                this.solrClient.add(collectionName, doc);
+                this.solrClient.add(this.collectionName, doc);
             }
 
-            this.solrClient.commit(collectionName);
+            this.solrClient.commit(this.collectionName);
         } catch (SolrServerException | IOException e) {
             throw new RuntimeException(e);
         }
+
+        return table;
     }
 
     @Override
-    public Collection<ResultEntry> retrieveData(Map<String,String> query, int n) {
+    public Collection<ResultEntry> retrieveData(String collectionName, Map<String,List<String>> query, int n) {
         log.info("retrieveData(): query={}, n={}", query, n);
 
         SolrQueryBuilder sqb = new SolrQueryBuilder();
 
-        for(Map.Entry<String,String> cond: query.entrySet()) {
-            sqb.addCondition(cond.getKey(), cond.getValue());
+        for(Map.Entry<String,List<String>> cond: query.entrySet()) {
+            sqb.addCondition(cond.getKey(),"(" + String.join(" OR ", cond.getValue()) + ")");
         }
 
         SolrQuery solrQuery = sqb.build();
@@ -85,35 +87,6 @@ public class SolrProxyFacade implements ProxyFacade {
         SolrDocumentList results = response.getResults();
 
         return Converter.solrDocumentListToMapCollection(results);
-    }
-
-    private void createCollection() throws SolrServerException, IOException {
-        log.info("createCollection()");
-
-        CoreAdminRequest.Create createRequest = new CoreAdminRequest.Create();
-        createRequest.setCoreName(this.collectionName);
-        createRequest.setInstanceDir("./" + this.collectionName);
-        createRequest.setConfigSet("_default");
-        createRequest.process(solrClient);
-    }
-
-    private boolean checkIfCollectionExists() {
-        CoreAdminRequest request = new CoreAdminRequest();
-        request.setAction(CoreAdminParams.CoreAdminAction.STATUS);
-        CoreAdminResponse cores=null;
-
-        try {
-            cores = request.process(solrClient);
-        } catch (SolrServerException | IOException e) {
-            e.printStackTrace();
-        }
-
-        List<String> coreList = new ArrayList<String>();
-        for (int i = 0; i < cores.getCoreStatus().size(); i++) {
-            coreList.add(cores.getCoreStatus().getName(i));
-        }
-
-        return coreList.contains(this.collectionName);
     }
 
     private static class Converter {

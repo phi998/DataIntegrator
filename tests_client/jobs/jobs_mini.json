@@ -1,0 +1,9 @@
+{
+  "ontologyGroup": "all",
+  "ontologyFormat": "json",
+  "datasetsGroup": "mini",
+
+  "jobs": [
+    {"name": "giunti", "datasetName": "giunti", "ontologyName": "books", "ignore": [0,1,2]}
+  ]
+}

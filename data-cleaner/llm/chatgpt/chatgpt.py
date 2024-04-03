@@ -127,12 +127,15 @@ class ChatGPT(GenericLLMApi):
         return response_content
 
     def __get_key(self):
-        project_root = dirname(dirname(__file__))
-        output_path = join(project_root, '../config/')
+        api_key = os.environ["OPENAI_KEY"]
 
-        with open(output_path + "/secrets.json") as f:
-            secrets = json.load(f)
-            api_key = secrets["api_key"]
+        if api_key == '':
+            project_root = dirname(dirname(__file__))
+            output_path = join(project_root, '../config/')
+
+            with open(output_path + "/secrets.json") as f:
+                secrets = json.load(f)
+                api_key = secrets["api_key"]
 
         openai.api_key = api_key
 

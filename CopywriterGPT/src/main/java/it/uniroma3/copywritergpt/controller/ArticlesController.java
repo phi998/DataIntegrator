@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,10 +32,13 @@ public class ArticlesController {
 
         String articleType = documentsSelectionForm.getDocuments().size()==1 ? ArticleType.SINGLE_DOC.name() : ArticleType.MULTIPLE_DOCS.name();
 
-        GenerateArticleResponse generateArticleResponse = this.articleService.generateArticle(
+        GenerateArticleResponse generateArticleResponse = this.articleService.generateArticle(documentsSelectionForm.getCollectionName(),
                 documentsSelectionForm.getDocuments().stream().map(DocumentResultEntry::getDocumentId).toList(),articleType,documentsSelectionForm.getTemplateId());
 
-        model.addAttribute("articleContent", generateArticleResponse.getArticleContent());
+        String articleContent =  generateArticleResponse.getArticleContent();
+        List<String> paragraphs = List.of(articleContent.split("\n"));
+
+        model.addAttribute("paragraphs", paragraphs);
 
         return "article";
     }

@@ -5,3 +5,4 @@ tiktoken~=0.5.1
 kafka-python
 confluent_kafka
 timeout_decorator
+requests~=2.31.0

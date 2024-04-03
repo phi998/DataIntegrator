@@ -5,7 +5,7 @@ import it.uniroma3.copywritergpt.domain.vo.Document;
 import it.uniroma3.copywritergpt.engine.ArticleGenerator;
 import it.uniroma3.copywritergpt.engine.TemplateFiller;
 import it.uniroma3.copywritergpt.enums.ArticleType;
-import it.uniroma3.copywritergpt.proxy.TssProxy;
+import it.uniroma3.copywritergpt.proxy.DimProxy;
 import it.uniroma3.di.common.api.dto.copywritergpt.GenerateArticleResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 public class ArticleService {
 
-    private TssProxy tssProxy;
+    private DimProxy dimProxy;
 
     @Autowired
     private PromptTemplateService promptTemplateService;
@@ -28,13 +28,13 @@ public class ArticleService {
     private ArticleRepository articleRepository;
 
     public ArticleService() {
-        this.tssProxy = new TssProxy(new RestTemplate());
+        this.dimProxy = new DimProxy(new RestTemplate());
     }
 
-    public GenerateArticleResponse generateArticle(Collection<String> documentIds, String articleType, Long promptTemplateId) {
+    public GenerateArticleResponse generateArticle(String collectionName, List<String> documentIds, String articleType, Long promptTemplateId) {
         log.info("generateArticle(): documentIds={}, promptTemplateId={}", documentIds, promptTemplateId);
 
-        List<Document> documents = tssProxy.getDocumentsById(documentIds);
+        List<Document> documents = dimProxy.getDocumentsById(collectionName, documentIds);
 
         PromptTemplate promptTemplate = promptTemplateService.getPromptTemplateById(promptTemplateId);
 

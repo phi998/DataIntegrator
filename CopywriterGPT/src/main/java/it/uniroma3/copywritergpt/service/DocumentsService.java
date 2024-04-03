@@ -1,24 +1,24 @@
 package it.uniroma3.copywritergpt.service;
 
-import it.uniroma3.copywritergpt.proxy.TssProxy;
+import it.uniroma3.copywritergpt.proxy.DimProxy;
 import it.uniroma3.di.common.api.dto.tss.QueryResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class DocumentsService {
 
-    private TssProxy tssProxy;
+    private DimProxy dimProxy;
 
     public DocumentsService() {
-        this.tssProxy = new TssProxy(new RestTemplate());
+        this.dimProxy = new DimProxy(new RestTemplate());
     }
 
-    public QueryResponse getTopResults(Map<String,String> query, int n) {
-        return tssProxy.getTopResults(query,n);
+    public QueryResponse getTopResults(String collectionName, Map<String, List<String>> query, int n) {
+        return dimProxy.getTopResults(collectionName,query,n);
     }
 
 }

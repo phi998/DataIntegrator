@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static it.uniroma3.tss.utils.Constants.CORE_NAME;
+
 class SolrProxyFacadeTest {
 
     @BeforeEach
@@ -22,6 +24,6 @@ class SolrProxyFacadeTest {
                 "3,Andrea,42\n";
 
         SolrProxyFacade solrFacade = new SolrProxyFacade();
-        solrFacade.uploadData(CSVUtils.toTableRows(testData, List.of("id","name","age")));
+        solrFacade.uploadData(CORE_NAME, CSVUtils.toTableRows(testData, List.of("id","name","age")));
     }
 }

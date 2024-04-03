@@ -1,9 +1,8 @@
 from io import StringIO
 
 import pandas as pd
-
-from FileStorageApi import FileStorageApi
 from chains.DefaultChain import DefaultChain
+from proxy.FileStorageApi import FileStorageApi
 
 
 class JobWorker:
@@ -15,9 +14,10 @@ class JobWorker:
     def clean_tables(self, job):
         context = job["jobName"]
         ontology = job["data"]["ontology"]
+        ontology_name = job["data"]["ontologyName"]
         tables = job["data"]["tables"]
 
-        chain = DefaultChain(context, ontology)
+        chain = DefaultChain(context, ontology, ontology_name)
 
         cleaned_tables = []
 

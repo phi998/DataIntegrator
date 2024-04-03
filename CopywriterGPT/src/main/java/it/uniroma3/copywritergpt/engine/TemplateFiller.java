@@ -70,6 +70,7 @@ public class TemplateFiller {
             resultBuilder.append("\n");
         }
 
+        log.info("template={}, result={}", template, resultBuilder.toString());
         return template.replaceAll("%%.*", resultBuilder.toString());
     }
 

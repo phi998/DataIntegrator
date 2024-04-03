@@ -6,7 +6,7 @@ public class Endpoints {
 
     public static final String DIM_ENDPOINT = "http://dim:8080";
 
-    public static final String TSS_ENDPOINT = "http://tss:8080";
+    public static final String TSS_ENDPOINT = "http://localhost:8080"; // TODO refactor. Tss is a deleted microservice. Now DIM interacts with storage
 
     public static final String CHATGPT_ENDPOINT = "http://chatgpt:5000";
 

@@ -4,14 +4,17 @@ import it.uniroma3.di.common.api.dto.dim.*;
 import it.uniroma3.dim.domain.entity.Ontology;
 import it.uniroma3.dim.domain.entity.OntologyItem;
 import it.uniroma3.dim.domain.enums.OntologyItemType;
+import it.uniroma3.dim.proxy.TssStorageClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -20,6 +23,9 @@ public class OntologyService {
 
     @Autowired
     private OntologyRepository ontologyRepository;
+
+    @Autowired
+    private StructureService structureService;
 
     @Transactional
     public CreateNewOntologyResponse createNewOntology(String ontologyName, Collection<OntologyItemInput> items) {
@@ -42,6 +48,14 @@ public class OntologyService {
         }
 
         ontology = ontologyRepository.save(ontology);
+
+        /*TssStorageClient tssClient = new TssStorageClient(new RestTemplate());
+        tssClient.createNewTable(ontologyName, items.stream()
+                .collect(Collectors.toMap(OntologyItemInput::getLabel,OntologyItemInput::getType)));*/
+
+        structureService.createTable(ontologyName, items.stream()
+                .collect(Collectors.toMap(OntologyItemInput::getLabel,OntologyItemInput::getType)));
+
         return Converter.toCreateNewOntologyResponse(ontology);
     }
 
@@ -72,7 +86,7 @@ public class OntologyService {
         return getOntologyCollectionResponse;
     }
 
-    public void addItemsToOntology(Long ontologyId, Collection<OntologyItemInput> items) {
+    public void addItemsToOntology(Long ontologyId, List<OntologyItemInput> items) {
         Ontology ontology = ontologyRepository.findById(ontologyId).get();
         for(OntologyItemInput item: items) {
             OntologyItem ontologyItem = new OntologyItem();
@@ -84,6 +98,13 @@ public class OntologyService {
         }
 
         this.ontologyRepository.save(ontology);
+
+        /*TssStorageClient tssClient = new TssStorageClient(new RestTemplate());
+        tssClient.addNewColumns(ontology.getName(), items.stream()
+                .collect(Collectors.toMap(OntologyItemInput::getLabel,OntologyItemInput::getType)));*/
+
+        structureService.addColumns(ontology.getName(), items.stream()
+                .collect(Collectors.toMap(OntologyItemInput::getLabel,OntologyItemInput::getType)));
     }
 
     public Ontology getOntologyByName(String ontologyName) {

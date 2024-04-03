@@ -11,7 +11,7 @@ public class ArticleGenerator {
     public String generateArticle(String context, String llmPrompt) {
         log.info("generateArticle(): context={}, llmPrompt={}", context, llmPrompt);
 
-        LlmProxy llmProxy = new ChatGptProxyImpl(new RestTemplate());
+        LlmProxy llmProxy = new ChatGptProxyImpl();
         return llmProxy.getResponse("You are an expert about" + context, llmPrompt);
     }
 

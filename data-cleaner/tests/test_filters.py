@@ -6,8 +6,6 @@ from filters.ColumnEntropyFilter import ColumnEntropyFilter
 from filters.ColumnTrimFilter import ColumnTrimFilter
 from filters.EmptyColumnsCleaner import EmptyColumnsCleaner
 from filters.HtmlCleaner import HtmlCleaner
-from filters.Labeler import Labeler
-from filters.UsefulDataFilter import UsefulDataFilter
 
 
 class FiltersTest(unittest.TestCase):
@@ -38,14 +36,6 @@ class FiltersTest(unittest.TestCase):
 
         csv_string.close()
 
-    def test_useful_columns_filter(self):
-        df = pd.read_csv('datasets/useful_columns_filter/input.csv', header=None)
-
-        cleaner = UsefulDataFilter("context")
-        df = cleaner.clean(df)
-
-        df.to_csv("datasets/useful_columns_filter/output_old.csv", header=None)
-
     def test_low_entropy_columns_filter(self):
         df = pd.read_csv('datasets/low_entropy/input.csv', header=None)
 
@@ -57,13 +47,5 @@ class FiltersTest(unittest.TestCase):
 
         df.to_csv("datasets/low_entropy/output.csv", header=None)
 
-
-    def test_labeler(self):
-        df = pd.read_csv('datasets/labeler/input.csv', header=None)
-
-        labeler = Labeler("job advertisement")
-        df = labeler.label_columns(df, ["Company name", "Role", "Location", "Description"])
-
-        df.to_csv("datasets/labeler/output_old.csv")
 
 

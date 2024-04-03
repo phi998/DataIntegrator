@@ -1,6 +1,7 @@
 from config.ConfigCache import ConfigCache
 from enums.chatgpt.Model import Model
 from llm.chatgpt.chatgpt import ChatGPT
+from llm.client.LLMClient import LLMClient
 from sampler.column.ColumnTokenLimitSampler import ColumnTokenLimitSampler
 
 
@@ -40,8 +41,6 @@ class LabelerByColumn:
         return df
 
     def __label_column(self, column, ontology):
-        chatgpt = ChatGPT(model=Model.GPT_3_5_16K)
-
         column = [str(col) for col in column if col is not None]
 
         ontology_items = ','.join(ontology.keys())
@@ -51,20 +50,18 @@ class LabelerByColumn:
             ontology_subprompt = "Classify the column given to you into only one of these types that are separated with " \
                                  f"comma: {ontology_items}"
 
-
-
+        llm_client = LLMClient()
+        chatgpt = ChatGPT(model=Model.GPT_3_5_16K)
         response = chatgpt.get_one_shot_solution(
-            examples=self.__cache.get_prompt_examples(),
-            input_example='apple, banana, pear, pineapple',
-            output_example='{"column_name":"fruit","confidence":0.9}',
             task=f"You are an expert about {self.__data_context}",
             prompt="Answer the question based on the task below, If the question cannot be answered "
                    "using the information provided answer with 'other'.\n" + ontology_subprompt,
+            prompt_input=';'.join(column),
             instructions=["Look at items values in detail",
                           "Select a class that best represents the meaning of all items",
                           "For the selected class write the confidence you would give in the interval between 0 and 1",
                           "Answer with only a json string like {\"column_name\":\"effective name\",\"confidence\":confidence}, no prose"],
-            prompt_input=';'.join(column),
+            examples=self.__cache.get_prompt_examples(self.__data_context),
             ontology=ontology
         )
 

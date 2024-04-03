@@ -1,5 +1,7 @@
 {
   "max_llm_attempts": 3,
   "llm_fail_timewait_secs": 5,
-  "column_token_limit_for_llm": 300
+  "column_token_limit_for_llm": 300,
+  "temperature": 1,
+  "model": "GPT_3_5"
 }

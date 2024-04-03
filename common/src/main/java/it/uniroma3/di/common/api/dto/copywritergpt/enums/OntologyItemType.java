@@ -2,6 +2,7 @@ package it.uniroma3.di.common.api.dto.copywritergpt.enums;
 
 public enum OntologyItemType {
 
+    STRING,
     TITLE,
     PROSE,
     NUMERIC,

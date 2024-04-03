@@ -1,0 +1,200 @@
+{
+  "eshopping": [
+    {
+      "input": "Leggings donna fitness FIT+ 500 cotone leggero neri DOMYOS, Valentine's Day Dog Shaped Throw Pillow White/pink - Room Essentials, Fashion High Quality Metal Various Sizes Hardware Quick Link",
+      "output": "{\"column_name\":\"product name\",\"confidence\":0.9}"
+    },
+    {
+      "input": "home & garden, office & work, jewelry, toys, Sports & Outdoors",
+      "output": "{\"column_name\":\"product category\",\"confidence\":0.9}"
+    },
+    {
+      "input": "4.7 out of 5 stars, 3.0, 1.2, 3.8/5.0, 40/100, 87",
+      "output": "{\"column_name\":\"rating\",\"confidence\":0.9}"
+    },
+    {
+      "input": "22.90, 13.20$, 10 euros, 80€",
+      "output": "{\"column_name\":\"price\",\"confidence\":0.9}"
+    },
+    {
+      "input": "Travelhouse 3 Piece Hardshell Luggage Set Hardside Lightweight Suitcase with TSA Lock Spinner Wheels 20in24in28in.(Red)",
+      "output": "{\"column_name\":\"description\",\"confidence\":0.9}"
+    }
+  ],
+  "finance": [
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    },
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    },
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    },
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    },
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    }
+  ],
+  "hotels": [
+    {
+      "input": "Casa Burelli - Montalcino, Hotel di lusso vicino al Vaticano, Hotel President, Albergo dei Capitani, Hotel Villa Cesi",
+      "output": "{\"column_name\":\"hotel name\",\"confidence\":0.9}"
+    },
+    {
+      "input": "4.7 out of 5 stars, 3.0, 1.2, 3.8/5.0, 40/100, 87",
+      "output": "{\"column_name\":\"rating\",\"confidence\":0.9}"
+    },
+    {
+      "input": "via delle terre bianche 1, Impruneta, Italia, VIA ELVIO PERTINACE 20, Alba Italia 94A, Via Altinia, Favaro Veneto, Italia, First Street Road, 98",
+      "output": "{\"column_name\":\"address\",\"confidence\":0.9}"
+    },
+    {
+      "input": "free wifi, internal parking, air conditioner, reception open until 11am",
+      "output": "{\"column_name\":\"additional  information\",\"confidence\":0.9}"
+    },
+    {
+      "input": "22.90, 13.20$, 10 euros, 80€",
+      "output": "{\"column_name\":\"price\",\"confidence\":0.9}"
+    }
+  ],
+  "jobs": [
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    },
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    },
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    },
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    },
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    }
+  ],
+  "books": [
+    {
+      "input": "Un romanzo russo, I Malavoglia, Il volo di Sara, Dubliners, The rain is getting darker, Anne Frank diary",
+      "output": "{\"column_name\":\"book title\",\"confidence\":0.9}"
+    },
+    {
+      "input": "22.90, 13.20$, 10 euros, 80€",
+      "output": "{\"column_name\":\"price\",\"confidence\":0.9}"
+    },
+    {
+      "input": "pink fiction, giallo, horror & thriller, technical book, boys and children",
+      "output": "{\"column_name\":\"category\",\"confidence\":0.9}"
+    },
+    {
+      "input": "mondadori, giunti, black cat, academic press, quirk books",
+      "output": "{\"column_name\":\"editors\",\"confidence\":0.9}"
+    },
+    {
+      "input": "32, 216, 240, 208, 176",
+      "output": "{\"column_name\":\"pages\",\"confidence\":0.9}"
+    }
+  ],
+  "realestate": [
+    {
+      "input": "Trilocale in vendita a L'Aquila, Torrione - L'Aquila. € 128.000, 80 Mq, vendita Casa a Roma in Riserva Verde, Selling house in New York, Appartamento in Vendita, Villa in Vendita all'asta",
+      "output": "{\"column_name\":\"advertisement title\",\"confidence\":0.9}"
+    },
+    {
+      "input": "1.500.000€, 549.000€, 630.000$, all'asta, su richiesta, on demand",
+      "output": "{\"column_name\":\"price\",\"confidence\":0.9}"
+    },
+    {
+      "input": "\"Il sito è integrato nella più ampia gestione dell'ecosistema delle reti stradali urbane: treni, tram, automobili e biciclette. Dall'11 febbraio 2019 è operativo il nuovo collegamento tramviario T2 tra l'aeroporto di Firenze e il centro città. Il nuovo servizio tramviario rappresenta una modalità di collegamento comoda ed ecologica grazie alla fermata in prossimità del terminal aeroportuale, alla frequenza e alla velocità delle corse.\"\n\"Situato in via Santa Sofia, a due passi dalla prossima fermata della linea metropolitana blu M4 Santa Sofia e in vicinanza della fermata della linea M3 Crocetta, proponiamo al secondo piano di un condominio signorile, un elegante ufficio di 225 mq circa.\"\n",
+      "output": "{\"column_name\":\"description\",\"confidence\":0.9}"
+    },
+    {
+      "input": "Monica Corretti, Antonello Careddu, Saverio Franceschini, John Smith, Luke Doe",
+      "output": "{\"column_name\":\"broker name\",\"confidence\":0.9}"
+    },
+    {
+      "input": "Via Cristoforo Colombo, First Avenue Rd, First Road 187",
+      "output": "{\"column_name\":\"location\",\"confidence\":0.9}"
+    }
+  ],
+  "restaurants": [
+    {
+      "input": "Bisteccheria Quattro Venti Restaurant, Pizzeria Malaterra, Trinità De Monti Restaurant, La Ricetta del Diavolo, Restaurant The Good One",
+      "output": "{\"column_name\":\"restaurant name\",\"confidence\":0.9}"
+    },
+    {
+      "input": "Firenze, Rome, Milano, New York, London",
+      "output": "{\"column_name\":\"location\",\"confidence\":0.9}"
+    },
+    {
+      "input": "4.7 out of 5 stars, 3.0, 1.2, 3.8/5.0, 40/100, 87, #23 of 190",
+      "output": "{\"column_name\":\"rating\",\"confidence\":0.9}"
+    },
+    {
+      "input": "€23 - €55, €5 - €7, €10+, $250 - $290",
+      "output": "{\"column_name\":\"price range\",\"confidence\":0.9}"
+    },
+    {
+      "input": "19:30-23:00, 10:30-22:00, 10:00-20:00\n",
+      "output": "{\"column_name\":\"opening times\",\"confidence\":0.9}"
+    }
+  ],
+  "movies": [
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    },
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    },
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    },
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    },
+    {
+      "input": "apple, banana, pear, pineapple",
+      "output": "{\"column_name\":\"fruit\",\"confidence\":0.9}"
+    }
+  ],
+  "footballplayers": [
+    {
+      "input": "Jules Koundé, Alejandro Balde, João Félix Francesco Totti, John Newman",
+      "output": "{\"column_name\":\"player name\",\"confidence\":0.9}"
+    },
+    {
+      "input": "1.89, 1.67m, 188cm, 190",
+      "output": "{\"column_name\":\"height\",\"confidence\":0.9}"
+    },
+    {
+      "input": "68, 90kg, 100kg, 78",
+      "output": "{\"column_name\":\"weight\",\"confidence\":0.9}"
+    },
+    {
+      "input": "06-03-2006, 07-02-1992, 28-12-1990",
+      "output": "{\"column_name\":\"date of birth\",\"confidence\":0.9}"
+    },
+    {
+      "input": "3 millions, 5mln, 1.5, 10.34mil",
+      "output": "{\"column_name\":\"value\",\"confidence\":0.9}"
+    }
+  ]
+}

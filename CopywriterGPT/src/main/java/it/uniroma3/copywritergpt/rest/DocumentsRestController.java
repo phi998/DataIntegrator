@@ -22,13 +22,13 @@ public class DocumentsRestController {
     private DocumentsService documentsService;
 
     @GetMapping("/collection/{collectionName}/documents")
-    public QueryResponse getDocuments(@PathVariable String collectionName, @RequestParam Map<String,String> queryParams) {
+    public QueryResponse getDocuments(@PathVariable String collectionName, @RequestParam Map<String,List<String>> queryParams) {
         log.info("getDocuments(): collectionName={}, queryParams={}", collectionName, queryParams);
 
-        int n = Integer.parseInt(queryParams.get(Constants.TSS_N_RESULTS_KEY));
+        int n = Integer.parseInt(queryParams.get(Constants.TSS_N_RESULTS_KEY).get(0));
         queryParams.remove(Constants.TSS_N_RESULTS_KEY);
 
-        return documentsService.getTopResults(queryParams,n);
+        return documentsService.getTopResults(collectionName,queryParams,n);
     }
 
 }

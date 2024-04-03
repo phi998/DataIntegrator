@@ -27,16 +27,16 @@
 
             <h2 th:text="${job.name}">job_name</h2>
             <div class="table-responsive">
-                <table>
+                <table class="table">
                     <tbody>
                         <tr>
-                            <th>Job ID</th><td>pjb_id</td>
+                            <th>Job ID</th><td th:text="${job.id}">job_id</td>
                         </tr><tr>
                             <th>Job Status</th><td></td>
                         </tr><tr>
                             <th>Job ontology</th>
                             <td>
-                                <span th:each="item : ${job.ontology.items}" th:text="${item.label}">item</span>
+                                <span th:each="item : ${job.ontology.items}" th:text="${item.label}" class="badge rounded-pill bg-dark">item</span>
                             </td>
                         </tr>
                     </tbody>
@@ -49,31 +49,27 @@
 
             <h2 th:if="${job.jobStatus eq 'COMPLETED'}">Jobs Result Preview</h2>
 
-            <form th:if="${job.jobStatus eq 'COMPLETED'}" method="post" th:action="@{'/jobs/' + ${job.id} + '/push'}" th:object="${renameTableColumnsForm}">
+            <form th:if="${job.jobStatus eq 'COMPLETED'}" id="previewForm" method="post" th:action="@{'/jobs/' + ${job.id} + '/push'}" th:object="${renameTableColumnsForm}">
             <div class="table-responsive" th:each="table : *{tableName2Table}">
                 <h3 th:text="${table.key}">table_name</h3>
-                <table>
+                <table class="table">
                     <thead><tr>
-                        <th>Column Index</th>
-                        <th>Column Name</th>
-                        <th>New column name</th>
-                        <th>Column Preview</th>
+                        <th scope="col">Column Index</th>
+                        <th scope="col">Column Name</th>
+                        <th scope="col">New column name</th>
+                        <th scope="col">Column Preview</th>
                     </tr></thead>
                     <tbody>
                         <tr th:each="column : ${table.value.colIndex2Name}">
                             <td th:text ="${column.key}">column_index</td>
                             <td th:text="${column.value}">column_name</td>
                             <td>
-                                <input type="text" th:value="${column.key}" th:field="*{tableName2Table[__${table.key}__].colIndex2Name[__${column.key}__]}">
+                                <select form="previewForm" th:value="${column.key}" th:field="*{tableName2Table[__${table.key}__].colIndex2Name[__${column.key}__]}">
+                                    <option th:each="ontItem : ${ontologySelect}" th:value="${ontItem}" th:text="${ontItem}">option_value</option>
+                                </select>
                             </td>
-                            <td>
-                                <table>
-                                    <tbody>
-                                    <tr th:each="cell: ${table.value.colIndex2Preview[column.key]}">
-                                        <td th:text="${cell}" style="padding: 5px;">cell_val</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                            <td style="max-height: 100px; overflow: hidden;">
+                                <span th:each="cell: ${table.value.colIndex2Preview[column.key]}" th:text="${cell}" style="padding: 5px;">cell_value</span>
                             </td>
                         </tr>
                     </tbody>

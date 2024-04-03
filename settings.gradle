@@ -2,6 +2,6 @@ rootProject.name = 'DataIntegrator'
 
 include ':DataIntegrationManager'
 include ':DataIntegrationStorage'
-include ':TableStorageService'
+// include ':TableStorageService'
 include ':CopywriterGPT'
 include ':common'

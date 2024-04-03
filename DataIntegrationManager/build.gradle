@@ -23,6 +23,8 @@ repositories {
 
 ext {
 	set('springCloudVersion', "2022.0.4")
+	set('solrVersion', '9.4.0')
+	set('clickhouseJDBCVersion', '0.2.4')
 }
 
 dependencies {
@@ -37,6 +39,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
+
+	implementation "org.apache.solr:solr-solrj:${solrVersion}"
+	implementation "ru.yandex.clickhouse:clickhouse-jdbc:${clickhouseJDBCVersion}"
 
 	implementation 'org.apache.commons:commons-csv:1.10.0'
 	implementation 'com.google.code.gson:gson:2.10.1'

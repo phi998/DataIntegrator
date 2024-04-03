@@ -6,7 +6,7 @@ class ColumnEntropyFilter:
     def __init__(self, min_entropy):
         self.__min_entropy = min_entropy
 
-    def apply(self, df, ontology):
+    def apply(self, df):
 
         for col in df.columns:
             cells_list = df[col].tolist()

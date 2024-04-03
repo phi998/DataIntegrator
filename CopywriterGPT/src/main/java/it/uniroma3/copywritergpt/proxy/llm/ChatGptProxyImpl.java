@@ -1,6 +1,7 @@
 package it.uniroma3.copywritergpt.proxy.llm;
 
 import it.uniroma3.copywritergpt.proxy.LlmProxy;
+import it.uniroma3.di.common.api.client.chatgpt.ChatGPTClient;
 import it.uniroma3.di.common.api.dto.chatgpt.ChatGptRequest;
 import it.uniroma3.di.common.api.dto.chatgpt.ChatGptResponse;
 import it.uniroma3.di.common.utils.Endpoints;
@@ -13,30 +14,15 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class ChatGptProxyImpl implements LlmProxy {
 
-    private RestTemplate restTemplate;
-
-    private static final String CHATGPT_GW_URL = Endpoints.CHATGPT_ENDPOINT + "/chat";
-
-    public ChatGptProxyImpl(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
     @Override
     public String getResponse(String task, String prompt) {
         log.info("getResponse(): task={}, prompt={}", task, prompt);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        ChatGPTClient chatGPTClient = new ChatGPTClient(new RestTemplate());
+        String response = chatGPTClient.getResponse(task, prompt);
 
-        ChatGptRequest chatGptRequest = new ChatGptRequest();
-        chatGptRequest.setTask(task);
-        chatGptRequest.setPrompt(prompt);
+        log.info("getResponse(): response={}", response);
 
-        ResponseEntity<ChatGptResponse> responseEntity = restTemplate.postForEntity(CHATGPT_GW_URL, chatGptRequest, ChatGptResponse.class);
-        ChatGptResponse chatGptResponse = responseEntity.getBody();
-
-        log.info("getResponse(): chatGptResponse={}", chatGptResponse);
-
-        return chatGptResponse.getContent();
+        return response;
     }
 }

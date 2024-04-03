@@ -1,12 +1,10 @@
-import json
 import logging
 import time
-from os.path import dirname, join
 import openai
 
 from config.ConfigCache import ConfigCache
+from config.KeyManager import KeyManager
 from engine.PromptBuilder import PromptBuilder
-from timeout_decorator import timeout
 
 from enums.DefaultAgentAnswers import DefaultAgentAnswers
 from enums.Model import Model
@@ -16,9 +14,11 @@ from enums.Role import Role
 class ChatGPT:
 
     def __init__(self, model=Model.GPT_3_5_16K):
-        self.__key = self.__get_key()
         self.__model = model
         self.__cache = ConfigCache().get_instance()
+
+        km = KeyManager()
+        openai.api_key = km.get_key()
 
     def interact(self, task, prompt, prompt_input=None, instructions=None, observations=None, examples=None):
         max_retries = self.__cache.get_configuration("max_llm_attempts")
@@ -77,25 +77,13 @@ class ChatGPT:
         response = openai.ChatCompletion.create(
             model=self.__model.value,
             messages=messages,
-            temperature=1
+            temperature=self.__cache.get_configuration("temperature")
         )
         response_content = response.choices[0].message.content
 
         self.__print_log_prompt(task, prompt, response_content)
 
         return response_content
-
-    def __get_key(self):
-        project_root = dirname(dirname(__file__))
-        output_path = join(project_root, 'config/')
-
-        with open(output_path + "/secrets.json") as f:
-            secrets = json.load(f)
-            api_key = secrets["api_key"]
-
-        openai.api_key = api_key
-
-        return api_key
 
     def __format_json_text_response(self, output):  # deletes useless prose
         index_of_brace = output.find('{')

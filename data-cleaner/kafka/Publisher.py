@@ -12,9 +12,9 @@ class Publisher:
         }
         self.producer = Producer(conf)
 
-    def publish_cleaned_data(self, job_id, job_name, ontology, tables):
+    def publish_cleaned_data(self, job_id, job_name, ontology_name, ontology, tables):
         topic = "cleaned-data-event-channel"
-        event_data = {"ontology": ontology, "tables": tables}
+        event_data = {"ontology": ontology, "tables": tables, "ontologyName": ontology_name}
         data_cleaned_event = {"jobId": job_id, "jobName": job_name, "data": event_data}
 
         print(f"PUBLISHING CLEANED DATA: {data_cleaned_event}")

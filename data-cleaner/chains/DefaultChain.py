@@ -1,5 +1,4 @@
 from filters.ColumnEntropyFilter import ColumnEntropyFilter
-from filters.LabelerByColumn import LabelerByColumn
 from filters.ColumnTrimFilter import ColumnTrimFilter
 from filters.EmptyColumnsCleaner import EmptyColumnsCleaner
 from filters.HtmlCleaner import HtmlCleaner
@@ -31,8 +30,8 @@ class DefaultChain:
         table_column_trimmer = ColumnTrimFilter()
         df = table_column_trimmer.apply(df)
 
-        entropy_filter = ColumnEntropyFilter(0.1)  # FIXME
-        df = entropy_filter.apply(df, self.ontology)
+        entropy_filter = ColumnEntropyFilter(0.1)
+        df = entropy_filter.apply(df)
 
         print("Cleaned low entropy columns")
 
@@ -40,9 +39,6 @@ class DefaultChain:
         statistics_cache = StatisticsCache().get_instance()
         statistics_cache.set_number_of_columns(len(df.columns))
         ##################
-
-        #labeler = LabelerByColumn(data_context=self.context)
-        #df = labeler.label_columns(df, self.ontology)
 
         print("Column naming finished")
 

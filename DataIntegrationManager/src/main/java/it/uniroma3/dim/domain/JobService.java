@@ -3,10 +3,13 @@ package it.uniroma3.dim.domain;
 import it.uniroma3.di.common.api.dto.dim.*;
 import it.uniroma3.di.common.api.dto.dis.FileUploadedResponse;
 import it.uniroma3.di.common.api.dto.dis.RetrieveFileResponse;
+import it.uniroma3.di.common.api.dto.tss.TableStorageField;
 import it.uniroma3.dim.domain.entity.*;
 import it.uniroma3.dim.domain.enums.JobStatus;
 import it.uniroma3.dim.domain.enums.JobType;
+import it.uniroma3.dim.domain.vo.TableField;
 import it.uniroma3.dim.domain.vo.TableInfo;
+import it.uniroma3.dim.domain.vo.enums.FieldType;
 import it.uniroma3.dim.event.JobStartedEvent;
 import it.uniroma3.dim.eventpublisher.impl.JobCreatedEventPublisher;
 import it.uniroma3.dim.proxy.DisStorageClient;
@@ -16,6 +19,7 @@ import it.uniroma3.dim.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,6 +28,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static it.uniroma3.di.common.utils.Constants.CSV_SEPARATOR;
+import static it.uniroma3.dim.utils.Utils.convertToSnakeCase;
 
 @Service
 @Slf4j
@@ -34,6 +39,9 @@ public class JobService {
 
     @Autowired
     private OntologyService ontologyService;
+
+    @Autowired
+    private StorageService storageService;
 
     @Autowired
     private JobTableRepository jobTableRepository;
@@ -214,7 +222,6 @@ public class JobService {
         return ejtr;
     }
 
-    @Transactional
     public void renameColumns(Long jobId, Map<String,Collection<String>> tableName2columnsNames) {
         log.info("renameColumns(): jobId={}, tableName2columnsNames={}", jobId, tableName2columnsNames);
 
@@ -248,15 +255,11 @@ public class JobService {
         for(JobTable jobTable: job.getJobResult().getResultTables()) {
             String tableName = jobTable.getName();
 
-            String tableContent = "";
-            try {
-                tableContent = CSVUtils.mergeColumnsWithSameName(Utils.convertBinaryToString(jobTable.getTableData()));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            String category = job.getName(); // FIXME add category attribute to job
+            String tableContent = Utils.convertBinaryToString(jobTable.getTableData());
+            String category = job.getJobData().getOntology().getName();
 
-            this.uploadToTss(tableName,category,tableContent,ontology);
+            // this.uploadToTss(tableName,category,tableContent,ontology);
+            this.saveToStorage(tableName,category,tableContent,ontology);
         }
     }
 
@@ -272,8 +275,30 @@ public class JobService {
 
 
     private void uploadToTss(String tableName, String category, String resultTableContent, Map<String,String> ontology2type) {
+        log.info("uploadToTss(): tableName={}, category={}, resultTableContent={}, ontology2type={}", tableName, category, resultTableContent, ontology2type);
+
         TssStorageClient tssStorageClient = new TssStorageClient(new RestTemplate());
         tssStorageClient.uploadJobResultTable(tableName,category,resultTableContent,ontology2type);
+    }
+
+    private void saveToStorage(String tableName, String category, String resultTableContent, Map<String,String> ontology2type) {
+        log.info("saveToStorage(): tableName={}, category={}, resultTableContent={}, ontology2type={}", tableName, category, resultTableContent, ontology2type);
+
+        Collection<TableField> tfs = new ArrayList<>();
+
+        for(Map.Entry<String,String> ontologyItem : ontology2type.entrySet()) {
+            String ontologyItemName = ontologyItem.getKey();
+            String ontologyItemType = ontologyItem.getValue();
+
+            TableField tableStorageField = new TableField();
+            tableStorageField.setName(ontologyItemName);
+            tableStorageField.setType(FieldType.STRING); // TODO adapt it to type
+            tableStorageField.setSymbolicName(convertToSnakeCase(ontologyItemName));
+
+            tfs.add(tableStorageField);
+        }
+
+        this.storageService.storeTable(tableName,category,resultTableContent,tfs);
     }
 
     static class Converter {

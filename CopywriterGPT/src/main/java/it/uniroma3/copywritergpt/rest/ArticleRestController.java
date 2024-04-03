@@ -19,13 +19,14 @@ public class ArticleRestController {
 
     @GetMapping("/articles/new")
     public GenerateArticleResponse generateArticle(
+            @RequestParam String collectionName,
             @RequestParam Long templateId,
             @RequestParam String articleType,
             @RequestParam List<String> documentIds) {
         log.info("generateArticle(): templateId={}, articleType={}, documentIds={}, ",
                 templateId, articleType, documentIds);
 
-        return articleService.generateArticle(documentIds, articleType, templateId);
+        return articleService.generateArticle(collectionName, documentIds, articleType, templateId);
     }
 
 

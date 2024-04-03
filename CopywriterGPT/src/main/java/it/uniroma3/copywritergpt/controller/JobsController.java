@@ -57,7 +57,7 @@ public class JobsController {
         for (MultipartFile file : files) {
             log.info("createNewJob(): Received file={}", file.getOriginalFilename());
             AddTableToJobRequest table = new AddTableToJobRequest();
-            table.setTableName(file.getName());
+            table.setTableName(file.getOriginalFilename());
             try {
                 String csvStringContent = new String(file.getBytes(), StandardCharsets.UTF_8);
                 table.setTableContent(Util.convertToBase64String(csvStringContent));
@@ -74,7 +74,7 @@ public class JobsController {
         createNewJobRequest.setOntologyName(newJobForm.getOntologyName());
 
         CreateNewJobResponse response = jobService.createNewJob(createNewJobRequest, tables);
-        return "redirect:jobs/" + response.getJobId();
+        return "redirect:/jobs/" + response.getJobId();
     }
 
     @GetMapping("/jobs/{jobId}")
@@ -109,7 +109,7 @@ public class JobsController {
             for(Map.Entry<Integer, ColumnPreview> cpEntry: tp.getTable().entrySet()) {
                 int columnIndex = cpEntry.getKey();
                 ColumnPreview cp = cpEntry.getValue();
-                String columnName = cp.getColumnName();
+                String columnName = cp.getColumnName().toLowerCase();
                 List<String> cellsPreview = cp.getCells();
                 tablePreviewForm.addColumn(columnIndex, columnName, cellsPreview);
             }
@@ -117,11 +117,14 @@ public class JobsController {
             renameTableColumnsForm.addTable(tableName,tablePreviewForm);
         }
 
-        List<String> ontology = jobInfo.getOntology().getItems().stream().map(OntologyItemOutput::getLabel).toList();
+        List<String> ontology = jobInfo.getOntology().getItems().stream().map(oio -> oio.getLabel().toLowerCase()).toList();
 
         model.addAttribute("job", jobInfo);
         model.addAttribute("renameTableColumnsForm", renameTableColumnsForm);
         model.addAttribute("ontology", ontology);
+        List<String> ontologySelect = new ArrayList<>(ontology);
+        ontologySelect.add("Other");
+        model.addAttribute("ontologySelect", ontologySelect);
 
         return "job";
     }
@@ -137,7 +140,7 @@ public class JobsController {
 
         this.jobService.startJob(jobId, columnsToDrop);
 
-        return "redirect:jobs/" + jobId;
+        return "redirect:/jobs/" + jobId;
     }
 
     @PostMapping("/jobs/{jobId}/push")

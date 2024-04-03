@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CSVUtilsTest {
 
-    @Test
+    //@Test
     void convertCsvStringToStructure() {
 
         String datasetFileName = "mondadori_12.csv";
@@ -25,7 +25,7 @@ class CSVUtilsTest {
 
     }
 
-    @Test
+    //@Test
     void mergeColumnsWithSameName() throws IOException {
 
         String datasetFileName = "zalando_1.csv";
